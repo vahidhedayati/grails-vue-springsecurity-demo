@@ -1,23 +1,3 @@
-Taken from 
-
-
-To create a grails vue application to do this in grails 3.3+ 
-
-```
-grails create-app myapp --profile=vue
-
-```
-
-[You tube video running through authentication](https://www.youtube.com/watch?v=Z0qr6XIG4Kc)
-
-
-
-Official guide
-----
-[Official guide can be found here ](http://guides.grails.org/building-a-vue-app/guide/index.html)  
-```
-git clone https://github.com/grails-guides/building-a-vue-app.git
-```
 
 
 To run this application
@@ -29,6 +9,30 @@ To run this application
 This will launch both apps and access url via 
 
 http://localhost:3000
+
+
+[You tube video running through authentication](https://www.youtube.com/watch?v=Z0qr6XIG4Kc)
+
+
+-----
+
+
+To create a grails 3  vue application run the following:  
+
+```
+grails create-app myapp --profile=vue
+
+```
+
+
+
+
+Taken from :
+----
+[Official guide can be found here ](http://guides.grails.org/building-a-vue-app/guide/index.html)  
+```
+git clone https://github.com/grails-guides/building-a-vue-app.git
+```
 
 
 The first thing to consider when setting up a vue app is to disable esLint.
