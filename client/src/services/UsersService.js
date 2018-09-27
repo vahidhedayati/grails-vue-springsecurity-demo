@@ -2,7 +2,7 @@ import Api from '@/services/Api'
 
 export default {
   logout () {
-    return Api().get('/api/logout')
+    return Api().get('logout')
       .catch((error) => {
       if (error.response) {
       console.log(JSON.stringify(error.response));
@@ -15,7 +15,7 @@ export default {
   });
   },
   fetchUsers () {
-    return Api().get('user')
+    return Api().get('driver')
     .catch((error) => {
         if (error.response) {
             console.log(error.response);
@@ -41,7 +41,7 @@ export default {
     });
   },
   login (params) {
-    return Api().post('api/login', params)
+    return Api().post('login', params)
     .catch((error) => {
         if (error.response) {
             console.log(error.response);

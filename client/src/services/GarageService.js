@@ -1,8 +1,8 @@
 import Api from '@/services/Api'
 
 export default {
-  fetchDrivers () {
-    return Api().get('api/vehicle' )
+  fetchName (component) {
+    return Api().get(component )
     .catch((error) => {
         if (error.response) {
             console.log(error.response);
@@ -13,8 +13,8 @@ export default {
         }
     });
   },
-  createProfile (params) {
-    return Api().post('profile', params)
+  create (component, params) {
+    return Api().post(component, params)
     .catch((error) => {
         if (error.response) {
             console.log(error.response);
@@ -25,8 +25,8 @@ export default {
         }
     });
   },
-  updateProfile (params) {
-    return Api().patch('profile/' + params.id, params)
+  update(component,params) {
+    return Api().patch(component, params)
     .catch((error) => {
         if (error.response) {
             console.log(error.response);
@@ -37,8 +37,8 @@ export default {
         }
     });
   },
-  deleteProfile (id) {
-    return Api().delete('profile/' + id)
+  delete (component,id) {
+    return Api().delete(component+'/' + id)
     .catch((error) => {
         if (error.response) {
             console.log(error.response);

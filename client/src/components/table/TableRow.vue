@@ -54,6 +54,7 @@
 <script>
 //This is needed for the select component to work
 import FieldSelect from '../form/FieldSelect'
+import GarageService from '@/services/GarageService'
 export default {
     //You must declare what is being passed in otherwise they wont work..
    props: ['item', 'makes', 'models', 'drivers','reload'],
@@ -77,8 +78,21 @@ export default {
 
           //These must be delcated in the data block above the this items or must be the direct object queried
           console.log(`${this.serverURL}/vehicle/${this.item.id}`);
+           return GarageService.fetchName('vehicle/'+this.item.id)
+             .then((res) => {
+             if (res) {
+               if (res.data) {
+                 //this.vehicles.push(res.data) // <2>
+                 //this.vehicle = {name: '', make: null, model: null, driver: null}
+                 this.showForm=true;
+                 this.vehicle=this.item;
+                 console.log('json '+JSON.stringify(res.data));
+                 this.retrievedVehicle=res.data
+               }
+             }
+           });
 
-          fetch(`${this.serverURL}/vehicle/${this.item.id}`, {
+          /*fetch(`${this.serverURL}/vehicle/${this.item.id}`, {
              method: 'GET',
              headers: {'Content-Type': 'application/json'},
            }).then(r => r.json()).then(json => {
@@ -87,11 +101,32 @@ export default {
              console.log('json '+JSON.stringify(json));
              this.retrievedVehicle=json
            }).catch(ex => console.error('s', ex))
+*/
+
         },
         save() {
           const newName = this.vehicle;
           console.log( JSON.stringify(newName)+"---------");
-                fetch(`${this.serverURL}/vehicle/${this.item.id}`, {
+
+          return GarageService.update('vehicle/'+this.item.id, JSON.stringify(newName))
+            .then((res) => {
+            if (res) {
+             // if (res.data) {
+               // this.vehicles.push(res.data) // <2>
+               // this.vehicle = {name: '', make: null, model: null, driver: null}
+                this.showForm=false;
+                //This is passed through from Garage.vue as its actual function as a variable called reload
+                //The reload is passed from VehicleTable to child vue page TableRow as reload
+                //When triggered here - it reloads all the vehicles in parent parent file Garage.vue
+                this.reload;
+
+              //}
+            }
+          });
+
+
+/*
+          fetch(`${this.serverURL}/api/vehicle/${this.item.id}`, {
                   method: 'PUT',
                   headers: {'Content-Type': 'application/json'},
                   body: JSON.stringify(newName)
@@ -102,6 +137,7 @@ export default {
                    //When triggered here - it reloads all the vehicles in parent parent file Garage.vue
                    this.reload;
                 }).catch(ex => console.error('Unable to save vehicle', ex))
+                */
         }
      }
 

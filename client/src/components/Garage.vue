@@ -39,7 +39,7 @@ export default {
       makes: [],
       newName: '',
       drivers: [],
-      serverURL: process.env.SERVER_URL // <3>
+      serverURL: process.env.SERVER_URL
     }
   },
   // end::component[]
@@ -48,7 +48,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    fetchData: async function () { // <2>
+    fetchData: async function () {
       try {
         Promise.all([// <3>
           this.fetchVehicles(),
@@ -61,76 +61,84 @@ export default {
         console.log(error)
       }
     },
-    // end::fetch[]
-    // tag::methods[]
-    fetchVehicles: function () { // <1>
-      return GarageService.fetchDrivers ()
+
+    fetchVehicles: function () {
+      return GarageService.fetchName('vehicle')
         .then((res) => {
-          if (res) {
-            if (res.data) {
-              console.log(' -------------------------->>>'+res.data)
-              this.vehicles = res.data;
+        if (res) {
+          if (res.data) {
+            this.vehicles = res.data;
 
-            }
           }
-
-          });
+        }
+      });
     },
     fetchModels: function () {
-      /*fetch(`${this.serverURL}/model`)
-        .then(r => r.json())
-        .then(json => { this.models = json })
-        .catch(error => console.error('Error retrieving models: ' + error))
-        */
+      return GarageService.fetchName('model')
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+            this.models = res.data;
+
+          }
+        }
+      });
     },
     fetchMakes: function () {
-      /*fetch(`${this.serverURL}/make`)
-        .then(r => r.json())
-        .then(json => { this.makes = json })
-        .catch(error => console.error('Error retrieving makes: ' + error))
-        */
+      return GarageService.fetchName('make')
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+            this.makes = res.data;
+
+          }
+        }
+      });
+
     },
     fetchDrivers: function () {
-      /*fetch(`${this.serverURL}/driver`)
-        .then(r => r.json())
-        .then(json => { this.drivers = json })
-        .catch(error => console.error('Error retrieving drivers: ' + error))
-        */
+      return GarageService.fetchName('driver')
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+            this.drivers = res.data;
+
+          }
+        }
+      });
+
     },
-    // end::methods[]
-    // tag::submit[]
+
     submitNewVehicle: function () {
-      const vehicle = this.vehicle // <1>
-      fetch(`${this.serverURL}/vehicle`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(vehicle)
-      }).then(r => r.json())
-        .then(json => {
-          this.vehicles.push(json) // <2>
-          this.vehicle = {name: '', make: null, model: null, driver: null} // <3>
-        })
-        .catch(ex => console.error('Unable to save vehicle', ex))
+      return GarageService.create('vehicle', JSON.stringify(vehicle))
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+            this.vehicles.push(res.data) // <2>
+            this.vehicle = {name: '', make: null, model: null, driver: null}
+
+          }
+        }
+      });
     },
     updateItem () {
-      const newName = this.newName
-      fetch(`${this.serverURL}/vehicle/${this.item.id}`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newName)
-      }).then(r => r.json()).then(json => {
-        this.vehicles.push(json) // <2>
-        this.vehicle = {name: '', make: null, model: null, driver: null} // <3>
-      }).catch(ex => console.error('Unable to save vehicle', ex))
+      const newName = this.newName;
+      console.log('n ddddddddddddddddddddddddddddd'+newName)
+      return GarageService.update('vehicle/'+this.item.id, JSON.stringify(newName))
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+            this.vehicles.push(res.data) // <2>
+            this.vehicle = {name: '', make: null, model: null, driver: null}
+
+          }
+        }
+      });
+
     }
   }
 }
 </script>
-<!--end::submit[]-->
-
-<!--tag::css[]-->
-<!-- Per Component Custom CSS Rules -->
-<!--1-->
 <style>
   #garage {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -138,4 +146,3 @@ export default {
     color: #2c3e50;
   }
 </style>
-<!--end::css[]-->
