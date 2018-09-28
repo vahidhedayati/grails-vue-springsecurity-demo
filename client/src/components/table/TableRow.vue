@@ -75,9 +75,7 @@ export default {
         },
        methods: {
          edit () {
-
-          //These must be delcated in the data block above the this items or must be the direct object queried
-          console.log(`${this.serverURL}/vehicle/${this.item.id}`);
+         //These must be delcated in the data block above the this items or must be the direct object queried
            return GarageService.fetchName('vehicle/'+this.item.id)
              .then((res) => {
              if (res) {
@@ -96,9 +94,9 @@ export default {
         },
         save() {
           const newName = this.vehicle;
-          console.log( {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}} +" <<>>"+JSON.stringify(newName)+"---------");
-
-          return GarageService.update('vehicle/'+this.item.id, {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}})
+          //console.log( {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}} +" <<>>"+JSON.stringify(newName)+"---------");
+          console.log(' '+JSON.stringify(newName))
+          return GarageService.update('vehicle/'+this.item.id, newName)
             .then((res) => {
             if (res) {
              // if (res.data) {
@@ -113,21 +111,6 @@ export default {
               //}
             }
           });
-
-
-/*
-          fetch(`${this.serverURL}/api/vehicle/${this.item.id}`, {
-                  method: 'PUT',
-                  headers: {'Content-Type': 'application/json'},
-                  body: JSON.stringify(newName)
-                }).then(r => r.json()).then(json => {
-                   this.showForm=false;
-                   //This is passed through from Garage.vue as its actual function as a variable called reload
-                   //The reload is passed from VehicleTable to child vue page TableRow as reload
-                   //When triggered here - it reloads all the vehicles in parent parent file Garage.vue
-                   this.reload;
-                }).catch(ex => console.error('Unable to save vehicle', ex))
-                */
         }
      }
 

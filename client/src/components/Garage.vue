@@ -1,4 +1,4 @@
-<!--tag::template[]-->
+
 <template>
   <div id="garage">
     <app-header></app-header>
@@ -6,7 +6,7 @@
                   :makes="makes"
                   :models="models"
                   :drivers="drivers"
-                  @submit="submitNewVehicle()"> <!--1-->
+                  @submit="submitNewVehicle()">
 
     </vehicle-form>
     <vehicle-table :vehicles="vehicles"
@@ -14,11 +14,10 @@
                     :models="models"
                     :drivers="drivers"
                     :reload="fetchVehicles()"
-     ></vehicle-table> <!--2-->
+     ></vehicle-table>
   </div>
 </template>
-<!--end::template[]-->
-<!--tag::component[]-->
+
 <script>
 import AppHeader from './AppHeader' // <1>
 import GarageService from '@/services/GarageService'
@@ -26,15 +25,15 @@ import VehicleForm from './form/VehicleForm'
 import VehicleTable from './table/VehicleTable'
 
 export default {
-  components: { // <1>
+  components: {
     AppHeader,
     VehicleForm,
     VehicleTable
   },
-  data: function () { // <2>
+  data: function () {
     return {
       vehicles: [],
-      vehicle: {name: '', make: null, model: null, driver: null},
+      vehicle: {name: '', make: {id:null}, model: {id:null}, driver: {id:null}},
       models: [],
       makes: [],
       newName: '',
@@ -50,7 +49,7 @@ export default {
   methods: {
     fetchData: async function () {
       try {
-        Promise.all([// <3>
+        Promise.all([
           this.fetchVehicles(),
           this.fetchModels(),
           this.fetchModels(),
@@ -110,11 +109,16 @@ export default {
     },
 
     submitNewVehicle: function () {
-      return GarageService.create('vehicle', JSON.stringify(vehicle))
+      const vehicle = {
+        vehicle: this.vehicle
+      }
+      ///console.log(JSON.stringify({name:vehicle.name, make:{id:vehicle.make}, model:{id:vehicle.model}, driver:{id:vehicle.driver}})+" "+JSON.stringify(vehicle));
+      console.log(' > '+JSON.stringify(vehicle))
+      return GarageService.createName('vehicle',this.vehicle)
         .then((res) => {
         if (res) {
           if (res.data) {
-            this.vehicles.push(res.data) // <2>
+            this.vehicles.push(res.data)
             this.vehicle = {name: '', make: null, model: null, driver: null}
 
           }
@@ -123,12 +127,11 @@ export default {
     },
     updateItem () {
       const newName = this.newName;
-      console.log('n ddddddddddddddddddddddddddddd'+newName)
-      return GarageService.update('vehicle/'+this.item.id, JSON.stringify(newName))
+      return GarageService.update('vehicle/'+this.item.id, newName)
         .then((res) => {
         if (res) {
           if (res.data) {
-            this.vehicles.push(res.data) // <2>
+            this.vehicles.push(res.data)
             this.vehicle = {name: '', make: null, model: null, driver: null}
 
           }

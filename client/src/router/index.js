@@ -73,7 +73,7 @@ if(!authUser || !authUser.user.token) {
 }
 
 if (findOne(to.meta.roles,authUser.auth.isAuthenticated.roles)) {
-  console.log(' yes');
+  console.log(' yes >'+to.meta.roles+ " <> "+authUser.auth.isAuthenticated.roles);
   return next()
 } else {
   console.log('NO'+to.meta.roles.includes(authUser.auth.isAuthenticated.roles)+' '+to.meta.roles+' >> '+authUser.auth.isAuthenticated.roles)

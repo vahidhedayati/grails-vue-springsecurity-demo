@@ -13,7 +13,7 @@ export default {
         }
     });
   },
-  create (component, params) {
+  createName (component, params) {
     return Api().post(component, params)
     .catch((error) => {
         if (error.response) {
@@ -26,6 +26,7 @@ export default {
     });
   },
   update(component,params) {
+
     return Api().patch(component, params)
     .catch((error) => {
         if (error.response) {
