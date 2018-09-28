@@ -1,3 +1,5 @@
+//grails.plugin.springsecurity.active = false
+
 grails.plugin.springsecurity.rest.token.storage.useJwt=true
 grails.plugin.springsecurity.rest.token.storage.jwt.useSignedJwt=true
 grails.plugin.springsecurity.rest.token.storage.jwt.secret='qrD6h8K6S9503Q06Y6Rfk21TErImPYqa'
@@ -17,7 +19,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/assets/**',      access: ['permitAll']],
 		//[pattern: '/j_spring_security_switch_user',      access: ['permitAll']],
 		//[pattern: '/api/logout',      access: ['permitAll']],
-		[pattern: '/api/searchUser/**',      access: ['permitAll']],
+		//[pattern: '/api/searchUser/**',      access: ['permitAll']],
 		[pattern: '/**/js/**',       access: ['permitAll']],
 		[pattern: '/**/css/**',      access: ['permitAll']],
 		[pattern: '/**/images/**',   access: ['permitAll']],
@@ -45,6 +47,12 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		]
 //filters: 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'
 ]
+
+grails.plugin.springsecurity.rest.logout.endpointUrl='/api/logout'
+
+
+//grails.plugin.springsecurity.rest.token.rendering.usernamePropertyName='id'
+
 /*
 //gorm
 grails.plugin.springsecurity.rest.token.storage.useGorm = true
@@ -58,7 +66,6 @@ grails.plugin.springsecurity.rest.login.active=true
 grails.plugin.springsecurity.rest.login.useJsonCredentials = true
 grails.plugin.springsecurity.rest.login.failureStatusCode = 401
 grails.plugin.springsecurity.rest.login.usernamePropertyName = 'username'
-grails.plugin.springsecurity.rest.login.usernamePropertyName = 'id'
 grails.plugin.springsecurity.rest.login.passwordPropertyName='password'
 grails.plugin.springsecurity.rest.login.endpointUrl='/api/login'
 grails.plugin.springsecurity.rest.login.useRequestParamsCredentials = false

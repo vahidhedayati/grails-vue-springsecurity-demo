@@ -2,7 +2,7 @@ import Api from '@/services/Api'
 
 export default {
   fetchProfile (id) {
-    return Api().get('/api/driver/'+id)//)
+    return Api().get('driver/'+id)//)
     .catch((error) => {
         if (error.response) {
             console.log(error.response);

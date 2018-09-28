@@ -92,23 +92,13 @@ export default {
              }
            });
 
-          /*fetch(`${this.serverURL}/vehicle/${this.item.id}`, {
-             method: 'GET',
-             headers: {'Content-Type': 'application/json'},
-           }).then(r => r.json()).then(json => {
-             this.showForm=true;
-             this.vehicle=this.item;
-             console.log('json '+JSON.stringify(json));
-             this.retrievedVehicle=json
-           }).catch(ex => console.error('s', ex))
-*/
 
         },
         save() {
           const newName = this.vehicle;
-          console.log( JSON.stringify(newName)+"---------");
+          console.log( {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}} +" <<>>"+JSON.stringify(newName)+"---------");
 
-          return GarageService.update('vehicle/'+this.item.id, JSON.stringify(newName))
+          return GarageService.update('vehicle/'+this.item.id, {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}})
             .then((res) => {
             if (res) {
              // if (res.data) {

@@ -81,7 +81,7 @@ export default {
             this.$store.dispatch('user/setToken', response.data.access_token);
             this.$store.dispatch('user/userLogged',new Boolean(true));
 
-            this.getProfile(response.data.username);
+            this.getProfile(response.data.id);
 
             if(response.data.roles[0] === 'ROLE_ADMIN') {
               this.$router.push({name: 'Admin'})
@@ -97,8 +97,8 @@ export default {
       console.log(userId)
       ProfileService.fetchProfile(userId)
         .then((res) => {
-        console.log("PROFILE" +JSON.stringify(res))
-      this.$store.dispatch('user/setProfile', res)
+        console.log("PROFILE" +res.data)
+      this.$store.dispatch('user/setProfile', res.data)
       //this.$router.push({name: 'Home'})
     })
     },
