@@ -27,7 +27,14 @@ class VehicleController extends RestfulController {
      * @return
      */
 
-    def save(params) {
+    /**
+     * This appears to conflict with default rest save method - not going to be used in this example
+     * @param params
+     * @return
+     */
+
+
+    def save2(params) {
 
         println "WE ARE IN SAVE ${request.JSON}"
         def jsonParams = request.JSON
