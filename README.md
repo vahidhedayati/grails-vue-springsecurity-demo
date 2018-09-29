@@ -11,7 +11,19 @@ This will launch both apps and access url via
 http://localhost:3000
 
 
-[You tube video running through authentication](https://www.youtube.com/watch?v=Z0qr6XIG4Kc)
+[You tube video running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
+
+
+You may also need to install `npm` locally. Whilst trying to start up the site as per above instructions.
+I had to stop and run these two commands (during different intervals):
+
+```
+npm install --save uiv
+npm install --save vue
+
+```
+
+
 
 
 -----
