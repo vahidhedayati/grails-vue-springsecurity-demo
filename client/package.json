@@ -5,7 +5,7 @@
   "author": "Vahid Hedayati",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config scripts/webpack.dev.conf.js",
     "dev22": "node build/server.js",
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
