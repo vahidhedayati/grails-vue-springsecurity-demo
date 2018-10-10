@@ -2,6 +2,8 @@
 <template>
   <div id="garage">
     <app-header></app-header>
+    <p>Calc value: {{result}}</p>
+    <calc class="reduceZoom" v-model="result"/>
     <vehicle-form v-model="vehicle"
                   :makes="makes"
                   :models="models"
@@ -23,12 +25,14 @@ import AppHeader from './AppHeader' // <1>
 import GarageService from '@/services/GarageService'
 import VehicleForm from './form/VehicleForm'
 import VehicleTable from './table/VehicleTable'
+import Calc from './example/calc'
 
 export default {
   components: {
     AppHeader,
     VehicleForm,
-    VehicleTable
+    VehicleTable,
+    Calc
   },
   data: function () {
     return {
@@ -36,6 +40,7 @@ export default {
       vehicle: {name: '', make: {id:null}, model: {id:null}, driver: {id:null}},
       models: [],
       makes: [],
+      result:'',
       newName: '',
       drivers: [],
       serverURL: process.env.SERVER_URL
@@ -147,5 +152,9 @@ export default {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     text-align: center;
     color: #2c3e50;
+  }
+  .reduceZoom {
+    zoom:25.50%;
+
   }
 </style>

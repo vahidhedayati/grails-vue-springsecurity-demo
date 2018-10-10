@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Garage from '@/components/Garage'
 import Login from '@/components/login/Login'
+import calc from '@/components/example/calc'
 import Logout from '@/pages/Logout'
 import Home from '@/pages/Home'
 import Profile from '@/pages/account/Profile'
@@ -15,6 +16,12 @@ const router = new Router({
       path: '/',
       name: "Home",
       component: Home ,
+      meta: { requiresAuth:false}
+    },
+    {
+      path: '/calc',
+      name: "calc",
+      component: calc ,
       meta: { requiresAuth:false}
     },
     {
