@@ -4,6 +4,7 @@ import Garage from '@/components/Garage'
 import Login from '@/components/login/Login'
 import calc from '@/components/example/calc'
 import Logout from '@/components/Logout'
+import Cart from '@/components/shoppingCart/Cart'
 import Home from '@/components/Home'
 import Profile from '@/components/account/Profile'
 import EditProfile from '@/components/account/EditProfile'
@@ -22,6 +23,12 @@ const router = new Router({
       path: '/calc',
       name: "calc",
       component: calc ,
+      meta: { requiresAuth:false}
+    },
+    {
+      path: '/shop',
+      name: "shop",
+      component: Cart ,
       meta: { requiresAuth:false}
     },
     {

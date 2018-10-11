@@ -7,7 +7,8 @@ import createPersistedState from 'vuex-persistedstate'
 
 import auth from './auth'
 import user from './user'
-
+import cart from './cart'
+import products from './products'
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -16,7 +17,9 @@ const store = new Vuex.Store({
   plugins: [createPersistedState()],
   modules: {
     user,
-    auth
+    auth,
+    cart,
+    products
   }
 })
 

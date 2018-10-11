@@ -14,6 +14,10 @@ import './assets/css/grails.css'
 import './assets/css/main.css'
 import VueAuthenticate from 'vue-authenticate'
 
+import { currency } from './currency'
+
+Vue.filter('currency', currency)
+
 Vue.config.productionTip = false
 
 //Vue.use(uiv)

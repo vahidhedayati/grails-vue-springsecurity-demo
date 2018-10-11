@@ -9,6 +9,11 @@
       <button class="btn btn-success">Calculator</button>
     </router-link>
 
+    <router-link :to="{name: 'shop'}">
+      <button class="btn btn-success">Shop</button>
+    </router-link>
+
+
   <router-link :to="{name: 'Login'}">
 
     <button class="btn btn-primary">Login</button>
@@ -24,6 +29,7 @@
   <router-link :to="{name: 'Logout'}">
     <button class="btn btn-success">Logout</button>
   </router-link>
+
 
   </div>
 </template>
