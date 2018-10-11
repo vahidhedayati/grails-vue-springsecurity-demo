@@ -81,12 +81,7 @@ export default {
     pagechanged: function(page) {
       console.log("Page = "+page)
       this.currentPage = page;
-      this.fetchVehicles(page)
-    },
-    onPageChange(page) {
-      console.log("Page = "+page)
-      this.currentPage = page;
-      this.fetchVehicles(page)
+      this.fetchVehicles((page*this.max)-this.max)
     },
     fetchVehicles: function (pageNumber) {
       console.log("Fetching vehicles "+pageNumber)
