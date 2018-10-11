@@ -3,10 +3,10 @@ import Router from 'vue-router'
 import Garage from '@/components/Garage'
 import Login from '@/components/login/Login'
 import calc from '@/components/example/calc'
-import Logout from '@/pages/Logout'
-import Home from '@/pages/Home'
-import Profile from '@/pages/account/Profile'
-import EditProfile from '@/pages/account/EditProfile'
+import Logout from '@/components/Logout'
+import Home from '@/components/Home'
+import Profile from '@/components/account/Profile'
+import EditProfile from '@/components/account/EditProfile'
 Vue.use(Router);
 
 const router = new Router({
