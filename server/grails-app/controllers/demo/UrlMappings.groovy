@@ -12,6 +12,7 @@ class UrlMappings {
         "/api/vehicle"(resources:'vehicle')
         "/api/driver"(resources:'driver')
         "/api/searchUser"(controller:'driver', action: 'username')
+        "/api/exportVehicle"(controller:'vehicle', action: 'export')
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')
         "404"(view: '/notFound')

@@ -2,6 +2,7 @@
 <template>
   <div id="garage">
     <app-header></app-header>
+    <p><button v-on:click="sendVehicles()">Export</button> </p>
     <p>Calc value: {{result}}</p>
     <calc class="reduceZoom" v-model="result"/>
     <vehicle-form v-model="vehicle"
@@ -126,7 +127,37 @@ export default {
           }
         }
       });
+    },
+    sendVehicles: function () {
+      console.log('Trying to export vehicles')
+      return GarageService.fetchName('exportVehicle')
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+          //  this.makes = res.data;
+            console.log(' '+res.data)
+            var data, filename, link,dt;
+            filename = 'export.csv';
 
+
+            dt = 'data:text/csv;charset=utf-8,' + res.data;
+
+            data = encodeURI(dt);
+
+            link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute('download', filename);
+            link.click();
+            response.setContentType("text/csv");
+            response.setStatus(200);
+            var writer = response.getStreamWriter();
+
+            writer.write(res.data);
+
+
+          }
+        }
+      });
     },
     fetchDrivers: function () {
       return GarageService.fetchName('driver')

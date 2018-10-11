@@ -33,6 +33,29 @@ class VehicleController extends RestfulController {
         respond returnValue as Object, model: [("${resourceName}Count".toString()): countResources()]
     }
 
+
+    def export() {
+        println "Are we in export ???"
+        def allListing = listAllResources([offset:0,max:-1])
+        response.setHeader 'Content-type','text/plain; charset=utf-8'
+        response.setHeader "Content-disposition", "attachment; filename=index.csv"
+        def out = response.outputStream
+        out << 'Name,'
+        out << "Make,"
+        out << 'model,'
+        out << "Driver"
+        out << '\r'
+        allListing?.each{field->
+            out << field.name << ','
+            out << field.make.name << ','
+            out << field.model.name << ','
+            out << field.driver.name << ','
+            out << '\r'
+        }
+        out.flush()
+        out.close()
+    }
+
     def search() {
      //   println "- search triggered  ${params}"
         def jsonResponse = vehicleService.search(params)
