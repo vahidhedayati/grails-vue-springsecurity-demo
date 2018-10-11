@@ -135,26 +135,15 @@ export default {
         if (res) {
           if (res.data) {
           //  this.makes = res.data;
-            console.log(' '+res.data)
+            //console.log(' '+res.data)
             var data, filename, link,dt;
             filename = 'export.csv';
-
-
             dt = 'data:text/csv;charset=utf-8,' + res.data;
-
             data = encodeURI(dt);
-
             link = document.createElement('a');
             link.setAttribute('href', data);
             link.setAttribute('download', filename);
             link.click();
-            response.setContentType("text/csv");
-            response.setStatus(200);
-            var writer = response.getStreamWriter();
-
-            writer.write(res.data);
-
-
           }
         }
       });
