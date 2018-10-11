@@ -13,6 +13,25 @@ class VehicleController extends RestfulController {
     VehicleController() {
         super(Vehicle)
     }
+    /**
+     * Return a simple object with metadata about the list
+     * @return
+     */
+    def index(Integer max, Integer offset){
+        println "-- vs ${params} ${offset}"
+        params.max = Math.min(max ?: 10, 100)
+        params.offset = offset ?: 0
+        def returnValue = [
+                objects: listAllResources(params),
+                max: params.max,
+                offset: params.offset,
+                total: countResources()
+
+        ]
+        returnValue.numberOfPages=(countResources()/params.max)+1
+        println " number of pages =  ${returnValue.numberOfPages} ${returnValue.total} vs ${returnValue.max} "
+        respond returnValue as Object, model: [("${resourceName}Count".toString()): countResources()]
+    }
 
     def search() {
      //   println "- search triggered  ${params}"

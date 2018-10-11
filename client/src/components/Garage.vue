@@ -15,24 +15,33 @@
                     :makes="makes"
                     :models="models"
                     :drivers="drivers"
-                    :reload="fetchVehicles()"
+                    @reload="fetchVehicles()"
      ></vehicle-table>
+    <Pagination
+      :maxVisibleButtons=3
+      :totalPages="numberOfPages"
+      :total="total"
+      :currentPage="currentPage"
+      @pagechanged="pagechanged"/>
+
+
   </div>
 </template>
 
 <script>
-import AppHeader from './AppHeader' // <1>
+import AppHeader from './AppHeader'
 import GarageService from '@/services/GarageService'
 import VehicleForm from './form/VehicleForm'
 import VehicleTable from './table/VehicleTable'
 import Calc from './example/calc'
-
+import Pagination from './Pagination'
 export default {
   components: {
     AppHeader,
     VehicleForm,
     VehicleTable,
-    Calc
+    Calc,
+    Pagination
   },
   data: function () {
     return {
@@ -43,7 +52,11 @@ export default {
       result:'',
       newName: '',
       drivers: [],
-      serverURL: process.env.SERVER_URL
+      serverURL: process.env.SERVER_URL,
+      total: 0,
+      max: 10,
+      currentPage:1,
+      numberOfPages:0,
     }
   },
   // end::component[]
@@ -65,15 +78,35 @@ export default {
         console.log(error)
       }
     },
-
-    fetchVehicles: function () {
-      return GarageService.fetchName('vehicle')
+    pagechanged: function(page) {
+      console.log("Page = "+page)
+      this.currentPage = page;
+      this.fetchVehicles(page)
+    },
+    onPageChange(page) {
+      console.log("Page = "+page)
+      this.currentPage = page;
+      this.fetchVehicles(page)
+    },
+    fetchVehicles: function (pageNumber) {
+      console.log("Fetching vehicles "+pageNumber)
+//,{offset:pageNumber, max:this.max}
+      return GarageService.fetchName('vehicle?offset='+pageNumber)
         .then((res) => {
         if (res) {
-          if (res.data) {
-            this.vehicles = res.data;
+          if (res.data.objects) {
+            ///console.log("rr "+res.data.objects)
+            this.vehicles = res.data.objects;
+            this.total=res.data.total;
+            this.numberOfPages=res.data.numberOfPages;
+          } else {
+            if (res.data) {
+              //console.log("rr "+res.data.objects)
+              this.vehicles = res.data;
 
+            }
           }
+
         }
       });
     },

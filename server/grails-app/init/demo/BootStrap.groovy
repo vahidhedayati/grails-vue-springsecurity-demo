@@ -27,7 +27,23 @@ class BootStrap {
 
         new Vehicle(name: "Pickup", driver: driver1, make: nissan, model: titan).save()
         new Vehicle(name: "Economy", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "Kicks", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "370z", driver: driver1, make: nissan, model: leaf).save()
         new Vehicle(name: "Minivan", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Focus", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Fiesta", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Mondeo", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Micra", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "Altima", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "Frontier", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "Granada", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Cortina", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Test1", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Test2", driver: driver2, make: ford, model: windstar).save()
+        new Vehicle(name: "Test3", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "Test4", driver: driver1, make: nissan, model: leaf).save()
+
+
 
     }
     def destroy = {
