@@ -11,7 +11,9 @@ This will launch both apps and access url via
 http://localhost:3000
 
 
-[You tube video running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
+[Video running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
+
+[Video part 2 pagination](https://www.youtube.com/watch?v=WIi3x_5n03o)
 
 
 You may also need to install `npm` locally. Whilst trying to start up the site as per above instructions.
