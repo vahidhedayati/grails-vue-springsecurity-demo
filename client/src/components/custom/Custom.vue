@@ -12,12 +12,13 @@
                     :makes="makes"
                     :models="models"
                     :drivers="drivers"
-                    @reload="fetchVehicles()"
+                  v-bind="{fetchVehicles,sortSearch}"
      ></custom-table>
     <Pagination
       :maxVisibleButtons=3
       :totalPages="numberOfPages"
       :total="total"
+      @sortSearch="sortSearch"
       :currentPage="currentPage"
       @pagechanged="pagechanged"/>
   </div>
@@ -74,15 +75,8 @@ export default {
         console.log(error)
       }
     },
-    pagechanged: function(page) {
-      console.log("Page = "+page)
-      this.currentPage = page;
-      this.fetchVehicles((page*this.max)-this.max)
-    },
-    fetchVehicles: function (pageNumber) {
-      console.log("Fetching vehicles "+pageNumber)
-//,{offset:pageNumber, max:this.max}
-      return GarageService.fetchName('customRest?offset='+pageNumber)
+    initialiseVehicles(params){
+      return GarageService.fetchName('customRest?'+params)
         .then((res) => {
         if (res) {
           //console.log(' rees'+JSON.stringify(res))
@@ -102,34 +96,32 @@ export default {
         }
       });
     },
+    pagechanged: function(page) {
+      console.log("Page = "+page)
+      this.currentPage = page;
+      this.fetchVehicles((page*this.max)-this.max)
+    },
+    sortSearch(sortBy,sortOrder) {
+      //This is coming back grom VehicleTable sortable column full sorting is method 2 here
+      var variables = $.param(this.search);
+      if (this.search.returnDate1) {
+        variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
+      }
+      variables+="&sort="+sortBy+"&order="+sortOrder
+      this.initialiseVehicles(variables);
+    },
+    fetchVehicles: function (pageNumber) {
+      console.log("Fetching vehicles "+pageNumber)
+      this.initialiseVehicles('offset='+pageNumber);
+    },
     searchVehicles: function () {
     console.log("searching vehicles "+$.param(this.search))
-//,{offset:pageNumber, max:this.max}
       var variables = $.param(this.search);
-    if (this.search.returnDate1) {
-      variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
-    }
-
-    return GarageService.fetchName('customRest?'+variables)
-      .then((res) => {
-      if (res) {
-        //console.log(' rees'+JSON.stringify(res))
-        if (res.data.instanceList) {
-          console.log("rr "+res.data.instanceList)
-          this.vehicles = res.data.instanceList;
-          this.total=res.data.instanceTotal;
-          this.numberOfPages=res.data.numberOfPages;
-        } else {
-          if (res.data) {
-            //console.log("rr "+res.data.objects)
-            this.vehicles = res.data;
-
-          }
-        }
-
+      if (this.search.returnDate1) {
+        variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
       }
-    });
-  },
+      this.initialiseVehicles(variables);
+    },
     fetchModels: function () {
       return GarageService.fetchName('model')
         .then((res) => {

@@ -97,7 +97,7 @@ export default {
                 //This is passed through from Garage.vue as its actual function as a variable called reload
                 //The reload is passed from VehicleTable to child vue page TableRow as reload
                 //When triggered here - it reloads all the vehicles in parent parent file Garage.vue
-                this.reload;
+                this.fetchVehicles(0);
 
               //}
             }

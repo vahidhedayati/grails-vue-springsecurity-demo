@@ -11,11 +11,12 @@
         <th>Action</th>
       </tr>
     </thead> <!--1-->
-      <table-row v-for="vehicle in sortedCats"
+      <!-- sortedCats replaces vehicles and is only sorting by current paginated dataset -->
+      <table-row v-for="vehicle in vehicles"
                  :item="vehicle" :key="vehicle.id"
                  :makes="makes"
                  :models="models"
-                 :reload="reload"
+                 v-bind="{fetchVehicles}"
                  :drivers="drivers"></table-row> <!--2-->
   </table>
 </template>
@@ -24,7 +25,7 @@
 import TableRow from './TableRow.vue' // <3>
 
 export default {
-   props: ['vehicles', 'reload', 'makes', 'models', 'drivers'],
+   props: ['vehicles', 'reload', 'makes', 'models', 'drivers','fetchVehicles','sortSearch'],
   components: { // <3>
     TableRow
   },
@@ -41,9 +42,16 @@ export default {
         this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
       }
       this.currentSort = s;
-    },
+
+      //This is full on search and sortedSearch sits in the parent page Custom.vue
+      this.sortSearch(s,this.currentSortDir)
+
+    }
   },
   computed:{
+
+     //This is now ignored this was sorting based on paginated data
+    //simply replace vehicle in vehicles to vehicle in sortedCats above line 14/15
     sortedCats:function() {
       return this.vehicles.sort((a,b) => {
         let modifier = 1;
