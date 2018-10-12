@@ -14,6 +14,7 @@ http://localhost:3000
 [Video running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
 
 [Video part 2 pagination](https://www.youtube.com/watch?v=WIi3x_5n03o)
+[Video 3 custom searching/listing/saving via rest](https://www.youtube.com/watch?v=XhQDiB2lYL0)
 
 
 You may also need to install `npm` locally. Whilst trying to start up the site as per above instructions.
