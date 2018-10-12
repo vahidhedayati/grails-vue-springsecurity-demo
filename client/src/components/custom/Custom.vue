@@ -52,7 +52,7 @@ export default {
       total: 0,
       max: 10,
       currentPage:1,
-      numberOfPages:0,
+      numberOfPages:0
     }
   },
   // end::component[]

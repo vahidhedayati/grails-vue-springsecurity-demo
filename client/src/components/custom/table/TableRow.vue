@@ -30,7 +30,7 @@
       </td>
 
       <td>
-        {{item.returnDate| moment("dddd, MMMM Do YYYY") }}
+        {{item.returnDate ? (item.returnDate| moment("dddd, MMMM Do YYYY")) : '' }}
       </td>
 
 
