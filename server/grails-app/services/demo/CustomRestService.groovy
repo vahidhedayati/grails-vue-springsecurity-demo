@@ -16,7 +16,7 @@ class CustomRestService {
         String query="""
             select new map(     c.id as id, 
                                 v.id as vehicleId,
-                                c.contractName as contactName,
+                                c.contractName as contractName,
                                 v.name as vehicleName, 
                                 m.name as makeName, 
                                 o.name as modelName,
@@ -26,8 +26,26 @@ class CustomRestService {
             """
 
         if (bean.contractName) {
-            where=addClause(where,"c.contractName like :contractName ")
-            whereParams.contractName='%'+bean.contractName+'%'
+            where=addClause(where,"lower(c.contractName) like :contractName ")
+            whereParams.contractName='%'+bean.contractName.toLowerCase()+'%'
+        }
+        if (bean.vehicleName) {
+            where=addClause(where,"lower(c.vehicle.name) like :vehicleName ")
+            whereParams.vehicleName='%'+bean.vehicleName.toLowerCase()+'%'
+        }
+        if (bean.driver) {
+            where=addClause(where,"c.vehicle.driver.id=:driverId")
+            whereParams.driverId=bean.driver?.id
+        }
+
+        if (bean.make) {
+            where=addClause(where,"c.vehicle.make.id=:makeId")
+            whereParams.makeId=bean.make?.id
+        }
+
+        if (bean.model) {
+            where=addClause(where,"c.vehicle.model=:model")
+            whereParams.model=bean.model
         }
 
         query+=where
