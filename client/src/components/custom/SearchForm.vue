@@ -34,30 +34,34 @@
         <div class="col-sm-1">
           <div class="btn-group" role="group" aria-label="Search Contracts">
             <button type="button" class="btn btn-success" @click="submit()">Search</button>
+
             <button class="btn btn-primary" @click="showModal = true">Add Comment</button>
-            <test-modal :show="showModal"
-                               @close="showModal = false"></test-modal>
+            <test-modal  v-bind="{contract}"
+                        :show="showModal"
+                        :makes="makes"
+                        :models="models"
+                        :drivers="drivers"
+                        :contracts="contracts"
+                        @close="showModal = false"></test-modal>
           </div>
         </div>
         </div>
       </div>
-
     </div>
   </div>
-
 </template>
-
 <script>
 import FieldSelect from '../form/FieldSelect';
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
 import TestModal from './TestModal';
 export default {
-  props: ['search', 'makes', 'models', 'drivers'], // <6>
+  props: ['search','contract' ,'makes', 'models', 'drivers','contracts'],
 
   model: {
-    prop: 'search', // <4>
+    prop: 'search',
     event: 'change',
+
 
   },
   components: {
@@ -68,12 +72,12 @@ export default {
   },
   data: function () {
     return {
-      showModal:false
+      showModal:false,
     }
 
   },
   methods: {
-    submit () { // <5>
+    submit () {
       this.$emit('submit')
     },
     customFormatter(date) {
@@ -84,5 +88,5 @@ export default {
 </script>
 
 <style>
-  /* Add custom rules here */
+
 </style>

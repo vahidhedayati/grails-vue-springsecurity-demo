@@ -3,9 +3,12 @@
   <div id="custom">
     <app-header></app-header>
     <search-form v-model="search"
+
+                 v-bind="{contract}"
                   :makes="makes"
                   :models="models"
                   :drivers="drivers"
+                 :contracts="contracts"
                  @createHistory="createHistory()"
                  @submit="searchVehicles()"></search-form>
 
@@ -44,8 +47,9 @@ export default {
   data: function () {
     return {
       vehicles: [],
-      search:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null},returnDate1:''},
+      search:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null},returnDate1:'',fromDate1:'',toDate1:''},
       vehicle: {},
+      contracts:[],
       models: [],
       makes: [],
       newName: '',
@@ -56,7 +60,8 @@ export default {
       currentPage:1,
       numberOfPages:0,
       currentSort:'',
-      currentSortDir:'asc'
+      currentSortDir:'asc',
+      contract:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null},returnDate1:''},
     }
   },
   // end::component[]
@@ -137,7 +142,7 @@ export default {
       this.initialiseVehicles(variables);
     },
     searchVehicles: function () {
-    console.log("searching vehicles "+$.param(this.search))
+      console.log("searching vehicles "+$.param(this.search))
       var variables = $.param(this.search);
       if (this.search.returnDate1) {
         variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
@@ -179,8 +184,19 @@ export default {
           }
         }
       });
-
     },
+    fetchContracts: function () {
+      return GarageService.fetchName('contract')
+        .then((res) => {
+        if (res) {
+          if (res.data) {
+            this.contracts = res.data;
+
+          }
+        }
+      });
+    }
+
   }
 }
 </script>

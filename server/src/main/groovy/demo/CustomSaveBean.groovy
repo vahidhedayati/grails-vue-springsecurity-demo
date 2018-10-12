@@ -7,46 +7,30 @@ import java.time.temporal.ChronoUnit
 
 class CustomSaveBean implements Validateable {
 
-    String firstName
-    String lastName
-    Date dob
+    String contractName
+    String vehicleName
 
-    String name
-    String address1
+    Driver driver
+
+    Model model
+    Make make
+
+    Date fromDate
+    Date toDate
+
+    Date returnDate
+
 
     static constraints = {
-        firstName(nullable:false, maxSize:10)
-        dob(nullable:true, validator: verifyDob)
+        contractName(nullable:false)
+        vehicleName(nullable:false)
+        returnDate(validator: this.checkReturnDate)
     }
 
-    static def verifyDob={val,obj,errors->
-        if (val) {
-            Date d = val as Date
-            LocalDate today = LocalDate.now()
-            LocalDate BirthDay= new java.sql.Date(d.getTime()).toLocalDate()
-            def age = ChronoUnit.YEARS.between(BirthDay, today)
-            if (age < 15) {
-                errors.rejectValue(propertyName, "invalid.young.dob", ["${age as String}","15"] as Object[], '')
-            }
-            if (age > 50) {
-                errors.rejectValue(propertyName, "invalid.old.dob", ["${age as String}","50"] as Object[], '')
-            }
-        } else {
-            return errors.rejectValue(propertyName, 'invalid.dob')
+    static def checkReturnDate={val,obj,errors->
+        if (val && val < obj.fromDate) {
+            errors.rejectValue(propertyName, "returnedBeforeStart.error", [val.format('dd MMM yyyy'),obj.fromDate.format('dd MMM yyyy')] as Object[], '')
         }
     }
-    Hospital getHospital(Hospital hosp) {
-        hosp.name=this.name
-        hosp.address1=this.address1
-        return hosp
-    }
-
-    Patient getPatient(Patient patient) {
-        patient.dob=this.dob
-        patient.firstName=this.firstName
-        patient.lastName=this.lastName
-        return patient
-    }
-
 
 }

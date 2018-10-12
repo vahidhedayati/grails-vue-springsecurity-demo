@@ -17,7 +17,7 @@ class VehicleService {
     @Transactional
     def save(params) {
         if (params.funkyForm) {
-            CustomSaveBean bean = new CustomSaveBean()
+            PatientSaveBean bean = new PatientSaveBean()
             DataBindingUtils.bindObjectToInstance(bean, params)
             bean.validate()
             println "-- ${bean.errors.allErrors.collect{it.codes[-1]}}"

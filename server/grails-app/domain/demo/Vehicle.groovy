@@ -17,5 +17,6 @@ class Vehicle {
     static belongsTo = [driver: Driver]
 
     static constraints = {
+        //name unique: true
     }
 }
