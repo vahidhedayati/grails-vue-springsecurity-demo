@@ -30,17 +30,19 @@ import SearchForm from './SearchForm'
 import GarageService from '@/services/GarageService'
 import CustomTable from './table/VehicleTable'
 import Pagination from '../Pagination'
+import moment from 'moment';
 export default {
   components: {
     SearchForm,
     AppHeader,
     CustomTable,
-    Pagination
+    Pagination,
+    moment
   },
   data: function () {
     return {
       vehicles: [],
-      search:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null}},
+      search:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null},returnDate1:''},
       vehicle: {},
       models: [],
       makes: [],
@@ -103,7 +105,12 @@ export default {
     searchVehicles: function () {
     console.log("searching vehicles "+$.param(this.search))
 //,{offset:pageNumber, max:this.max}
-    return GarageService.fetchName('customRest?'+$.param(this.search))
+      var variables = $.param(this.search);
+    if (this.search.returnDate1) {
+      variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
+    }
+
+    return GarageService.fetchName('customRest?'+variables)
       .then((res) => {
       if (res) {
         //console.log(' rees'+JSON.stringify(res))

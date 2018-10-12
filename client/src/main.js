@@ -28,6 +28,7 @@ Vue.use(uiv)
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
+Vue.use(require('vue-moment'));
 
 // Vue Auth
 Vue.use(VueAuthenticate, {

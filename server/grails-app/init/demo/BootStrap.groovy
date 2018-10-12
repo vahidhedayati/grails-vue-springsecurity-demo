@@ -83,15 +83,15 @@ class BootStrap {
 
 
 
-        new VehicleHistory(contract: vc1,returnDate: new Date(),checkedOutBy: driver1,checkedInBy: driver2);
-        new VehicleHistory(contract: vc2,returnDate: new Date()-2,checkedOutBy: driver1,checkedInBy: driver2);
-        new VehicleHistory(contract: vc3,returnDate: new Date()-3,checkedOutBy: driver1,checkedInBy: driver2);
+        VehicleHistory vh1 = new VehicleHistory(contract: vc1,returnDate: new Date(),checkedOutBy: driver1,checkedInBy: driver2).save();
+        new VehicleHistory(contract: vc2,returnDate: new Date()-2,checkedOutBy: driver1,checkedInBy: driver2).save();
+        new VehicleHistory(contract: vc3,returnDate: new Date()-3,checkedOutBy: driver1,checkedInBy: driver2).save();
 
-        new VehicleHistory(contract: vc4,returnDate: new Date()-4,checkedOutBy: driver2,checkedInBy: driver1);
-        new VehicleHistory(contract: vc5,returnDate: new Date()-5,checkedOutBy: driver2,checkedInBy: driver1);
-        new VehicleHistory(contract: vc6,returnDate: new Date()-6,checkedOutBy: driver2,checkedInBy: driver1);
+        new VehicleHistory(contract: vc4,returnDate: new Date()-4,checkedOutBy: driver2,checkedInBy: driver1).save();
+        new VehicleHistory(contract: vc5,returnDate: new Date()-5,checkedOutBy: driver2,checkedInBy: driver1).save();
+        new VehicleHistory(contract: vc6,returnDate: new Date()-6,checkedOutBy: driver2,checkedInBy: driver1).save();
 
-        println "---> ${vc1.id} ID of contract 1 "
+        println "---> ${vc1.id} ID of contract 1  + ${vh1?.id}"
     }
     def destroy = {
     }

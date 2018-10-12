@@ -29,6 +29,10 @@
 
       </td>
 
+      <td>
+        {{item.returnDate| moment("dddd, MMMM Do YYYY") }}
+      </td>
+
 
     </tr>
 
@@ -38,6 +42,8 @@
 //This is needed for the select component to work
 import FieldSelect from '../../form/FieldSelect'
 import GarageService from '@/services/GarageService'
+import moment from 'moment';
+import VueMoment from 'vue-moment'
 export default {
     //You must declare what is being passed in otherwise they wont work..
    props: ['item', 'makes', 'models', 'drivers','reload'],
@@ -54,7 +60,9 @@ export default {
       },
       //This is needed for the select component to work
       components: {
-          FieldSelect
+          FieldSelect,
+        VueMoment,
+        moment
         },
        methods: {
          edit () {

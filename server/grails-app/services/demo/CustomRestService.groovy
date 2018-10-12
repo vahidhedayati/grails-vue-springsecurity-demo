@@ -13,6 +13,23 @@ class CustomRestService {
 
 
         String table = "VehicleContract c join c.vehicle v join v.driver d join v.make m join v.model o"
+
+        /**
+         * This is where it cross joins to another table to check the history for return date
+         */
+
+        String additionalQuery=''
+        if (bean.returnDate) {
+            table = "VehicleContract c, VehicleHistory h join c.vehicle v join v.driver d join v.make m join v.model o"
+
+            where=addClause(where,"h.contract.id=c.id")
+
+            where=addClause(where,"h.returnDate<=:returnDate")
+            whereParams.returnDate=bean.returnDate
+
+            additionalQuery="h.returnDate as returnDate, "
+
+        }
         String query="""
             select new map(     c.id as id, 
                                 v.id as vehicleId,
@@ -20,6 +37,7 @@ class CustomRestService {
                                 v.name as vehicleName, 
                                 m.name as makeName, 
                                 o.name as modelName,
+                                ${additionalQuery}
                                 d.name as driverName
                           )
                 from  ${table}
