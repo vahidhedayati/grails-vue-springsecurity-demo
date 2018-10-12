@@ -53,7 +53,9 @@ export default {
       total: 0,
       max: 10,
       currentPage:1,
-      numberOfPages:0
+      numberOfPages:0,
+      currentSort:'',
+      currentSortDir:'asc'
     }
   },
   // end::component[]
@@ -101,24 +103,46 @@ export default {
       this.currentPage = page;
       this.fetchVehicles((page*this.max)-this.max)
     },
-    sortSearch(sortBy,sortOrder) {
+    sortSearch(currentSort,currentSortDir) {
       //This is coming back grom VehicleTable sortable column full sorting is method 2 here
       var variables = $.param(this.search);
       if (this.search.returnDate1) {
         variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
       }
-      variables+="&sort="+sortBy+"&order="+sortOrder
+      this.currentSort=currentSort;
+      this.currentSortDir=currentSortDir;
+      variables+="&sort="+currentSort+"&order="+currentSortDir;
       this.initialiseVehicles(variables);
     },
     fetchVehicles: function (pageNumber) {
+      var variables=''
+      if (this.search) {
+        variables += $.param(this.search);
+        if (this.search.returnDate1) {
+          variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
+        }
+
+      }
+      if (this.currentSort) {
+        variables+="&sort="+this.currentSort+"&order="+this.currentSortDir;
+      }
+      if (variables!='') {
+        variables+='&offset='+pageNumber
+      } else {
+        variables='?offset='+pageNumber
+      }
+
       console.log("Fetching vehicles "+pageNumber)
-      this.initialiseVehicles('offset='+pageNumber);
+      this.initialiseVehicles(variables);
     },
     searchVehicles: function () {
     console.log("searching vehicles "+$.param(this.search))
       var variables = $.param(this.search);
       if (this.search.returnDate1) {
         variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
+      }
+      if (this.currentSort) {
+        variables+="&sort="+this.currentSort+"&order="+this.currentSortDir;
       }
       this.initialiseVehicles(variables);
     },
