@@ -6,6 +6,7 @@
                   :makes="makes"
                   :models="models"
                   :drivers="drivers"
+                 @createHistory="createHistory()"
                  @submit="searchVehicles()"></search-form>
 
     <custom-table :vehicles="vehicles"

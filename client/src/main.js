@@ -14,9 +14,17 @@ import './assets/css/grails.css'
 import './assets/css/main.css'
 import VueAuthenticate from 'vue-authenticate'
 
-import { currency } from './currency'
 
-Vue.filter('currency', currency)
+import { currency } from './currency'
+//import VuejsDialog from "vuejs-dialog"
+
+//import VuejsDialogMixin from "vuejs-dialog/vuejs-dialog-mixin.min.js" // only needed in custom components
+
+// include the default style
+//import 'vuejs-dialog/vuejs-dialog.min.css'
+
+// Tell Vue to install the plugin.
+//Vue.use(VuejsDialog)
 
 Vue.config.productionTip = false
 
@@ -28,7 +36,7 @@ Vue.use(uiv)
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
-Vue.use(require('vue-moment'));
+//Vue.use(require('vue-moment'));
 
 // Vue Auth
 Vue.use(VueAuthenticate, {

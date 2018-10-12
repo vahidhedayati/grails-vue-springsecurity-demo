@@ -33,7 +33,10 @@
 
         <div class="col-sm-1">
           <div class="btn-group" role="group" aria-label="Search Contracts">
-            <button type="button" class="btn btn-success" @click="submit()">Search</button> <!--5-->
+            <button type="button" class="btn btn-success" @click="submit()">Search</button>
+            <button class="btn btn-primary" @click="showModal = true">Add Comment</button>
+            <test-modal :show="showModal"
+                               @close="showModal = false"></test-modal>
           </div>
         </div>
         </div>
@@ -48,17 +51,26 @@
 import FieldSelect from '../form/FieldSelect';
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
+import TestModal from './TestModal';
 export default {
   props: ['search', 'makes', 'models', 'drivers'], // <6>
 
   model: {
     prop: 'search', // <4>
-    event: 'change'
+    event: 'change',
+
   },
   components: {
     FieldSelect,
     Datepicker,
-    moment
+    moment,
+    TestModal
+  },
+  data: function () {
+    return {
+      showModal:false
+    }
+
   },
   methods: {
     submit () { // <5>

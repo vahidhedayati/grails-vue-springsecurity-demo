@@ -36,6 +36,8 @@
     "vuejs-datepicker":"^1.5.3",
     "moment":"^2.22.2",
     "vue-moment":"^4.0.0"
+
+
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
