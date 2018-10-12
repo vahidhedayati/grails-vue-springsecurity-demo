@@ -1,49 +1,37 @@
 
 <template>
-  <div id="garage">
+  <div id="custom">
     <app-header></app-header>
-    <p><button v-on:click="sendVehicles()">Export</button> </p>
-    <vehicle-form v-model="vehicle"
-                  :makes="makes"
-                  :models="models"
-                  :drivers="drivers"
-                  @submit="submitNewVehicle()">
-
-    </vehicle-form>
-    <vehicle-table :vehicles="vehicles"
+    <custom-table :vehicles="vehicles"
                     :makes="makes"
                     :models="models"
                     :drivers="drivers"
                     @reload="fetchVehicles()"
-     ></vehicle-table>
+     ></custom-table>
     <Pagination
       :maxVisibleButtons=3
       :totalPages="numberOfPages"
       :total="total"
       :currentPage="currentPage"
       @pagechanged="pagechanged"/>
-
-
   </div>
 </template>
 
 <script>
-import AppHeader from './AppHeader'
+import AppHeader from '../AppHeader'
 import GarageService from '@/services/GarageService'
-import VehicleForm from './form/VehicleForm'
-import VehicleTable from './table/VehicleTable'
-import Pagination from './Pagination'
+import CustomTable from './table/VehicleTable'
+import Pagination from '../Pagination'
 export default {
   components: {
     AppHeader,
-    VehicleForm,
-    VehicleTable,
+    CustomTable,
     Pagination
   },
   data: function () {
     return {
       vehicles: [],
-      vehicle: {name: '', make: {id:null}, model: {id:null}, driver: {id:null}},
+      vehicle: {},
       models: [],
       makes: [],
       newName: '',
@@ -64,7 +52,7 @@ export default {
     fetchData: async function () {
       try {
         Promise.all([
-          this.fetchVehicles(),
+          this.fetchVehicles(0),
           this.fetchModels(),
           this.fetchModels(),
           this.fetchMakes(),
@@ -82,13 +70,14 @@ export default {
     fetchVehicles: function (pageNumber) {
       console.log("Fetching vehicles "+pageNumber)
 //,{offset:pageNumber, max:this.max}
-      return GarageService.fetchName('vehicle?offset='+pageNumber)
+      return GarageService.fetchName('customRest?offset='+pageNumber)
         .then((res) => {
         if (res) {
-          if (res.data.objects) {
-            ///console.log("rr "+res.data.objects)
-            this.vehicles = res.data.objects;
-            this.total=res.data.total;
+          //console.log(' rees'+JSON.stringify(res))
+          if (res.data.instanceList) {
+            console.log("rr "+res.data.instanceList)
+            this.vehicles = res.data.instanceList;
+            this.total=res.data.instanceTotal;
             this.numberOfPages=res.data.numberOfPages;
           } else {
             if (res.data) {
@@ -191,7 +180,7 @@ export default {
 }
 </script>
 <style>
-  #garage {
+  #custom {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     text-align: center;
     color: #2c3e50;

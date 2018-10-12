@@ -5,8 +5,12 @@
   </router-link>
 
 
+    <router-link :to="{name: 'testcalc'}">
+      <button class="btn btn-success">Parent -> Calc</button>
+    </router-link>
+
     <router-link :to="{name: 'calc'}">
-      <button class="btn btn-success">Calculator</button>
+      <button class="btn btn-success">Calc</button>
     </router-link>
 
     <router-link :to="{name: 'shop'}">
@@ -24,6 +28,9 @@
     <button class="btn btn-success">Garage</button>
   </router-link>
 
+    <router-link :to="{name: 'custom'}">
+      <button class="btn btn-success">Custom</button>
+    </router-link>
 
 
   <router-link :to="{name: 'Logout'}">
@@ -33,3 +40,6 @@
 
   </div>
 </template>
+<script>
+
+</script>

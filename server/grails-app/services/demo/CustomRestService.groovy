@@ -1,0 +1,57 @@
+package demo
+
+class CustomRestService {
+
+
+    def search(bean) {
+        String where=''
+        Map whereParams=[:]
+        List sorts=['contractName', 'vehicleName', 'makeName', 'modelName' ,'driverName']
+        List sorts2=['contractName', 'vehicleName', 'makeName','modelName','driverName']
+
+        def sortChoice=sorts.findIndexOf{it==bean.sort}
+
+
+        String table = "VehicleContract c join c.vehicle v join v.driver d join v.make m join v.model o"
+        String query="""
+            select new map(     c.id as id, 
+                                v.id as vehicleId,
+                                c.contractName as contactName,
+                                v.name as vehicleName, 
+                                m.name as makeName, 
+                                o.name as modelName,
+                                d.name as driverName
+                          )
+                from  ${table}
+            """
+
+        if (bean.contractName) {
+            where=addClause(where,"c.contractName like :contractName ")
+            whereParams.contractName='%'+bean.contractName+'%'
+        }
+
+        query+=where
+
+        def metaParams=[readOnly:true,timeout:15,offset:bean.offset?:0,max:bean.max?:-1]
+        if (sortChoice>0) {
+            query+=" order by ${sorts2[sortChoice]} $bean.order"
+        } else {
+            query+=" order by c.dateCreated $bean.order"
+        }
+        def results=VehicleContract.executeQuery(query,whereParams,metaParams)
+        int total=results.size()
+        if (total>=metaParams.max) {
+            total=VehicleContract.executeQuery("select count(*) from VehicleContract c "+where,whereParams,[readOnly:true,timeout:15,max:1])[0]
+        } else {
+            total+=metaParams.offset as Long
+        }
+
+        println "-- instance = ${results}"
+        return [instanceList:results, instanceTotal:total]
+
+    }
+
+    private String addClause(String where,String clause) {
+        return (where ? where + ' and ' : 'where ') + clause
+    }
+}

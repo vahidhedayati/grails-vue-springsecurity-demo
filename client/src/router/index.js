@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Garage from '@/components/Garage'
+import Custom from '@/components/custom/Custom'
 import Login from '@/components/login/Login'
-import calc from '@/components/example/calc'
+import calc from '@/components/example/calculator/calc'
+import testcalc from '@/components/example/calculator/test'
 import Logout from '@/components/Logout'
 import Cart from '@/components/shoppingCart/Cart'
 import Home from '@/components/Home'
@@ -23,6 +25,12 @@ const router = new Router({
       path: '/calc',
       name: "calc",
       component: calc ,
+      meta: { requiresAuth:false}
+    },
+    {
+      path: '/testcalc',
+      name: "testcalc",
+      component: testcalc ,
       meta: { requiresAuth:false}
     },
     {
@@ -57,7 +65,13 @@ const router = new Router({
       component: Garage ,
       meta: { requiresAuth: true , roles:['ROLE_ADMIN', 'ROLE_DRIVER']}
     },
-
+    ,
+    {
+      path: '/custom',
+      name: 'custom', // <1>
+      component: Custom ,
+      meta: { requiresAuth: true , roles:['ROLE_ADMIN', 'ROLE_DRIVER']}
+    },
     {
       path: '/login',
       name: 'Login',
