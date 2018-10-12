@@ -28,8 +28,7 @@ class CustomRestController extends RestfulController {
      * @return
      */
     def index(){
-
-println "-- we are in custom ${params}"
+        println "-- we are in custom ${params}"
         CustomSearchBean bean = new CustomSearchBean()
         DataBindingUtils.bindObjectToInstance(bean, params)
         bean.validate()
@@ -40,6 +39,7 @@ println "-- we are in custom ${params}"
             //return
         }
     }
+    
 
 
 }

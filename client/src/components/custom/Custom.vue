@@ -2,6 +2,12 @@
 <template>
   <div id="custom">
     <app-header></app-header>
+    <search-form v-model="search"
+                  :makes="makes"
+                  :models="models"
+                  :drivers="drivers"
+                 @submit="searchVehicles()"></search-form>
+
     <custom-table :vehicles="vehicles"
                     :makes="makes"
                     :models="models"
@@ -18,12 +24,15 @@
 </template>
 
 <script>
+import $ from 'jquery';
 import AppHeader from '../AppHeader'
+import SearchForm from './SearchForm'
 import GarageService from '@/services/GarageService'
 import CustomTable from './table/VehicleTable'
 import Pagination from '../Pagination'
 export default {
   components: {
+    SearchForm,
     AppHeader,
     CustomTable,
     Pagination
@@ -31,6 +40,7 @@ export default {
   data: function () {
     return {
       vehicles: [],
+      search:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null}},
       vehicle: {},
       models: [],
       makes: [],
@@ -90,6 +100,29 @@ export default {
         }
       });
     },
+    searchVehicles: function () {
+    console.log("searching vehicles "+$.param(this.search))
+//,{offset:pageNumber, max:this.max}
+    return GarageService.fetchName('customRest?'+$.param(this.search))
+      .then((res) => {
+      if (res) {
+        //console.log(' rees'+JSON.stringify(res))
+        if (res.data.instanceList) {
+          console.log("rr "+res.data.instanceList)
+          this.vehicles = res.data.instanceList;
+          this.total=res.data.instanceTotal;
+          this.numberOfPages=res.data.numberOfPages;
+        } else {
+          if (res.data) {
+            //console.log("rr "+res.data.objects)
+            this.vehicles = res.data;
+
+          }
+        }
+
+      }
+    });
+  },
     fetchModels: function () {
       return GarageService.fetchName('model')
         .then((res) => {
@@ -112,26 +145,6 @@ export default {
         }
       });
     },
-    sendVehicles: function () {
-      console.log('Trying to export vehicles')
-      return GarageService.fetchName('exportVehicle')
-        .then((res) => {
-        if (res) {
-          if (res.data) {
-          //  this.makes = res.data;
-            //console.log(' '+res.data)
-            var data, filename, link,dt;
-            filename = 'export.csv';
-            dt = 'data:text/csv;charset=utf-8,' + res.data;
-            data = encodeURI(dt);
-            link = document.createElement('a');
-            link.setAttribute('href', data);
-            link.setAttribute('download', filename);
-            link.click();
-          }
-        }
-      });
-    },
     fetchDrivers: function () {
       return GarageService.fetchName('driver')
         .then((res) => {
@@ -144,38 +157,6 @@ export default {
       });
 
     },
-
-    submitNewVehicle: function () {
-      const vehicle = {
-        vehicle: this.vehicle
-      }
-      ///console.log(JSON.stringify({name:vehicle.name, make:{id:vehicle.make}, model:{id:vehicle.model}, driver:{id:vehicle.driver}})+" "+JSON.stringify(vehicle));
-      console.log(' > '+JSON.stringify(vehicle))
-      return GarageService.createName('vehicle',this.vehicle)
-        .then((res) => {
-        if (res) {
-          if (res.data) {
-            this.vehicles.push(res.data)
-            this.vehicle = {name: '', make: null, model: null, driver: null}
-
-          }
-        }
-      });
-    },
-    updateItem () {
-      const newName = this.newName;
-      return GarageService.update('vehicle/'+this.item.id, newName)
-        .then((res) => {
-        if (res) {
-          if (res.data) {
-            this.vehicles.push(res.data)
-            this.vehicle = {name: '', make: null, model: null, driver: null}
-
-          }
-        }
-      });
-
-    }
   }
 }
 </script>
