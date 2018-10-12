@@ -25,6 +25,7 @@ class CustomSaveBean implements Validateable {
         contractName(nullable:false)
         vehicleName(nullable:false)
         returnDate(validator: this.checkReturnDate)
+        toDate(validator: this.checkToDate)
     }
 
     static def checkReturnDate={val,obj,errors->
@@ -32,5 +33,9 @@ class CustomSaveBean implements Validateable {
             errors.rejectValue(propertyName, "returnedBeforeStart.error", [val.format('dd MMM yyyy'),obj.fromDate.format('dd MMM yyyy')] as Object[], '')
         }
     }
-
+    static def checkToDate={val,obj,errors->
+        if (val && val < obj.fromDate) {
+            errors.rejectValue(propertyName, "toDateBeforeStart.error", [val.format('dd MMM yyyy'),obj.fromDate.format('dd MMM yyyy')] as Object[], '')
+        }
+    }
 }

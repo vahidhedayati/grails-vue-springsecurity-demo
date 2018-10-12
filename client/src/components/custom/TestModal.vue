@@ -2,6 +2,7 @@
   <modal :show="show" @close="close">
     <div class="modal-header">
       <h3>Contract history</h3>
+      <ul v-show="errors" id="errors" class="errors"><li v-for="error in errors">{{ error }}</li></ul>
     </div>
     <div class="modal-body">
       <div class="form-label col-sm-6">
@@ -58,7 +59,8 @@
     data: function () {
       return {
         title: '',
-        body: ''
+        body: '',
+        errors:[],
       };
     },
     components: {
@@ -86,16 +88,32 @@
           this.contract.toDate=moment(this.contract.toDate1).format('DD MMM YYYY')
         }
         console.log(' > '+JSON.stringify(this.contract))
-        return GarageService.createName('customRest',this.contract)
+        return GarageService.createNoCatch('customRest',this.contract)
           .then((res) => {
           if (res) {
             if (res.data) {
               console.log('res'+JSON.stringify(res.data))
               //this.close();
+            } else {
+              console.log(' dddd '+res.errors)
             }
+          } else {
+            console.log('no res')
           }
-        });
+        }).catch((error) => {
+          if (error.response) {
+          this.errors=error.response.data.error
+          error.response.data.error.forEach(function(element) {
+            console.log("..."+element);
 
+          });
+
+        } else if ( error.request) {
+          console.log("dddd"+error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+      });
 
       }
     }

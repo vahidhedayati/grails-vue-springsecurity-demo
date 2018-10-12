@@ -53,15 +53,15 @@ class CustomRestController extends RestfulController {
         println "WE ARE IN SAVE ${request.JSON}"
         def jsonParams = request.JSON
         CustomSaveBean bean = new CustomSaveBean()
-        DataBindingUtils.bindObjectToInstance(bean, params)
+        DataBindingUtils.bindObjectToInstance(bean, jsonParams)
         bean.validate()
         if (!bean.hasErrors()) {
             //render vehicleService.save(jsonParams)
         } else {
             //def msg = messageSource.getMessage('my.localized.content', ['Juan', 'lunes'] as Object[], 'Default Message', request.locale)
-            def errors = [error: bean.errors.allErrors.collect{it.codes[-2]}]
+            def errors = [error: bean.errors.fieldErrors.collect{messageSource.getMessage(it, request.locale)}]
             println "-- ${errors}"
-            render errors as JSON
+            render errors as JSON, status: 409
         }
 
     }

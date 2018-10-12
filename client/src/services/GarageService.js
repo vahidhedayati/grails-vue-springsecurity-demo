@@ -37,6 +37,10 @@ export default {
         }
     });
   },
+  createNoCatch (component, params) {
+    return Api().post(component, params)
+
+  },
   update(component,params) {
 
     return Api().patch(component, params)
