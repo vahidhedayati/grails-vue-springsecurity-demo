@@ -2,7 +2,10 @@
 <template>
   <div id="garage">
     <app-header></app-header>
-    <p><button v-on:click="sendVehicles()">Export</button> </p>
+    <p>
+      <button v-on:click="sendVehicles()">Export</button>
+      <button v-on:click="  xlsVehicles()">  Export XLS</button>
+    </p>
     <vehicle-form v-model="vehicle"
                   :makes="makes"
                   :models="models"
@@ -140,6 +143,20 @@ export default {
             link.setAttribute('download', filename);
             link.click();
           }
+        }
+      });
+    },
+    xlsVehicles: function () {
+      console.log('Trying to export vehicles XLS')
+      return GarageService.fetchBlob('exportXls')
+        .then((res) => {
+        if (res) {
+          const url = window.URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'file.xls');
+          document.body.appendChild(link);
+          link.click();
         }
       });
     },

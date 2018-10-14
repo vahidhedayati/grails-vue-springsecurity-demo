@@ -13,6 +13,19 @@ export default {
     }
   });
   },
+
+  fetchBlob (component) {
+    return Api().get(component,{responseType: 'blob', headers: { 'Accept': 'application/vnd.ms-excel' }})
+      .catch((error) => {
+      if (error.response) {
+      console.log(error.response);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+  });
+  },
   fetchName (component) {
     return Api().get(component)
     .catch((error) => {

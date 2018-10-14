@@ -9,13 +9,12 @@ import org.springframework.context.MessageSource
 
 /**
  *
- * This has no ties to any domain classes and will simply interact with a more complex data set to compile
- *
- * the listing / search features sent via rest
+ *This is a customised rest controller
  *
  */
 @Secured(['ROLE_DRIVER'])
-class CustomRestController extends RestfulController {
+class CustomRestController {
+
     MessageSource messageSource
 
     def customRestService
@@ -27,10 +26,6 @@ class CustomRestController extends RestfulController {
      * Check the URLMappings.groovy for get/post overrides to make all this work
      *
      */
-    CustomRestController() {
-        super(Unused)
-    }
-
     /**
      * This overrides the default call to this controller
      * @return

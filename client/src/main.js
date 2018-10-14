@@ -8,7 +8,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue';
-import * as uiv from 'uiv'
+//import * as uiv from 'uiv'
 import './assets/css/bootstrap.css'
 import './assets/css/grails.css'
 import './assets/css/main.css'
@@ -32,7 +32,7 @@ Vue.config.productionTip = false
 Vue.router = router;
 //Vue.use(abilitiesPlugin, ability);
 ///Vue.use(SuiVue);
-Vue.use(uiv)
+//Vue.use(uiv)
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
