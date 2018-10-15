@@ -51,7 +51,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 ]
 
 grails.plugin.springsecurity.rest.logout.endpointUrl='/api/logout'
-
+grails.plugin.springsecurity.rest.token.validation.headerName='X-Auth-Token'
 
 //grails.plugin.springsecurity.rest.token.rendering.usernamePropertyName='id'
 
