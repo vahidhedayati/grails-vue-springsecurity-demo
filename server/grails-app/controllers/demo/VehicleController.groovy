@@ -36,7 +36,7 @@ class VehicleController extends RestfulController {
                 total: countResources()
 
         ]
-        returnValue.numberOfPages=(countResources()/params.max)+1
+        returnValue.numberOfPages=(countResources()/params.max).intValue()+1
         println " number of pages =  ${returnValue.numberOfPages} ${returnValue.total} vs ${returnValue.max} "
         respond returnValue as Object, model: [("${resourceName}Count".toString()): countResources()]
     }

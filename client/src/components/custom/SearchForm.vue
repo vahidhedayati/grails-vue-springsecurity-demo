@@ -35,7 +35,7 @@
           <div class="btn-group" role="group" aria-label="Search Contracts">
             <button type="button" class="btn btn-success" @click="submit()">Search</button>
 
-            <button class="btn btn-primary" @click="showModal = true">Add Comment</button>
+            <button class="btn btn-primary" @click="showModal = true">Add History</button>
             <test-modal  v-bind="{contract}"
                         :show="showModal"
                         :makes="makes"

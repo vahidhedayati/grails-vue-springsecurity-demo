@@ -20,9 +20,12 @@
                     @reload="fetchVehicles()"
      ></vehicle-table>
 
-    <b-pagination size="md" :total-rows="total" v-model="currentPage" :per-page="10">
-    </b-pagination>
-
+    <Pagination
+      :maxVisibleButtons=3
+      :totalPages="numberOfPages"
+      :total="total"
+      :currentPage="currentPage"
+      @pagechanged="pagechanged"/>
   </div>
 </template>
 
@@ -31,13 +34,13 @@ import AppHeader from './AppHeader'
 import GarageService from '@/services/GarageService'
 import VehicleForm from './form/VehicleForm'
 import VehicleTable from './table/VehicleTable'
-//import Pagination from './Pagination'
+import Pagination from './Pagination'
 export default {
   components: {
     AppHeader,
     VehicleForm,
     VehicleTable,
-   // Pagination
+    Pagination
   },
   data: function () {
     return {

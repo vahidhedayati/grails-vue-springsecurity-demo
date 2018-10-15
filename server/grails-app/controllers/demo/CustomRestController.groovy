@@ -37,7 +37,9 @@ class CustomRestController {
         bean.validate()
         if (!bean.hasErrors()) {
             def results = customRestService.search(bean)
-            results.numberOfPages=(results.instanceTotal/bean.max)+1
+            results.numberOfPages=(results.instanceTotal/bean.max).intValue()+1
+
+            println " number of pages =  ${results.numberOfPages} ${results.instanceTotal} vs ${results.max} "
             render results as JSON
             //return
         }

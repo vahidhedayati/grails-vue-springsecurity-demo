@@ -2,7 +2,7 @@
   <modal :show="show" @close="close">
     <div class="modal-header">
       <h3>Contract history</h3>
-      <ul v-show="errors" id="errors" class="errors"><li v-for="error in errors">{{ error }}</li></ul>
+      <ul v-show="errors.length>0"  class="errors"><li v-for="error in errors">{{ error }}</li></ul>
     </div>
     <div class="modal-body">
       <div class="form-label col-sm-6">
