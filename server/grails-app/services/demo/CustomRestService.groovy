@@ -6,8 +6,8 @@ class CustomRestService {
     def search(bean) {
         String where=''
         Map whereParams=[:]
-        List sorts=['contractName', 'vehicleName', 'makeName', 'modelName' ,'driverName']
-        List sorts2=['contractName', 'vehicleName', 'makeName','modelName','driverName']
+        List sorts=['id','contractName', 'vehicleName', 'makeName', 'modelName' ,'driverName']
+        List sorts2=['id','contractName', 'vehicleName', 'makeName','modelName','driverName']
 
         def sortChoice=sorts.findIndexOf{it==bean.sort}
 
