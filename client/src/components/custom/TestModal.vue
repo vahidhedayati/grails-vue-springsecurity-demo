@@ -17,7 +17,7 @@
 
       <div class="form-label">
         <div class="form-label col-sm-6">
-          VehicName
+
           <input type="text" class="form-control" placeholder="driverName" v-model="contract.driverName" required>
         </div>
 
@@ -97,7 +97,7 @@
           if (res) {
             if (res.data) {
               console.log('res'+JSON.stringify(res.data))
-              //this.close();
+              this.close();
             } else {
               console.log(' dddd '+res.errors)
             }

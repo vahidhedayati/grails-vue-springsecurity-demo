@@ -1,11 +1,16 @@
 package demo
 
+import exceptions.ContractNameTakenException
+import exceptions.UserTakenException
+import exceptions.VehicleException
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import grails.util.Holders
 import grails.web.databinding.DataBindingUtils
 import org.springframework.context.MessageSource
+
+import javax.xml.bind.ValidationException
 
 /**
  *
@@ -52,15 +57,32 @@ class CustomRestController {
         CustomSaveBean bean = new CustomSaveBean()
         DataBindingUtils.bindObjectToInstance(bean, jsonParams)
         bean.validate()
-        if (!bean.hasErrors()) {
-            //render vehicleService.save(jsonParams)
-        } else {
-            //def msg = messageSource.getMessage('my.localized.content', ['Juan', 'lunes'] as Object[], 'Default Message', request.locale)
-            def errors = [error: bean.errors.fieldErrors.collect{messageSource.getMessage(it, request.locale)}]
-            println "-- ${errors}"
-            render errors as JSON, status: 409
+        //
+        try {
+            if (!bean.hasErrors()) {
+                bean=customRestService.save(bean)
+                def done = [success:true]
+               render done as JSON
+                return
+            }
+            /*
+        } catch (VehicleException e ){
+            bean.errors.rejectValue('vehicleName','vehicleTaken.label')
+        } catch (UserTakenException e ){
+            bean.errors.rejectValue('driverName','usernameTaken.label')
+        } catch (ContractNameTakenException e ) {
+            bean.errors.rejectValue('contractName', 'contractTaken.label')
+        */
+        } catch (Throwable e ){
+         //   bean.errors=e
         }
-
+        println "-------- ${bean.errors}"
+        //def msg = messageSource.getMessage('my.localized.content', ['Juan', 'lunes'] as Object[], 'Default Message', request.locale)
+        def errors = [error: bean.errors.fieldErrors.collect{messageSource.getMessage(it, request.locale)}]
+        println "-- ${errors}"
+        render errors as JSON, status: 409
     }
+
+
 
 }
