@@ -10,36 +10,11 @@ This will launch both apps and access url via
 
 http://localhost:3000
 
+Youtube
+--------
+[Part1 running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
 
-[Video running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
-
-[Video part 2 pagination](https://www.youtube.com/watch?v=WIi3x_5n03o)
-
-
-[Video 3 custom searching/listing/saving via rest](https://www.youtube.com/watch?v=XhQDiB2lYL0)
-
-
-You may also need to install `npm` locally. Whilst trying to start up the site as per above instructions.
-I had to stop and run these two commands (during different intervals):
-
-```
-npm install --save uiv
-npm install --save vue
-
-```
-
-
-
-
------
-
-
-To create a grails 3  vue application run the following:  
-
-```
-grails create-app myapp --profile=vue
-
-```
+[Part2 Custom rest listing/ search / pagination/ file streaming/backend error validation](https://www.youtube.com/watch?v=4nnVnN6MWWg)
 
 
 
@@ -69,3 +44,14 @@ I have been working on a fairly simple edit/save function of a given specific ve
 
 
 
+
+Creating a brand new app vuejs app
+-----
+
+
+To create a grails 3  vue application run the following:  
+
+```
+grails create-app myapp --profile=vue
+
+```
