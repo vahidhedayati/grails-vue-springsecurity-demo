@@ -19,4 +19,10 @@ class VehicleContract {
     Date dateCreated
     Date lastUpdated
 
+
+    static constraints = {
+        contractName nullable: false, unique: true
+    }
+
+
 }

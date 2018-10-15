@@ -16,9 +16,13 @@
 
 
       <div class="form-label">
+        <div class="form-label col-sm-6">
+          VehicName
+          <input type="text" class="form-control" placeholder="driverName" v-model="contract.driverName" required>
+        </div>
+
         <field-select v-model="contract.make.id" :field="'Make'" :item=null :values="makes" class="col-sm-6" required></field-select>
         <field-select v-model="contract.model.id" :field="'Model'" :item=null :values="models" class="col-sm-6" required></field-select>
-        <field-select v-model="contract.driver.id" :field="'Driver'" :item="null" :values="drivers" class="col-sm-6" required></field-select>
 
       </div>
       <div style="clear:both;"/>
@@ -34,7 +38,7 @@
         <datepicker v-model="contract.fromDate1" class="dateField" required></datepicker>
         </span>
         <span class="col-sm-6 dateField">
-        FromDate
+        ToDate
         <datepicker v-model="contract.toDate1"   class="dateField" required></datepicker>
         </span>
       </div>

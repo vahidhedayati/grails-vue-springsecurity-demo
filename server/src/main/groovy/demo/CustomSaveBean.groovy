@@ -10,7 +10,8 @@ class CustomSaveBean implements Validateable {
     String contractName
     String vehicleName
 
-    Driver driver
+    //Driver driver
+    String driverName
 
     Model model
     Make make
@@ -33,6 +34,7 @@ class CustomSaveBean implements Validateable {
             errors.rejectValue(propertyName, "returnedBeforeStart.error", [val.format('dd MMM yyyy'),obj.fromDate.format('dd MMM yyyy')] as Object[], '')
         }
     }
+
     static def checkToDate={val,obj,errors->
         if (val && val < obj.fromDate) {
             errors.rejectValue(propertyName, "toDateBeforeStart.error", [val.format('dd MMM yyyy'),obj.fromDate.format('dd MMM yyyy')] as Object[], '')

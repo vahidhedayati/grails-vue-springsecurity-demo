@@ -60,11 +60,12 @@ export default {
       serverURL: process.env.SERVER_URL,
       total: 0,
       max: 10,
+      offset:0,
       currentPage:1,
       numberOfPages:0,
       currentSort:'',
       currentSortDir:'asc',
-      contract:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null},returnDate1:''},
+      contract:{contractName:'', vehicleName: '', make: {id:null}, model: {id:null}, driverName:'',returnDate1:''},
     }
   },
   // end::component[]
@@ -110,7 +111,8 @@ export default {
     pagechanged: function(page) {
       console.log("Page = "+page)
       this.currentPage = page;
-      this.fetchVehicles((page*this.max)-this.max)
+      this.offset=(page*this.max)-this.max
+      this.fetchVehicles(this.offset)
     },
     sortSearch(currentSort,currentSortDir) {
       //This is coming back grom VehicleTable sortable column full sorting is method 2 here
@@ -120,7 +122,7 @@ export default {
       }
       this.currentSort=currentSort;
       this.currentSortDir=currentSortDir;
-      variables+="&sort="+currentSort+"&order="+currentSortDir;
+      variables+="&sort="+currentSort+"&order="+currentSortDir+'&offset='+ this.offset;
       this.initialiseVehicles(variables);
     },
     fetchVehicles: function (pageNumber) {
