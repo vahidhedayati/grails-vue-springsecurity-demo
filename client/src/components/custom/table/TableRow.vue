@@ -30,7 +30,10 @@
       </td>
 
       <td>
-        {{item.returnDate ? (item.returnDate| moment("dddd, MMMM Do YYYY")) : '' }}
+        {{(item.returnDate ?
+        moment(item.returnDate).format('DD MMM YYYY')   :
+        null)
+        }}
       </td>
 
 
@@ -64,7 +67,15 @@ export default {
         VueMoment,
         moment
         },
+      filters: {
+        moment: function (date) {
+          return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+        }
+      },
        methods: {
+         moment: function () {
+           return moment();
+         },
          edit () {
          //These must be delcated in the data block above the this items or must be the direct object queried
            return GarageService.fetchName('vehicle/'+this.item.id)
