@@ -18,13 +18,18 @@
                     :drivers="drivers"
                   v-bind="{fetchVehicles,sortSearch}"
      ></custom-table>
-    <Pagination
+
+    <b-pagination size="md" :total-rows="total" v-model="currentPage" :per-page="10">
+    </b-pagination>
+
+
+    <!-- Pagination
       :maxVisibleButtons=3
       :totalPages="numberOfPages"
       :total="total"
       @sortSearch="sortSearch"
       :currentPage="currentPage"
-      @pagechanged="pagechanged"/>
+      @pagechanged="pagechanged"/ -->
   </div>
 </template>
 
@@ -34,14 +39,14 @@ import AppHeader from '../AppHeader'
 import SearchForm from './SearchForm'
 import GarageService from '@/services/GarageService'
 import CustomTable from './table/VehicleTable'
-import Pagination from '../Pagination'
+//import Pagination from '../Pagination'
 import moment from 'moment';
 export default {
   components: {
     SearchForm,
     AppHeader,
     CustomTable,
-    Pagination,
+  //  Pagination,
     moment
   },
   data: function () {

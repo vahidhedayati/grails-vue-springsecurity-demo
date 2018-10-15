@@ -19,13 +19,9 @@
                     :drivers="drivers"
                     @reload="fetchVehicles()"
      ></vehicle-table>
-    <Pagination
-      :maxVisibleButtons=3
-      :totalPages="numberOfPages"
-      :total="total"
-      :currentPage="currentPage"
-      @pagechanged="pagechanged"/>
 
+    <b-pagination size="md" :total-rows="total" v-model="currentPage" :per-page="10">
+    </b-pagination>
 
   </div>
 </template>
@@ -35,13 +31,13 @@ import AppHeader from './AppHeader'
 import GarageService from '@/services/GarageService'
 import VehicleForm from './form/VehicleForm'
 import VehicleTable from './table/VehicleTable'
-import Pagination from './Pagination'
+//import Pagination from './Pagination'
 export default {
   components: {
     AppHeader,
     VehicleForm,
     VehicleTable,
-    Pagination
+   // Pagination
   },
   data: function () {
     return {
@@ -83,26 +79,29 @@ export default {
       this.fetchVehicles((page*this.max)-this.max)
     },
     fetchVehicles: function (pageNumber) {
-      console.log("Fetching vehicles "+pageNumber)
+      //if (pageNumber<=this.total) {
+        console.log("Fetching vehicles "+pageNumber)
 //,{offset:pageNumber, max:this.max}
-      return GarageService.fetchName('vehicle?offset='+pageNumber)
-        .then((res) => {
-        if (res) {
-          if (res.data.objects) {
-            ///console.log("rr "+res.data.objects)
-            this.vehicles = res.data.objects;
-            this.total=res.data.total;
-            this.numberOfPages=res.data.numberOfPages;
-          } else {
-            if (res.data) {
-              //console.log("rr "+res.data.objects)
-              this.vehicles = res.data;
+        return GarageService.fetchName('vehicle?offset='+pageNumber)
+          .then((res) => {
+          if (res) {
+            if (res.data.objects) {
+              ///console.log("rr "+res.data.objects)
+              this.vehicles = res.data.objects;
+              this.total=res.data.total;
+              this.numberOfPages=res.data.numberOfPages;
+            } else {
+              if (res.data) {
+                //console.log("rr "+res.data.objects)
+                this.vehicles = res.data;
 
+              }
             }
-          }
 
-        }
-      });
+          }
+        });
+      //}
+
     },
     fetchModels: function () {
       return GarageService.fetchName('model')
