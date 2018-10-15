@@ -18,7 +18,7 @@
     </router-link>
 
 
-  <router-link :to="{name: 'Login'}">
+  <router-link v-show="!loggedIn" :to="{name: 'Login'}">
 
     <button class="btn btn-primary">Login</button>
   </router-link>
@@ -33,7 +33,7 @@
     </router-link>
 
 
-  <router-link :to="{name: 'Logout'}">
+  <router-link v-show="loggedIn" :to="{name: 'Logout'}">
     <button class="btn btn-success">Logout</button>
   </router-link>
 
@@ -41,5 +41,14 @@
   </div>
 </template>
 <script>
-
+  export default {
+    data() {
+      return {
+        loggedIn:false
+      }
+    },
+    created () {
+      this.loggedIn=((JSON.parse(localStorage.getItem('vuex')).user.token)?true:false)
+    }
+  }
 </script>
