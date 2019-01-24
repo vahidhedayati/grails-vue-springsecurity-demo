@@ -48,7 +48,6 @@ class BootStrap {
         for (int i=1; i < 13; i++) {
             //bootStrapContent << [i,
             Map values=[:]
-
             values.driver=new Driver(name: "Driver ${i}", username: "driver${i}", password: "password${i}").save()
 
             UserRole.create(values.driver, role, true)
@@ -59,34 +58,46 @@ class BootStrap {
 
             values.vehicle=new Vehicle(name: "Vehice ${i}", driver: values.driver, make: values.make, model: values.model).save()
 
-            Calendar calendar = today.toCalendar()
-            Calendar endCalendar = today.toCalendar()
-            calendar.add(Calendar.MONTH,i)
-            endCalendar.add(Calendar.MONTH,i)
-            endCalendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
-
-            String period = " ${ calendar.getTime().format(' dd MMM yyyy')} - ${ endCalendar.getTime().format(' dd MMM yyyy')} "
-
-            values.vehicleContract=new VehicleContract(contractName:values.driver.name+" contract for ${period}",
-                    vehicle: values.vehicle,fromDate:calendar.getTime() ,
-                    toDate: endCalendar.getTime(), driver:values.driver).save()
-
-            values.vehicleHistory = new VehicleHistory(contract:values.vehicleContract,returnDate:endCalendar.getTime(),checkedOutBy: driver1, checkedInBy: driver2).save();
-
             bootStrapContent."${i}"=values
         }
 
 
 
 
+        List contractsHistory=[]
         /**
-         * Iterate through bootStrapContent and append new v
+         * Iterate through bootStrapContent and append through each key generating a 12 month contract per user/vehicle
          */
-        bootStrapContent.each {key,  values ->
-            println "We have key ${key}: ${values}"
+
+            bootStrapContent.each { key, values ->
+                println "We have key ${key}: ${values}"
+
+                bootStrapContent.keySet().each { k ->
+
+                    Calendar calendar = today.toCalendar()
+                    Calendar endCalendar = today.toCalendar()
+                    calendar.add(Calendar.MONTH, k as int)
+                    endCalendar.add(Calendar.MONTH, k as int)
+                    calendar.set(Calendar.DAY_OF_MONTH, 1)
+                    endCalendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+                    String period = " ${calendar.getTime().format(' dd MMM yyyy')} - ${endCalendar.getTime().format(' dd MMM yyyy')} "
+                    VehicleContract vehicleContract = new VehicleContract(contractName: values.driver.name + " contract for ${period}",
+                        vehicle: values.vehicle, fromDate: calendar.getTime(),
+                        toDate: endCalendar.getTime(), driver: values.driver).save()
+
+                    VehicleHistory vehicleHistory = new VehicleHistory(contract: vehicleContract, returnDate: endCalendar.getTime(), checkedOutBy: driver1, checkedInBy: driver2).save();
+
+                    contractsHistory<< [contract:vehicleContract,history:vehicleHistory]
+
+            }
+
         }
-
-
+        /**
+         * this should contain a huge list of 12*12 contracts / history
+         */
+        contractsHistory?.each { ch ->
+            println " Contract ${ch.contract} has history ${ch.history}"
+        }
 
 
 
