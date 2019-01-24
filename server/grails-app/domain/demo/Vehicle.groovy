@@ -19,4 +19,8 @@ class Vehicle {
     static constraints = {
         //name unique: true
     }
+
+    String toString() {
+        return "Vehicle name: ${name} Make: ${make.name} Model: ${model.name} Driver: ${driver.name}"
+    }
 }

@@ -13,4 +13,8 @@ class Model {
 
     static constraints = {
     }
+
+    String toString() {
+        return "Model name: ${name}"
+    }
 }

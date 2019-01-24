@@ -16,4 +16,11 @@ class Driver extends User {
     static constraints = {
         vehicles nullable: true
     }
+
+    String toString() {
+
+        return """ 
+            Driver name: ${name} -  Username: ${username} 
+        """
+    }
 }

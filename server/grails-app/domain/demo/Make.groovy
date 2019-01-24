@@ -13,4 +13,9 @@ class Make {
 
     static constraints = {
     }
+
+
+    String toString() {
+        return "Make name: ${name}"
+    }
 }

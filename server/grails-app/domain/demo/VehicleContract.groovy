@@ -24,5 +24,14 @@ class VehicleContract {
         contractName nullable: false, unique: true
     }
 
+    String toString() {
+        return """
+           Contract ${contractName}
+            Leased by ${driver.name}
+            For car: ${vehicle.name}
+            For period: ${fromDate.format('dd MMM yyyy')} - ${toDate.format('dd MMM yyyy')}
+        """
+    }
+
 
 }
