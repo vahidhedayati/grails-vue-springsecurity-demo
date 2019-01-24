@@ -10,13 +10,6 @@ class BootStrap {
         SpringSecurityUtils.clientRegisterFilter("corsFilterTest",
                 SecurityFilterPosition.SECURITY_CONTEXT_FILTER.order - 1)
 
-        def driver1 = new Driver(name: "Susan", username: "susan", password: "password1").save() //<1>
-        def driver2 = new Driver(name: "Pedro", username:  "pedro", password: "password2").save()
-
-        Role role = new Role(authority: "ROLE_DRIVER").save()  //<2>
-
-        UserRole.create(driver1, role, true)  //<3>
-        UserRole.create(driver2, role, true)
 
         def nissan = new Make(name: "Nissan").save()
         def ford = new Make(name: "Ford").save()
@@ -24,6 +17,74 @@ class BootStrap {
         def titan = new Model(name: "Titan").save()
         def leaf = new Model(name: "Leaf").save()
         def windstar = new Model(name: "Windstar").save()
+
+        Role role = new Role(authority: "ROLE_DRIVER").save()
+        List makes=[]
+        makes << nissan
+        makes << ford
+
+        List models=[]
+        models << titan
+        models << leaf
+        models << windstar
+
+
+        Map<Integer,Map> bootStrapContent=[:]
+
+        def r = new Random()
+
+        int makesSize=makes.size()
+
+        Date today = new Date()
+
+        for (int i=1; i < 13; i++) {
+            //bootStrapContent << [i,
+            Map values=[:]
+
+            values.driver=new Driver(name: "Driver ${i}", username: "driver${i}", password: "password${i}").save()
+
+            UserRole.create(values.driver, role, true)
+
+            values.make=makes.get(r.nextInt(makesSize))
+
+            values.model=models.get(r.nextInt(makesSize))
+
+            values.vehicle=new Vehicle(name: "Vehice ${key}", driver: values.driver, make: values.make, model: values.model).save()
+
+            Calendar calendar = today.toCalendar()
+            Calendar endCalendar = today.toCalendar()
+            calendar.add(Calendar.MONTH,key)
+            endCalendar.add(Calendar.MONTH,key)
+            endCalendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+
+            String period = " ${ calendar.getTime().format(' dd MMM yyyy')} - ${ endCalendar.getTime().format(' dd MMM yyyy')} "
+
+            values.vehicleContract=new VehicleContract(contractName:values.values.name+" contract for ${period}",
+                    vehicle: values.vehicle,fromDate:calendar.getTime() ,
+                    toDate: endCalendar.getTime(), driver:values.driver).save()
+
+            values.vehicleHistory = new VehicleHistory(contract:values.vehicleContract,returnDate:endCalendar.getTime(),checkedOutBy: driver1, checkedInBy: driver2).save();
+
+            bootStrapContent.add(i,values)
+        }
+
+
+
+
+        /**
+         * Iterate through bootStrapContent and append new v
+         */
+        bootStrapContent.each {Integer key, Map values ->
+            println "We have key ${key}: ${values}"
+        }
+
+
+
+        Driver driver1= new Driver(name: "Susan", username: "susan", password: "password1").save()
+        Driver driver2= new Driver(name: "Pedro", username:  "pedro", password: "password2").save()
+
+        UserRole.create(driver1, role, true)  //<3>
+        UserRole.create(driver2, role, true)
 
         Vehicle v1 = new Vehicle(name: "Pickup", driver: driver1, make: nissan, model: titan).save()
         Vehicle v2 = new Vehicle(name: "Economy", driver: driver1, make: nissan, model: leaf).save()
@@ -37,11 +98,6 @@ class BootStrap {
         Vehicle v10 = new Vehicle(name: "Altima", driver: driver1, make: nissan, model: leaf).save()
         Vehicle v11 = new Vehicle(name: "Frontier", driver: driver1, make: nissan, model: leaf).save()
         Vehicle v12 = new Vehicle(name: "Granada", driver: driver2, make: ford, model: windstar).save()
-        Vehicle v13 = new Vehicle(name: "Cortina", driver: driver2, make: ford, model: windstar).save()
-        Vehicle v14 = new Vehicle(name: "Test1", driver: driver2, make: ford, model: windstar).save()
-        Vehicle v15 = new Vehicle(name: "Test2", driver: driver2, make: ford, model: windstar).save()
-        Vehicle v16 = new Vehicle(name: "Test3", driver: driver1, make: nissan, model: leaf).save()
-        Vehicle v17 = new Vehicle(name: "Test4", driver: driver1, make: nissan, model: leaf).save()
 
 
         VehicleContract vc1  = new VehicleContract(contractName:'aa', vehicle: v1,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
@@ -56,11 +112,6 @@ class BootStrap {
         new VehicleContract(contractName:'ii',vehicle: v9,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
         new VehicleContract(contractName:'jj',vehicle: v10,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
         new VehicleContract(contractName:'kk',vehicle: v12,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
-        new VehicleContract(contractName:'ll',vehicle: v13,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
-        new VehicleContract(contractName:'mm',vehicle: v14,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
-        new VehicleContract(contractName:'nn',vehicle: v15,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
-        new VehicleContract(contractName:'oo',vehicle: v16,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
-        new VehicleContract(contractName:'pp',vehicle: v17,fromDate: new Date()-365, toDate: new Date(), driver:driver1).save()
 
 
         new VehicleContract(contractName:'qq',vehicle: v1,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
@@ -74,14 +125,6 @@ class BootStrap {
         new VehicleContract(contractName:'yy',vehicle: v9,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
         new VehicleContract(contractName:'zz',vehicle: v10,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
         new VehicleContract(contractName:'aabb',vehicle: v12,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
-        new VehicleContract(contractName:'bbcc',vehicle: v13,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
-        new VehicleContract(contractName:'ddee',vehicle: v14,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
-        new VehicleContract(contractName:'ffgg',vehicle: v15,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
-        new VehicleContract(contractName:'hhii',vehicle: v16,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
-        new VehicleContract(contractName:'jjkk',vehicle: v17,fromDate: new Date()-365, toDate: new Date(), driver:driver2).save()
-
-
-
 
         VehicleHistory vh1 = new VehicleHistory(contract: vc1,returnDate: new Date(),checkedOutBy: driver1,checkedInBy: driver2).save();
         new VehicleHistory(contract: vc2,returnDate: new Date()-2,checkedOutBy: driver1,checkedInBy: driver2).save();
