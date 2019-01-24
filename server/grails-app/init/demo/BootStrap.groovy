@@ -29,13 +29,21 @@ class BootStrap {
         models << windstar
 
 
-        Map<Integer,Map> bootStrapContent=[:]
+        Map bootStrapContent=[:]
 
         def r = new Random()
 
         int makesSize=makes.size()
 
-        Date today = new Date()
+        //Today last year
+        Date today = new Date()-365
+
+        Driver driver1= new Driver(name: "Susan", username: "susan", password: "password1").save()
+        Driver driver2= new Driver(name: "Pedro", username:  "pedro", password: "password2").save()
+
+        UserRole.create(driver1, role, true)  //<3>
+        UserRole.create(driver2, role, true)
+
 
         for (int i=1; i < 13; i++) {
             //bootStrapContent << [i,
@@ -49,23 +57,23 @@ class BootStrap {
 
             values.model=models.get(r.nextInt(makesSize))
 
-            values.vehicle=new Vehicle(name: "Vehice ${key}", driver: values.driver, make: values.make, model: values.model).save()
+            values.vehicle=new Vehicle(name: "Vehice ${i}", driver: values.driver, make: values.make, model: values.model).save()
 
             Calendar calendar = today.toCalendar()
             Calendar endCalendar = today.toCalendar()
-            calendar.add(Calendar.MONTH,key)
-            endCalendar.add(Calendar.MONTH,key)
+            calendar.add(Calendar.MONTH,i)
+            endCalendar.add(Calendar.MONTH,i)
             endCalendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
 
             String period = " ${ calendar.getTime().format(' dd MMM yyyy')} - ${ endCalendar.getTime().format(' dd MMM yyyy')} "
 
-            values.vehicleContract=new VehicleContract(contractName:values.values.name+" contract for ${period}",
+            values.vehicleContract=new VehicleContract(contractName:values.driver.name+" contract for ${period}",
                     vehicle: values.vehicle,fromDate:calendar.getTime() ,
                     toDate: endCalendar.getTime(), driver:values.driver).save()
 
             values.vehicleHistory = new VehicleHistory(contract:values.vehicleContract,returnDate:endCalendar.getTime(),checkedOutBy: driver1, checkedInBy: driver2).save();
 
-            bootStrapContent.add(i,values)
+            bootStrapContent."${i}"=values
         }
 
 
@@ -74,17 +82,13 @@ class BootStrap {
         /**
          * Iterate through bootStrapContent and append new v
          */
-        bootStrapContent.each {Integer key, Map values ->
+        bootStrapContent.each {key,  values ->
             println "We have key ${key}: ${values}"
         }
 
 
 
-        Driver driver1= new Driver(name: "Susan", username: "susan", password: "password1").save()
-        Driver driver2= new Driver(name: "Pedro", username:  "pedro", password: "password2").save()
 
-        UserRole.create(driver1, role, true)  //<3>
-        UserRole.create(driver2, role, true)
 
         Vehicle v1 = new Vehicle(name: "Pickup", driver: driver1, make: nissan, model: titan).save()
         Vehicle v2 = new Vehicle(name: "Economy", driver: driver1, make: nissan, model: leaf).save()
