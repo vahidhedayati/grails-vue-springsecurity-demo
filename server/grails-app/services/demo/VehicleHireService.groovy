@@ -33,7 +33,7 @@ class VehicleHireService {
         def results=VehicleHire.executeQuery(query,wp,metaParams)
         int total=results.size()
         if (total>=metaParams.max) {
-            total=EmailQueue.executeQuery("select count(*) from RentalVehicle rv "+where,wp,[readOnly:true,timeout:15,max:1])[0]
+            total=VehicleHire.executeQuery("select count(*) from RentalVehicle rv "+where,wp,[readOnly:true,timeout:15,max:1])[0]
         } else {
             total+=metaParams.offset as Long
         }
