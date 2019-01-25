@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Garage from '@/components/Garage'
 import Custom from '@/components/custom/Custom'
+import Rental from '@/components/rental/Rental'
 import Login from '@/components/login/Login'
 import calc from '@/components/example/calculator/calc'
 import testcalc from '@/components/example/calculator/test'
@@ -58,6 +59,12 @@ const router = new Router({
           meta: { requiresAuth: true , roles:['ROLE_ADMIN', 'ROLE_DRIVER']}
         }
       ]
+    },
+    {
+      path: '/rental',
+      name: "rental",
+      component: Rental ,
+      meta: { requiresAuth: false}
     },
     {
       path: '/garage',

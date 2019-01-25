@@ -9,7 +9,7 @@ class VehicleContract {
 
     String contractName
 
-    Vehicle vehicle
+    BaseVehicle vehicle
 
     Date fromDate
     Date toDate
@@ -19,9 +19,11 @@ class VehicleContract {
     Date dateCreated
     Date lastUpdated
 
+    Date returnDate
 
     static constraints = {
         contractName nullable: false, unique: true
+        returnDate(nullable:true)
     }
 
     String toString() {

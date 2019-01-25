@@ -33,6 +33,10 @@
     </router-link>
 
 
+    <router-link :to="{name: 'rental'}">
+      <button class="btn btn-xs btn-success">Rent a vehicle</button>
+    </router-link>
+
   <router-link v-show="loggedIn" :to="{name: 'Logout'}">
     <button class="btn btn-xs btn-success">Logout</button>
   </router-link>
