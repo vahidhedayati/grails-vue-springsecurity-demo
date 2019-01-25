@@ -7,7 +7,10 @@ class VehicleHireService {
         Map wp=[:]
         String where=''
         String query="""
-           from VehicleHire rv  
+          select new map (rv.id as id, rv.stock as stock, rv.deposit as deposit,
+            rv.cost as cost, 
+            (select count(*) from VehicleContract vc where vc.vehicle.id = rv.id and vc.returnDate is null) as onHire,  
+            rv.make as make, rv.model as model) from VehicleHire rv  
         """
         if (params.cost) {
             where=addClause(where,"rv.cost >= :cost")
@@ -30,7 +33,7 @@ class VehicleHireService {
         def results=VehicleHire.executeQuery(query,wp,metaParams)
         int total=results.size()
         if (total>=metaParams.max) {
-            total=EmailQueue.executeQuery("select count(*) fromRentalVehicle rv "+where,wp,[readOnly:true,timeout:15,max:1])[0]
+            total=EmailQueue.executeQuery("select count(*) from RentalVehicle rv "+where,wp,[readOnly:true,timeout:15,max:1])[0]
         } else {
             total+=metaParams.offset as Long
         }
