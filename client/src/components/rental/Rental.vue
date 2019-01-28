@@ -1,7 +1,10 @@
 
 <template>
   <div id="custom">
-    <app-header></app-header>
+    <app-header
+      header-image="retail"
+      header-text="Arrrr welcome to the shop"
+    ></app-header>
     <custom-table :vehicles="vehicles"
                   :makes="makes"
                   :models="models"
