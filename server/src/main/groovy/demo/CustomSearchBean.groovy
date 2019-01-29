@@ -16,6 +16,8 @@ class CustomSearchBean extends DefaultSearchBean {
     Date returnDate
     User checkedOutBy
     User checkedInBy
+    Double cost
+    Double deposit
 
     static constraints={
         contractName(nullable: true)
@@ -28,5 +30,10 @@ class CustomSearchBean extends DefaultSearchBean {
         returnDate(nullable:true)
         checkedOutBy(nullable:true)
         checkedInBy(nullable:true)
+        cost(nullable:true)
+        deposit(nullable:true)
     }
+
+
+
 }

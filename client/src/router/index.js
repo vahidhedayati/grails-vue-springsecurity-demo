@@ -101,19 +101,20 @@ var findOne = function (haystack, arr) {
 router.beforeEach((to, from, next) => {
   const authUser = JSON.parse(window.localStorage.getItem('vuex'))
   if(!to.meta.requiresAuth && !to.meta.roles) {
-  return next()
-}
-if(!authUser || !authUser.user.token) {
-  return next({name:'Login'})
-}
+    return next()
+  }
 
-if (findOne(to.meta.roles,authUser.auth.isAuthenticated.roles)) {
-  console.log(' yes >'+to.meta.roles+ " <> "+authUser.auth.isAuthenticated.roles);
-  return next()
-} else {
-  console.log('NO'+to.meta.roles.includes(authUser.auth.isAuthenticated.roles)+' '+to.meta.roles+' >> '+authUser.auth.isAuthenticated.roles)
-  return next({name:'Home'})
-}
+  if(!authUser || !authUser.user.token) {
+    return next({name:'Login'})
+  }
+
+  if (findOne(to.meta.roles,authUser.auth.isAuthenticated.roles)) {
+    console.log(' yes >'+to.meta.roles+ " <> "+authUser.auth.isAuthenticated.roles);
+    return next()
+  } else {
+    console.log('NO'+to.meta.roles.includes(authUser.auth.isAuthenticated.roles)+' '+to.meta.roles+' >> '+authUser.auth.isAuthenticated.roles)
+    return next({name:'Home'})
+  }
 })
 
 export default router

@@ -27,6 +27,7 @@ class BootStrap {
         models << titan
         models << leaf
         models << windstar
+       // println "-------------------------------------------------  ${titan?.id} ----------------------------------------  ${nissan.id}"
 
 
         Map bootStrapContent=[:]
@@ -55,6 +56,7 @@ class BootStrap {
             UserRole.create(values.driver, role, true)
 
             values.make=makes.get(r.nextInt(makesSize))
+            //println " make is --------------------------------------------------------------------  ${values.make}"
 
             values.model=models.get(r.nextInt(makesSize))
 

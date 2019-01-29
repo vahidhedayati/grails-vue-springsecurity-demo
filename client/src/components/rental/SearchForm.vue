@@ -5,12 +5,12 @@
     <div id="inputRow" class="row">
       <div class="col-sm-2">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="cost" v-model.lazy="search.cost">
+          <input type="text" class="form-control" placeholder="cost" v-model="search.cost">
         </div>
       </div>
       <div class="col-sm-2">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="deposit" v-model.lazy="search.deposit">
+          <input type="text" class="form-control" placeholder="deposit" v-model="search.deposit">
         </div>
       </div>
       <div class="col-sm-2">

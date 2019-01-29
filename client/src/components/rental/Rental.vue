@@ -5,6 +5,11 @@
       header-image="retail"
       header-text="Arrrr welcome to the shop"
     ></app-header>
+    <search-form v-model="vehicle"
+                  :makes="makes"
+                  :models="models"
+                  @submit="searchVehicles()"/>
+
     <custom-table :vehicles="vehicles"
                   :makes="makes"
                   :models="models"
@@ -71,17 +76,18 @@ export default {
         this.fetchModels(),
         this.fetchModels(),
         this.fetchMakes(),
-        this.fetchDrivers()
+
       ])
     } catch (error) {
       console.log(error)
     }
   },
   initialiseVehicles(params){
-    return GarageService.fetchName('vehicleHire?'+params)
+
+    return GarageService.fetchName('rental?'+params)
       .then((res) => {
       if (res) {
-        //console.log(' rees'+JSON.stringify(res))
+        console.log(' rees'+JSON.stringify(res))
         if (res.data.instanceList) {
           console.log("rr "+res.data.instanceList)
           this.vehicles = res.data.instanceList;
@@ -164,17 +170,6 @@ export default {
       if (res) {
         if (res.data) {
           this.makes = res.data;
-
-        }
-      }
-    });
-  },
-  fetchDrivers: function () {
-    return GarageService.fetchName('driver')
-      .then((res) => {
-      if (res) {
-        if (res.data) {
-          this.drivers = res.data;
 
         }
       }

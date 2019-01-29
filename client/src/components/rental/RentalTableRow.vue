@@ -49,8 +49,8 @@
           <input  v-model="vehicle.stock">
         </span>
         <span v-else>
-            {{ item.stock }}
-        </span>
+            {{ item.stock }} - {{ item.onHire}} = {{item.inStock}}
+         </span>
       </td>
       <td>
       <form action="javascript:void(0);">
@@ -72,7 +72,7 @@ import FieldSelect from '../form/FieldSelect'
 import GarageService from '@/services/GarageService'
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['item', 'makes', 'models', 'drivers','reload'],
+   props: ['item', 'makes', 'models','reload'],
    data () {
         return {
           response: [],
@@ -91,7 +91,7 @@ export default {
        methods: {
          edit () {
          //These must be delcated in the data block above the this items or must be the direct object queried
-           return GarageService.fetchName('vehicleHire/'+this.item.id)
+           return GarageService.fetchName('rental/'+this.item.id)
              .then((res) => {
              if (res) {
                if (res.data) {
@@ -111,7 +111,7 @@ export default {
           const newName = this.vehicle;
           //console.log( {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}} +" <<>>"+JSON.stringify(newName)+"---------");
           console.log(' '+JSON.stringify(newName))
-          return GarageService.update('vehicleHire/'+this.item.id, newName)
+          return GarageService.update('rental/'+this.item.id, newName)
             .then((res) => {
             if (res) {
              // if (res.data) {
