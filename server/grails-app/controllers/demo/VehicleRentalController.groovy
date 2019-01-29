@@ -17,7 +17,6 @@ class VehicleRentalController {
         CustomSearchBean bean = new CustomSearchBean()
         DataBindingUtils.bindObjectToInstance(bean, params)
         bean.validate()
-        println " dd"
         if (!bean.hasErrors()) {
             def results = vehicleHireService.search(bean)
             results.numberOfPages = (results.instanceTotal / bean.max).intValue() + 1
@@ -26,6 +25,9 @@ class VehicleRentalController {
         }
     }
 
+    def listDefaults() {
+        render vehicleHireService.listDefaults(params) as JSON
+    }
     def search() {
         def jsonResponse = vehicleHireService.search(params)
         println "-=-- json response =  "+jsonResponse

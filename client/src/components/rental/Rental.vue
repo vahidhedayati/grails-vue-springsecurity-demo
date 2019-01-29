@@ -72,7 +72,8 @@ export default {
   fetchData: async function () {
     try {
       Promise.all([
-        this.fetchVehicles(0),
+        //this.fetchVehicles(0),
+        //this.listDefaults(),
         this.fetchModels(),
         this.fetchModels(),
         this.fetchMakes(),
