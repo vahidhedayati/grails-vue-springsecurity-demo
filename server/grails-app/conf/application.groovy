@@ -3,7 +3,8 @@
 grails.plugin.springsecurity.rest.token.storage.useJwt=true
 grails.plugin.springsecurity.rest.token.storage.jwt.useSignedJwt=true
 grails.plugin.springsecurity.rest.token.storage.jwt.secret='qrD6h8K6S9503Q06Y6Rfk21TErImPYqa'
-grails.plugin.springsecurity.rest.token.storage.jwt.expiration=3600
+//grails.plugin.springsecurity.rest.token.storage.jwt.expiration=3600
+grails.plugin.springsecurity.rest.token.storage.jwt.expiration=5
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'demo.User'
@@ -24,7 +25,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/**/js/**',       access: ['permitAll']],
 		[pattern: '/**/css/**',      access: ['permitAll']],
 		[pattern: '/**/images/**',   access: ['permitAll']],
-		[pattern: '/**/favicon.ico', access: ['permitAll']]
+		[pattern: '/**/favicon.ico', access: ['permitAll']],
+		[pattern: '/oauth/access_token',    access: ['permitAll']],
 ]
 grails.plugin.springsecurity.filterChain.chainMap = [
 		//Stateless chain
@@ -38,6 +40,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/**/images/**',   filters: 'none'],
 		[pattern: '/**/favicon.ico', filters: 'none'],
 		[pattern: '/vehicle/export', filters: 'none'],
+		[pattern: '/oauth/access_token', filters: 'none'],
 		//Traditional chain
 		//[
 		//		pattern: '/**',
