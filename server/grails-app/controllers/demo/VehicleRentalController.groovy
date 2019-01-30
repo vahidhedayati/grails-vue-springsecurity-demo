@@ -18,7 +18,7 @@ class VehicleRentalController {
         DataBindingUtils.bindObjectToInstance(bean, params)
         bean.validate()
         if (!bean.hasErrors()) {
-            def results = vehicleHireService.search(bean)
+            def results = vehicleHireService.search(params)
             results.numberOfPages = (results.instanceTotal / bean.max).intValue() + 1
             println " number of pages =  ${results.numberOfPages} ${results.instanceTotal} vs ${results.max} "
             render results as JSON

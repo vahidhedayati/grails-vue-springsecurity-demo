@@ -13,12 +13,18 @@
 <script>
 export default {
   // <1>
-  props: ['values', 'field', 'item'], // <2>
+  props: ['values', 'field', 'item','obj'], // <2>
   data: function () { // <2>
     return {
       //Set this value to be true if there is no item so it shows please select option
       blankForm: this.item==null,
       selected: this.item
+    }
+  },
+  created () {
+    if (this.item!=null) {
+        console.log('doing stuff');
+      this.updateValue();
     }
   },
   methods: { // <5>

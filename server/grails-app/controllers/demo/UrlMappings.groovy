@@ -17,6 +17,7 @@ class UrlMappings {
         "/api/exportXls"(controller:'vehicle', action: 'exportXls')
         get "/api/customRest"(controller:'customRest', action:'index')
         post "/api/customRest"(controller:'customRest',action:'save')
+        get "/api/availableHires"(controller:'vehicleRental', action:'listDefaults')
         get "/api/rental"(controller:'vehicleRental', action:'index')
         post "/api/rental"(controller:'vehicleRental',action:'save')
         "/"(controller: 'application', action:'index')

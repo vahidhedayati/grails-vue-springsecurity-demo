@@ -46,8 +46,8 @@ class BootStrap {
         UserRole.create(driver2, role, true)
 
 
-        Double cost=new Double(20.12)
-        Double deposit=new Double(250)
+        Double cost=new Double(120.50)
+        Double deposit=new Double(500)
         for (int i=1; i < 13; i++) {
             //bootStrapContent << [i,
             Map values=[:]
@@ -61,7 +61,7 @@ class BootStrap {
             values.model=models.get(r.nextInt(makesSize))
 
             values.vehicle=new Vehicle(name: "Vehice ${i}", driver: values.driver, make: values.make, model: values.model).save()
-            cost=cost+(i*3)
+            cost=cost+(i*5)
             deposit=deposit-(i*2)
             values.rentalVehicle=new VehicleHire(name: "Rental Vehice ${i}", make: values.make, model: values.model, cost: cost, deposit: deposit, stock: 10).save()
 
