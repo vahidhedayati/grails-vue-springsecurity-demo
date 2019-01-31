@@ -33,8 +33,8 @@
     </router-link>
 
 
-    <router-link :to="{name: 'rental'}">
-      <button class="btn btn-xs btn-success">Rent a vehicle</button>
+    <router-link  @click.native="++counter" :to="{ name: 'rental', params: {showSearch: false, counter:counter } }">
+      <button  class="btn btn-xs btn-success">Rent a vehicle  {{counter}}</button>
     </router-link>
 
   <router-link v-show="loggedIn" :to="{name: 'Logout'}">
@@ -46,13 +46,49 @@
 </template>
 <script>
   export default {
+
     data() {
       return {
-        loggedIn:false
+        loggedIn:false,
+        counter:0,
+        lastPath:'',
+        lastCounter:0,
       }
     },
     created () {
       this.loggedIn=((JSON.parse(localStorage.getItem('vuex')).user.token)?true:false)
+
+    },
+
+  beforeUpdate: function (from, to, next) {
+    if (this.$route.path==='/rental') {
+      if (this.$route.path==this.lastPath) {
+        console.log('new after', this.$route.path);
+        this.$eventHub.$emit('rentalcounter',this.counter);
+        //lastCounter++
+        //
+        //this.$root.$emit('rental-counter',this.counter);
+        // this.$bus.$emit('rentalCounter', this.counter)
+      } else {
+        //this.$eventHub.$off('rentalcounter');
+      }
+    } else {
+      this.$eventHub.$off('rentalcounter');
+    }
+
+    this.lastPath=this.$route.path
+
+    //this.showSearch=this.searchDetails;
+  },	//#
+  beforeRouteUpdate(to, from, next) {
+    console.log('aaaaaaaaabefore', this.$route.path);
+    next();
+  },
+    method: {
+      emitCounter() {
+        console.log('emitting')
+        //this.$emit("counter", this.counter);
+      }
     }
   }
 </script>

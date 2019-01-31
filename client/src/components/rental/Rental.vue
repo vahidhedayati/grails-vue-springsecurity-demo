@@ -4,11 +4,12 @@
       header-image="retail"
       header-text="Arrrr welcome to the shop"
     ></app-header>
-
-    <span v-if="showSearch">
+    {{searchDetails}}- {{counter}} - {{showSearch  }} -- {{enableSearch}}
+    <span v-if="enableSearch" >
     <search-form v-model="search"
                  :makes="makes"
                  :item="item"
+                 :hide-search="hideSearch"
                  :models="models"
                  @submit="searchVehicles()"/>
 
@@ -54,6 +55,7 @@
   import Pagination from '../Pagination'
   import moment from 'moment';
   export default {
+    props: ['searchDetails','counter'],
     components: {
       SearchForm,
       AppHeader,
@@ -84,15 +86,69 @@
         currentPage: 1,
         numberOfPages: 0,
         currentSort: '',
-        currentSortDir: 'asc'
+        currentSortDir: 'asc',
+        lastPath:'',
+        lastCounter:0,
       }
     },
     // end::component[]
     // tag::fetch[]
-    created() { // <1>
+    created: function () {	//#E
+      ///this.showSearch=this.searchDetails;
+      console.log('created show search'+this.showSearch);
       this.fetchData()
+
     },
+    mounted: function () {	//#E
+      console.log('mounted show search'+this.showSearch);
+
+
+
+    },
+    beforeMount: function () {	//#D
+     // this.showSearch = this.searchDetails;
+        console.log(" beforeMount");	//#D
+      this.$eventHub.$on('rentalcounter', function(newCounter){
+        //if (newCounter > counter) {
+        console.log('rentalcounter before',newCounter+' '+this.showSearch);
+        this.$emit('searchDetails',false);
+        //this.$emit('rentalcc',newCounter);
+        //setTimeout(() => {this.showSearch=''}, 0)
+        //  this.counter=newCounter;
+        //this.hideSearch();
+        //}
+        this.showSearch=false
+        //console.log('rentalcounter after',newCounter+' '+this.showSearch);
+
+      })
+
+    },	//#D
+
+  computed:{
+
+    //This is now ignored this was sorting based on paginated data
+    //simply replace vehicle in vehicles to vehicle in sortedCats above line 14/15
+    enableSearch() {
+      console.log(' +'+this.searchDetails+' '+this.showSearch)
+      return this.showSearch===true;
+      }
+    },
+  beforeUpdate: function () { 	//#F
+    //this.showSearch=this.searchDetails
+    console.log('beforeUpdate show search'+this.showSearch);
+    // this.showSearch = this.searchDetails;
+    //this.showSearch = this.searchDetails;
+
+  },	//#
+  mounted() {
+
+  },
+  	//#
     methods: {
+      hideSearch: function() {
+        console.log('hiding')
+        this.showSearch=false;
+      },
       fetchData: async function () {
         try {
           Promise.all([
@@ -129,6 +185,7 @@
           }
         });
       },
+
       activateSearch(vehicle) {
         this.showSearch=true;
         this.item.make.id=vehicle.makeId;

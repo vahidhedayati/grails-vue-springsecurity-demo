@@ -1,65 +1,30 @@
 <template id="tablerow-template" xmlns="http://www.w3.org/1999/xhtml">
-
     <tr>
+
       <td>
-      {{ item.id }}
-      </td>
-      <td>
-        <span v-if="showForm">
-          <input  v-model="vehicle.name">
-        </span>
-        <span v-else>
-            {{ item.name }}
-        </span>
-      </td>
-      <td>
-       <span v-if="showForm">
-          <field-select v-model="vehicle.make" :item="item.make.id" :field="'Make'" :values="makes"></field-select>
-        </span>
-        <span v-else>
             {{ item.make.name }}
-        </span>
       </td>
       <td>
-        <span v-if="showForm">
-          <field-select v-model="vehicle.model" :field="'Model'" :item="item.model.id" :values="models"></field-select>
-        </span>
-        <span v-else>
            {{ item.model.name }}
-        </span>
       </td>
       <td>
-         <span v-if="showForm">
-          <input  v-model="vehicle.cost">
-        </span>
-        <span v-else>
             {{ item.cost }}
-        </span>
       </td>
       <td>
-         <span v-if="showForm">
-          <input  v-model="vehicle.deposit">
-        </span>
-        <span v-else>
-            {{ item.deposit }}
-        </span>
+
+         {{ item.deposit }}
+
       </td>
       <td>
-         <span v-if="showForm">
-          <input  v-model="vehicle.stock">
-        </span>
-        <span v-else>
+
             {{ item.stock }} - {{ item.onHire}} = {{item.inStock}}
-         </span>
+
       </td>
       <td>
       <form action="javascript:void(0);">
-       <span v-if="showForm">
-            <button v-on:click="save(item)">Save</button>
-        </span>
-        <span v-else>
-            <button v-on:click="edit(item)">Edit</button>
-        </span>
+
+            <button v-on:click="rentVehicle(item)">Hire vehicle</button>
+
         </form>
       </td>
     </tr>
@@ -72,7 +37,7 @@ import FieldSelect from '../form/FieldSelect'
 import GarageService from '@/services/GarageService'
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['item', 'makes', 'models','reload'],
+   props: ['item', 'reload'],
    data () {
         return {
           response: [],
@@ -89,18 +54,20 @@ export default {
           FieldSelect
         },
        methods: {
-         edit () {
+         rentVehicle () {
          //These must be delcated in the data block above the this items or must be the direct object queried
-           return GarageService.fetchName('rental/'+this.item.id)
+           return GarageService.fetchName('hireVehicle/'+this.item.id)
              .then((res) => {
              if (res) {
                if (res.data) {
                  //this.vehicles.push(res.data) // <2>
+
                  //this.vehicle = {name: '', make: null, model: null, driver: null}
-                 this.showForm=true;
-                 this.vehicle=this.item;
-                 console.log('json '+JSON.stringify(res.data));
-                 this.retrievedVehicle=res.data
+                 //this.showForm=true;
+                 //this.vehicle=this.item;
+                 //console.log('json '+JSON.stringify(res.data));
+                 //this.retrievedVehicle=res.data
+
                }
              }
            });

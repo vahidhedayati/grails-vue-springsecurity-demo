@@ -64,6 +64,11 @@ Vue.use(VueAuthenticate, {
 
 Vue.config.productionTip = false;
 
+// Global event bus
+Vue.prototype.$eventHub = new Vue();
+//using   this.$root.$emit('rental-counter',this.counter); rather than
+//declaring above  then calling   this.$eventHub.$emit('rental-counter',this.counter);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

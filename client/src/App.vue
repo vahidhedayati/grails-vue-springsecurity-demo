@@ -6,7 +6,15 @@
 
 <script>
 export default {
-  name: 'App'
-
+  name: 'App',
+  watch: {
+    $route(to, from) {
+      console.log('after', this.$route.path);
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('before', this.$route.path);
+    next();
+  }
 }
 </script>

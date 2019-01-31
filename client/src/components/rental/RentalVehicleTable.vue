@@ -2,8 +2,7 @@
   <table class="table">
     <thead class="thead-inverse">
       <tr>
-        <th>ID</th>
-        <th>Name</th>
+
         <th>Make</th>
         <th>Model</th>
         <th>Cost Per day</th>

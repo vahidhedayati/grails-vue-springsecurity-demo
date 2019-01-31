@@ -24,9 +24,10 @@
         <div class="col-sm-2">
           <field-select v-model="search.model" :field="'Model'" :item="item.model.id" :obj="item.model" :values="models"></field-select>
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-3">
           <div class="btn-group" role="group" aria-label="Search Contracts">
             <button type="button" class="btn btn-success" @click="submit()">Search</button>
+            <button type="button" class="btn btn-primary" v-on:click="hideSearch">Back to offers</button>
           </div>
         </div>
       </div>
@@ -38,7 +39,7 @@
   import moment from 'moment';
 
   export default {
-    props: ['search','item','makes', 'models'],
+    props: ['search','item','makes', 'models','hideSearch'],
     model: {
       prop: 'search',
       event: 'change',

@@ -18,6 +18,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      props: true,
       name: "Home",
       component: Home ,
       meta: { requiresAuth:false}
@@ -64,6 +65,7 @@ const router = new Router({
       path: '/rental',
       name: "rental",
       component: Rental ,
+      props: true,
       meta: { requiresAuth: false}
     },
     {
@@ -72,7 +74,6 @@ const router = new Router({
       component: Garage ,
       meta: { requiresAuth: true , roles:['ROLE_ADMIN', 'ROLE_DRIVER']}
     },
-    ,
     {
       path: '/custom',
       name: 'custom', // <1>
