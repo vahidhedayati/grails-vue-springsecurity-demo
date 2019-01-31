@@ -22,7 +22,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		//[pattern: '/api/logout',      access: ['permitAll']],
 		//[pattern: '/api/searchUser/**',      access: ['permitAll']],
 		[pattern: '/guest/availableHires',       access: ['permitAll']],
-		[pattern: '/api/hireVehicle',       access: ['permitAll']],
+		[pattern: '/guest/hireVehicle',       access: ['permitAll']],
 		[pattern: '/guest/rental',       access: ['permitAll']],
 
 		[pattern: '/vehicle/export',       access: ['permitAll']],
@@ -45,6 +45,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/**/favicon.ico', filters: 'none'],
 		[pattern: '/vehicle/export', filters: 'none'],
 		[pattern: '/oauth/access_token', filters: 'none'],
+		[pattern: '/guest/hireVehicle', filters: 'none'],
 		[pattern: '/guest/availableHires', filters: 'none'],
 		[pattern: '/guest/rental', filters: 'none'],
 		//Traditional chain

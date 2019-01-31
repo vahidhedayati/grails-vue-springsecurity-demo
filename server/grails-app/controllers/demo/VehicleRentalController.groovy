@@ -30,7 +30,10 @@ class VehicleRentalController {
     }
 
     def hireVehicle(VehicleHireBean bean) {
+        println "kkkkkk"
 
+        println "hireVehicle--  ${bean.vehicle?.name} -- ${bean?.driver} ${bean?.driver?.name}"
+        render
 
     }
     def search() {

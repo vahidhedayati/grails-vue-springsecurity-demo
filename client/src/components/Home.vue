@@ -57,7 +57,6 @@
     },
     created () {
       this.loggedIn=((JSON.parse(localStorage.getItem('vuex')).user.token)?true:false)
-
     },
 
   beforeUpdate: function (from, to, next) {

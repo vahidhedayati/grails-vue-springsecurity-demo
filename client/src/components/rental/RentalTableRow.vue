@@ -56,7 +56,9 @@ export default {
        methods: {
          rentVehicle () {
          //These must be delcated in the data block above the this items or must be the direct object queried
-           return GarageService.fetchName('hireVehicle/'+this.item.id)
+           const userId=JSON.parse(localStorage.getItem('vuex')).user.profile.id
+           //console.log('---'+JSON.stringify(JSON.parse(localStorage.getItem('vuex')).user))
+           return GarageService.fetchRoot('/guest/hireVehicle?vehicle.id='+this.item.id+'&driver.id='+(userId?userId:''))
              .then((res) => {
              if (res) {
                if (res.data) {

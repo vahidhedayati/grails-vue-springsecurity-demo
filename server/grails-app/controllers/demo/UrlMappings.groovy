@@ -19,7 +19,7 @@ class UrlMappings {
         post "/api/customRest"(controller:'customRest',action:'save')
 
         get "/guest/availableHires"(controller:'vehicleRental', action:'listDefaults')
-        get "/api/hireVehicle"(controller:'vehicleRental', action:'hireVehicle')
+        get "/guest/hireVehicle"(controller:'vehicleRental', action:'hireVehicle')
 
         get "/guest/rental"(controller:'vehicleRental', action:'index')
         post "/guest/rental"(controller:'vehicleRental',action:'save')
