@@ -17,20 +17,25 @@
           <input type="text" class="form-control" placeholder="vehicle Name" v-model.trim="search.vehicleName">
         </div>
       </div>
-        </span>
-        <div class="col-sm-2">
-          <field-select v-model="search.make" :field="'Make'" :item="item.make.id" :obj="item.make" :values="makes"></field-select>
-        </div>
-        <div class="col-sm-2">
-          <field-select v-model="search.model" :field="'Model'" :item="item.model.id" :obj="item.model" :values="models"></field-select>
-        </div>
-        <div class="col-sm-3">
-          <div class="btn-group" role="group" aria-label="Search Contracts">
-            <button type="button" class="btn btn-success" @click="submit()">Search</button>
-            <button type="button" class="btn btn-primary" v-on:click="hideSearch">Back to offers</button>
-          </div>
+
+
+      </span>
+      <div class="col-sm-2">
+        <field-select :class="showAllSearch?'':'hidden'" v-model="search.make" :field="'Make'" :item="item.make.id" :obj="item.make" :values="makes"></field-select>
+      </div>
+      <div class="col-sm-2">
+        <field-select :class="showAllSearch?'':'hidden'" v-model="search.model" :field="'Model'" :item="item.model.id" :obj="item.model" :values="models"></field-select>
+      </div>
+      <div class="col-sm-3">
+        <div class="btn-group" role="group" aria-label="Search Contracts">
+            <span v-if="showAllSearch">
+          <button type="button" class="btn btn-success" @click="submit()">Search</button>
+            </span>
+
+          <button type="button" class="btn btn-primary" v-on:click="hideSearch">Back to offers</button>
         </div>
       </div>
+    </div>
   </div>
 </template>
 <script>
