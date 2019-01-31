@@ -149,14 +149,15 @@
         console.log('hiding')
         this.showSearch=false;
       },
+      //this.fetchModels(),
+      // this.fetchModels(),
+      //this.fetchMakes(),
       fetchData: async function () {
         try {
           Promise.all([
             //this.fetchVehicles(0),
             this.listDefaults(),
-            this.fetchModels(),
-            this.fetchModels(),
-            this.fetchMakes(),
+
 
           ])
         } catch (error) {
@@ -165,7 +166,7 @@
       },
       initialiseVehicles(params){
 
-        return GarageService.fetchName('rental?'+params)
+        return GarageService.fetchRoot('/guest/rental?'+params)
           .then((res) => {
           if (res) {
             console.log(' rees'+JSON.stringify(res))
@@ -234,7 +235,7 @@
         this.initialiseVehicles(variables);
       },
       searchVehicles: function () {
-        //console.log("searching vehicles "+this.search.make)
+        //console.log("searching vehicles ------------ "+this.search.make)
         console.log("searching vehicles "+$.param(this.search))
         var variables = $.param(this.search);
         if (this.search.returnDate1) {
@@ -257,6 +258,7 @@
         });
       },
       fetchMakes: function () {
+        console.log('getting makes ------------------------');
         return GarageService.fetchName('make')
           .then((res) => {
           if (res) {
@@ -268,7 +270,7 @@
         });
       },
       listDefaults: function () {
-        return GarageService.fetchName('availableHires')
+        return GarageService.fetchRoot('/guest/availableHires')
           .then((res) => {
           if(res) {
             if (res.data) {

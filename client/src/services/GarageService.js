@@ -1,5 +1,8 @@
 import Api from '@/services/Api'
-
+import axios from 'axios'
+const instance = axios.create({
+  baseURL: `http://localhost:8080/`
+})
 export default {
   fetchParams (component,params) {
     return Api().get(component, {params:params })
@@ -37,6 +40,18 @@ export default {
             console.log('Error', error.message);
         }
     });
+  },
+  fetchRoot (component) {
+    return instance.get(component)
+      .catch((error) => {
+      if (error.response) {
+      console.log(error.response);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+  });
   },
   createName (component, params) {
     return Api().post(component, params)

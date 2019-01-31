@@ -4,7 +4,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.web.databinding.DataBindingUtils
 
-@Secured(['ROLE_DRIVER'])
+@Secured(['permitAll'])
 class VehicleRentalController {
 
     static responseFormats = ['json']
@@ -27,6 +27,11 @@ class VehicleRentalController {
 
     def listDefaults() {
         render vehicleHireService.listDefaults(params) as JSON
+    }
+
+    def hireVehicle(VehicleHireBean bean) {
+
+
     }
     def search() {
         def jsonResponse = vehicleHireService.search(params)
