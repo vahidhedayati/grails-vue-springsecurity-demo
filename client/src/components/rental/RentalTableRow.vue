@@ -1,29 +1,18 @@
 <template id="tablerow-template" xmlns="http://www.w3.org/1999/xhtml">
     <tr>
-
-      <td>
-            {{ item.make.name }}
+      <td>{{ item.make.name }}</td>
+      <td>{{ item.model.name }}</td>
+      <td>{{ item.cost }}</td>
+      <td>{{ item.deposit }}</td>
+      <td>{{item.inStock}}</td>
+      <td class="rating">
+        <span v-bind:class="{'rating-active' :checkRating(n, item.rating)}" v-for="n in 5">☆</span>
       </td>
-      <td>
-           {{ item.model.name }}
-      </td>
-      <td>
-            {{ item.cost }}
-      </td>
-      <td>
-
-         {{ item.deposit }}
-
-      </td>
-      <td>
-
-            {{ item.stock }} - {{ item.onHire}} = {{item.inStock}}
-
-      </td>
+      <td>{{item.regPlate}}</td>
       <td>
       <form action="javascript:void(0);">
 
-            <button v-on:click="rentVehicle(item)">Hire vehicle</button>
+            <button v-show="item.inStock>0" v-on:click="rentVehicle(item)">Hire vehicle</button>
 
         </form>
       </td>
@@ -76,6 +65,9 @@ export default {
 
 
         },
+         checkRating(n, rating) {
+           return rating - n >= 0;
+         },
         save() {
           const newName = this.vehicle;
           //console.log( {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}} +" <<>>"+JSON.stringify(newName)+"---------");
@@ -104,5 +96,16 @@ export default {
 
 <!-- Per Component Custom CSS Rules -->
 <style>
-  /* Add custom rules here */
+  .rating-active:before {
+    content: "\2605";
+    position: absolute;
+    color:gold;
+  }
+  .rating {
+  }
+  .rating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+  }
 </style>

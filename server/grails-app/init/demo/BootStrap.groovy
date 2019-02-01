@@ -63,7 +63,9 @@ class BootStrap {
             values.vehicle=new Vehicle(name: "Vehice ${i}", driver: values.driver, make: values.make, model: values.model).save()
             cost=cost+(i*5)
             deposit=deposit-(i*2)
-            values.rentalVehicle=new VehicleHire(name: "Rental Vehice ${i}", make: values.make, model: values.model, cost: cost, deposit: deposit, stock: 10).save()
+            values.rentalVehicle=new VehicleHire(name: "Rental Vehice ${i}", registrationPlate: "REG-${i}",
+                    rating:r.nextInt(5)  as byte,
+                    make: values.make, model: values.model, cost: cost, deposit: deposit, stock: 10).save()
 
             bootStrapContent."${i}"=values
         }

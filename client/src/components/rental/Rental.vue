@@ -186,7 +186,6 @@
           }
         });
       },
-
       activateSearch(vehicle) {
         this.showSearch=true;
         this.item.make.id=vehicle.makeId;

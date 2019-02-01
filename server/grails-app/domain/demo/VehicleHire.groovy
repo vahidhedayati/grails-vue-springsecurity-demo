@@ -13,6 +13,10 @@ class VehicleHire extends BaseVehicle {
     Double deposit
 
     int stock
+
+    byte rating
+    String registrationPlate
+
     static constraints = {
         //name unique: true
     }

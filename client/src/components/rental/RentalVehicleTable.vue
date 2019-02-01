@@ -2,12 +2,13 @@
   <table class="table">
     <thead class="thead-inverse">
       <tr>
-
         <th>Make</th>
         <th>Model</th>
         <th>Cost Per day</th>
         <th>Deposit</th>
         <th>Stock</th>
+        <th>Rating</th>
+        <th>Registration Plate</th>
         <th>Action</th>
       </tr>
     </thead>

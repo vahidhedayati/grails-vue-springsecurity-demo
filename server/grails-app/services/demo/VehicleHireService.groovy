@@ -39,7 +39,7 @@ class VehicleHireService {
           select new map (rv.id as id, rv.stock as stock, rv.deposit as deposit,
             rv.cost as cost,rv.name as vehicleName, 
                                 m.name as makeName, 
-                                o.name as modelName,
+                                o.name as modelName, rv.rating as rating, rv.registrationPlate as regPlate,
             (select count(*) from VehicleContract vc where vc.vehicle.id = rv.id and vc.returnDate is null) as onHire,  
             (coalesce(rv.stock - (select count(*) from VehicleContract vc where vc.vehicle.id = rv.id and vc.returnDate is null),0) ) as inStock,    
             rv.make as make, rv.model as model) from VehicleHire rv  join rv.make m join rv.model o
