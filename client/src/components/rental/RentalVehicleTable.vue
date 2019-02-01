@@ -1,4 +1,5 @@
 <template id="fulltable-template" xmlns="http://www.w3.org/1999/xhtml">
+  <div>
   <table class="table">
     <thead class="thead-inverse">
       <tr>
@@ -17,17 +18,30 @@
                  :makes="makes"
                  :models="models"
                  :reload="reload"
+                 v-model="result"
                  ></table-row>
   </table>
+    {{result}}
+  <hire-modal  v-bind="{result}"
+               :show="result"
+               @close="result = null"></hire-modal>
+  </div>
 </template>
 
 <script>
 import TableRow from './RentalTableRow.vue'
-
+import HireModal from './HireModal';
 export default {
    props: ['vehicles', 'reload', 'makes', 'models'],
+  data: function () {
+    return {
+      result:{},
+      showModal:false,
+    }
+  },
   components: {
-    TableRow
+    TableRow,
+    HireModal,
   }
 }
 </script>

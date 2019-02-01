@@ -11,8 +11,7 @@
       <td>{{item.regPlate}}</td>
       <td>
       <form action="javascript:void(0);">
-
-            <button v-show="item.inStock>0" v-on:click="rentVehicle(item)">Hire vehicle</button>
+        <button v-show="item.inStock>0" v-on:click="rentVehicle(item)">Hire vehicle</button>
 
         </form>
       </td>
@@ -22,8 +21,9 @@
 
 <script>
 //This is needed for the select component to work
-import FieldSelect from '../form/FieldSelect'
-import GarageService from '@/services/GarageService'
+import FieldSelect from '../form/FieldSelect';
+import GarageService from '@/services/GarageService';
+
 export default {
     //You must declare what is being passed in otherwise they wont work..
    props: ['item', 'reload'],
@@ -44,6 +44,7 @@ export default {
         },
        methods: {
          rentVehicle () {
+           this.updateValue(this.item );
          //These must be delcated in the data block above the this items or must be the direct object queried
            const userId=JSON.parse(localStorage.getItem('vuex')).user.profile.id
            //console.log('---'+JSON.stringify(JSON.parse(localStorage.getItem('vuex')).user))
@@ -65,6 +66,9 @@ export default {
 
 
         },
+         updateValue: function (value) {
+           this.$emit('input', value);
+         },
          checkRating(n, rating) {
            return rating - n >= 0;
          },
