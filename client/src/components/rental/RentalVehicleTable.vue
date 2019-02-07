@@ -21,7 +21,7 @@
                  v-model="result"
                  ></table-row>
   </table>
-    {{result}}
+   Current results from vehicle selection =  {{result}}
   <hire-modal  v-bind="{result,rentalContract}"
                :show="result && result.id"
 

@@ -9,12 +9,12 @@ class VehicleContract {
 
     String contractName
 
-    BaseVehicle vehicle
+    VehicleHire vehicle
 
     Date fromDate
     Date toDate
 
-    User driver
+    RentalDriver driver
 
     Date dateCreated
     Date lastUpdated

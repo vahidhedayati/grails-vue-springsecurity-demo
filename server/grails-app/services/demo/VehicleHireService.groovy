@@ -92,7 +92,7 @@ class VehicleHireService {
             if (!role) {
                 role = new Role(authority: "ROLE_DRIVER").save()
             }
-            bean.driver= new Driver(name: bean.name, username: bean.username, password: bean.password).save()
+            bean.driver= new RentalDriver(name: bean.name, username: bean.username, password: bean.password).save()
             UserRole.create( bean.driver, role, true)
         } else {
             println "Driver was already logged in "

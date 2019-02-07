@@ -6,15 +6,11 @@ import grails.rest.Resource
 
 @GrailsCompileStatic
 @Secured(['ROLE_DRIVER'])
-@Resource(uri = '/api/driver')
-class Driver extends RentalDriver {
+@Resource(uri = '/api/rentaldriver')
+class RentalDriver extends User {
 
+    String name
 
-    static hasMany = [ vehicles: Vehicle ]
-
-    static constraints = {
-        vehicles nullable: true
-    }
 
     String toString() {
 

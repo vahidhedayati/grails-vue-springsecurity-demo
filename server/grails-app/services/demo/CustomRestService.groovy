@@ -20,7 +20,7 @@ class CustomRestService {
         def sortChoice = sorts.findIndexOf { it == bean.sort }
 
 
-        String table = "VehicleContract c left join c.vehicle v left join v.driver d join v.make m join v.model o"
+        String table = "VehicleContract c left join c.vehicle v left join c.driver d join v.make m join v.model o"
 
         /**
          * This is where it cross joins to another table to check the history for return date
@@ -60,7 +60,7 @@ class CustomRestService {
             whereParams.vehicleName = '%' + bean.vehicleName.toLowerCase() + '%'
         }
         if (bean.driver) {
-            where = addClause(where, "c.vehicle.driver.id=:driverId")
+            where = addClause(where, "c.driver.id=:driverId")
             whereParams.driverId = bean.driver?.id
         }
 
@@ -85,7 +85,7 @@ class CustomRestService {
         def results = VehicleContract.executeQuery(query, whereParams, metaParams)
         int total = results.size()
         if (total >= metaParams.max) {
-            total = VehicleContract.executeQuery("select count(*) from VehicleContract c " + where, whereParams, [readOnly: true, timeout: 15, max: 1])[0]
+            total = VehicleContract.executeQuery("select count(*) from  "+table+ where, whereParams, [readOnly: true, timeout: 15, max: 1])[0]
         } else {
             total += metaParams.offset as Long
         }
