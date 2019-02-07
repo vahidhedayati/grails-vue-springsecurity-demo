@@ -14,8 +14,8 @@ class CustomRestService {
     def search(bean) {
         String where = ''
         Map whereParams = [:]
-        List sorts = ['id', 'contractName', 'vehicleName', 'makeName', 'modelName', 'driverName']
-        List sorts2 = ['id', 'contractName', 'vehicleName', 'makeName', 'modelName', 'driverName']
+        List sorts = ['id', 'contractName', 'vehicleName', 'makeName', 'modelName', 'driverName', 'fromDate','toDate']
+        List sorts2 = ['id', 'contractName', 'vehicleName', 'makeName', 'modelName', 'driverName', 'fromDate','toDate']
 
         def sortChoice = sorts.findIndexOf { it == bean.sort }
 
@@ -28,20 +28,22 @@ class CustomRestService {
 
         String additionalQuery = ''
         if (bean.returnDate) {
-            table = "VehicleContract c, VehicleHistory h join c.vehicle v join v.driver d join v.make m join v.model o"
-
-            where = addClause(where, "h.contract.id=c.id")
-
-            where = addClause(where, "h.returnDate<=:returnDate")
+          //  table = "VehicleContract c, VehicleHistory h join c.vehicle v join v.driver d join v.make m join v.model o"
+          //  where = addClause(where, "h.contract.id=c.id")
+            //where = addClause(where, "h.returnDate<=:returnDate")
+            where = addClause(where, "c.returnDate<=:returnDate")
             whereParams.returnDate = bean.returnDate
 
-            additionalQuery = "h.returnDate as returnDate, "
+            //additionalQuery = "h.returnDate as returnDate, "
 
         }
         String query = """
             select new map(     c.id as id, 
                                 v.id as vehicleId,
+                                c.returnDate as returnDate,
                                 c.contractName as contractName,
+                                c.fromDate as fromDate,
+                                c.toDate as toDate,
                                 v.name as vehicleName, 
                                 m.name as makeName, 
                                 o.name as modelName,

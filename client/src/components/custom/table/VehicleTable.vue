@@ -1,4 +1,5 @@
 <template id="fulltable-template" xmlns="http://www.w3.org/1999/xhtml">
+  <div>
   <table class="table">
     <thead class="thead-inverse">
       <tr>
@@ -52,7 +53,24 @@
            desc: (this.column ==='driverName' && this.currentSortDir==='desc')}">
           </span>
         </th>
+        <th @click="sort('fromDate')" :class="{active: this.column === 'fromDate'}">
+          From Date
+          <span :class="{blank:(this.column != 'fromDate'),
+          arrow: (this.column === 'fromDate'),
+          asc: (this.column === 'fromDate' && this.currentSortDir==='asc'),
+           desc: (this.column ==='fromDate' && this.currentSortDir==='desc')}">
+          </span>
+        </th>
+        <th @click="sort('toDate')" :class="{active: this.column === 'toDate'}">
+          To Date
+          <span :class="{blank:(this.column != 'toDate'),
+          arrow: (this.column === 'toDate'),
+          asc: (this.column === 'toDate' && this.currentSortDir==='asc'),
+           desc: (this.column ==='toDate' && this.currentSortDir==='desc')}">
+          </span>
+        </th>
         <th>Action</th>
+
       </tr>
     </thead> <!--1-->
       <!-- sortedCats replaces vehicles and is only sorting by current paginated dataset -->
@@ -61,20 +79,31 @@
                  :makes="makes"
                  :models="models"
                  v-bind="{fetchVehicles}"
+                 v-model="result"
                  :drivers="drivers"></table-row> <!--2-->
   </table>
+
+  <rental-hire-modal  v-bind="{result,rentalContract}"
+               :show="result && result.id"
+
+               @close="result = null"></rental-hire-modal>
+  </div>
 </template>
 
 <script>
-import TableRow from './TableRow.vue' // <3>
+import TableRow from './TableRow.vue';
+import RentalHireModal from './ReturnHireModal';
 
 export default {
    props: ['vehicles', 'reload', 'makes', 'models', 'drivers','fetchVehicles','sortSearch'],
   components: { // <3>
-    TableRow
+    TableRow,
+    RentalHireModal
   },
   data: function () {
   return {
+    result:{},
+    rentalContract:{returnDate:'',id:'',rating:0},
     currentSort:'contractName',
     currentSortDir:'asc',
     column:'id',
@@ -140,6 +169,9 @@ export default {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 4px solid #42b983;
+  }
+  th.active {
+    color:orange !important;
   }
 
 

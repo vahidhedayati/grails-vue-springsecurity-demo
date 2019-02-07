@@ -83,7 +83,7 @@
     console.log('aaaaaaaaabefore', this.$route.path);
     next();
   },
-    method: {
+    methods: {
       emitCounter() {
         console.log('emitting')
         //this.$emit("counter", this.counter);

@@ -92,8 +92,6 @@ class BootStrap {
                     VehicleContract vehicleContract = new VehicleContract(contractName: values.driver.name + " contract for ${period}",
                         vehicle: values.vehicle, fromDate: calendar.getTime(),returnDate: yesterday,
                         toDate: endCalendar.getTime(), driver: values.driver).save()
-
-
                     VehicleHistory vehicleHistory = new VehicleHistory(contract: vehicleContract, returnDate: endCalendar.getTime(), checkedOutBy: driver1, checkedInBy: driver2).save();
 
                     contractsHistory<< [contract:vehicleContract,history:vehicleHistory]
