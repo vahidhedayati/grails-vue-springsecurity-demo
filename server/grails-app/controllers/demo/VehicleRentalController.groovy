@@ -3,6 +3,7 @@ package demo
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.web.databinding.DataBindingUtils
+import org.springframework.context.MessageSource
 
 @Secured(['permitAll'])
 class VehicleRentalController {
@@ -10,7 +11,7 @@ class VehicleRentalController {
     static responseFormats = ['json']
 
     def vehicleHireService
-
+    MessageSource messageSource
 
     def index(){
         println "rental index ${params}"
@@ -42,8 +43,37 @@ class VehicleRentalController {
         render jsonResponse
     }
 
+    /**
+     * This is the pop up dialog offering either a form for a guest user to provide username/name/password and rental from/toDates
+     * or it is an existing user and they provide from / to dates
+     * both types also provide vehicle.id which is what they clicked
+     * @return
+     */
     def save() {
-        //TODO
+        def jsonParams = request.JSON
+        println "saving jsonParams = ${jsonParams}"
+        VehicleHireBean bean = new VehicleHireBean()
+        DataBindingUtils.bindObjectToInstance(bean, jsonParams)
+        bean.validate()
+        try {
+            if (!bean.hasErrors()) {
+                println "all done"
+
+                vehicleHireService.save(bean)
+                def done = [success: true]
+                render done as JSON
+                return
+            }
+        } catch (Throwable e ){
+        //   bean.errors=e
+            println "--- ${e} 0000000000000"
+
+        }
+        println "-------- ${bean.errors}"
+        //def msg = messageSource.getMessage('my.localized.content', ['Juan', 'lunes'] as Object[], 'Default Message', request.locale)
+        def errors = [error: bean.errors.fieldErrors.collect{messageSource.getMessage(it, request.locale)}]
+        println "-- ${errors}"
+        render errors as JSON, status: 409
     }
 
 

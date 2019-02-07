@@ -69,6 +69,10 @@ export default {
     return Api().post(component, params)
 
   },
+  createRootNoCatch (component, params) {
+    return instance.post(component, params)
+
+  },
   update(component,params) {
 
     return Api().patch(component, params)

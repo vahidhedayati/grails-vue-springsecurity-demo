@@ -14,7 +14,7 @@ class VehicleContract {
     Date fromDate
     Date toDate
 
-    Driver driver
+    User driver
 
     Date dateCreated
     Date lastUpdated

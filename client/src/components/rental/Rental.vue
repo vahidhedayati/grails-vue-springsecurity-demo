@@ -4,7 +4,7 @@
       header-image="retail"
       header-text="Arrrr welcome to the shop"
     ></app-header>
-    {{searchDetails}}- {{counter}} - {{showSearch  }} -- {{enableSearch}}
+
     <span v-if="enableSearch" >
     <search-form v-model="search"
                  :makes="makes"

@@ -16,13 +16,22 @@ class VehicleHireBean implements Validateable {
     String name
     String password
 
+    Date fromDate
+    Date toDate
 
 
     static constraints = {
-        driver(nullable:true)
-        username(nullable:true)
-        name(nullable:true)
-        password(nullable:true)
+        driver(nullable:true, validator:checkDriver)
+        username(nullable:true,size:5..15, matches: "[a-zA-Z0-9]+")
+        name(nullable:true,minSize: 2,maxSize: 200)
+        password(nullable:true,size:5..15)
+
+    }
+
+    static def checkDriver= { val, obj, errors ->
+        if (!val &&  (!obj.username ||!obj.name ||!obj.password)) {
+            errors.rejectValue(propertyName, "invalid.driver")
+        }
     }
 
     VehicleHireBean() {}

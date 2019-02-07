@@ -1,6 +1,10 @@
 <template id="tablerow-template" xmlns="http://www.w3.org/1999/xhtml">
     <tr>
-      <td>{{ item.make.name }}</td>
+
+      <td>
+        <span class="hidden">{{ item.id}}</span>
+        <span>{{ item.make.name }}</span>
+      </td>
       <td>{{ item.model.name }}</td>
       <td>{{ item.cost }}</td>
       <td>{{ item.deposit }}</td>
@@ -46,6 +50,8 @@ export default {
          rentVehicle () {
            this.updateValue(this.item );
          //These must be delcated in the data block above the this items or must be the direct object queried
+
+           /*
            const userId=JSON.parse(localStorage.getItem('vuex')).user.profile.id
            //console.log('---'+JSON.stringify(JSON.parse(localStorage.getItem('vuex')).user))
            return GarageService.fetchRoot('/guest/hireVehicle?vehicle.id='+this.item.id+'&driver.id='+(userId?userId:''))
@@ -64,6 +70,7 @@ export default {
              }
            });
 
+           */
 
         },
          updateValue: function (value) {

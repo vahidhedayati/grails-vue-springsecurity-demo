@@ -1,5 +1,7 @@
 package demo
 
+import grails.gorm.transactions.Transactional
+
 class VehicleHireService {
 
 
@@ -77,6 +79,44 @@ class VehicleHireService {
 
     private String addClause(String where,String clause) {
         return (where ? where + ' and ' : 'where ') + clause
+    }
+
+    @Transactional
+    def save(VehicleHireBean bean) {
+        println "saving"
+        if (!bean.driver) {
+            println "no user found creating a new authenticating user"
+
+            //we know this is a guest user so lets add the user and set the bean's driver details
+            Role role =Role.findByAuthority('ROLE_DRIVER')
+            if (!role) {
+                role = new Role(authority: "ROLE_DRIVER").save()
+            }
+            bean.driver= new Driver(name: bean.name, username: bean.username, password: bean.password).save()
+            UserRole.create( bean.driver, role, true)
+        } else {
+            println "Driver was already logged in "
+        }
+
+        VehicleContract vc = new VehicleContract()
+        vc.vehicle=bean.vehicle
+        //Can't figure out why it saves properly but custom listing can't bind to driver object - really unusual
+        vc.driver=bean.driver
+        vc.fromDate=bean.fromDate
+        vc.toDate=bean.toDate
+        vc.contractName="""${bean.vehicle.name} hired to ${bean.driver.name} 
+                (${bean.fromDate.format('dd-MMM-yyyy')}/${bean.toDate.format('dd-MMM-yyyy')}) """
+        if (!vc.save(flush:true)) {
+            println "vcerrors: ${vc.errors}"
+        }
+
+        println " vc = ${vc.id} ${vc.driver}"
+
+
+
+
+
+
     }
 
 }

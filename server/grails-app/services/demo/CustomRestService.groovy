@@ -20,7 +20,7 @@ class CustomRestService {
         def sortChoice = sorts.findIndexOf { it == bean.sort }
 
 
-        String table = "VehicleContract c join c.vehicle v join v.driver d join v.make m join v.model o"
+        String table = "VehicleContract c left join c.vehicle v left join v.driver d join v.make m join v.model o"
 
         /**
          * This is where it cross joins to another table to check the history for return date

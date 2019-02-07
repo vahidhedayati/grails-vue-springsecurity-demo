@@ -22,8 +22,9 @@
                  ></table-row>
   </table>
     {{result}}
-  <hire-modal  v-bind="{result}"
-               :show="result"
+  <hire-modal  v-bind="{result,rentalContract}"
+               :show="result && result.id"
+
                @close="result = null"></hire-modal>
   </div>
 </template>
@@ -37,6 +38,7 @@ export default {
     return {
       result:{},
       showModal:false,
+      rentalContract:{driver:{id:''},username:'', name:'',password:'',vehicle:{id:''}, fromDate:'',toDate:'',fromDate1:'',toDate1:''},
     }
   },
   components: {

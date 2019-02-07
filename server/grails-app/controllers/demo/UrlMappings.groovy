@@ -20,6 +20,7 @@ class UrlMappings {
 
         get "/guest/availableHires"(controller:'vehicleRental', action:'listDefaults')
         get "/guest/hireVehicle"(controller:'vehicleRental', action:'hireVehicle')
+       // post "/guest/saveHire"(controller:'vehicleRental',action:'save')
 
         get "/guest/rental"(controller:'vehicleRental', action:'index')
         post "/guest/rental"(controller:'vehicleRental',action:'save')
