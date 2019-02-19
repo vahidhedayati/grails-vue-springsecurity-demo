@@ -48,7 +48,8 @@ class CustomRestService {
                                 m.name as makeName, 
                                 o.name as modelName,
                                 ${additionalQuery}
-                                d.name as driverName
+                                d.name as driverName,
+                                d.id as driverId
                           )
                 from  ${table}
             """

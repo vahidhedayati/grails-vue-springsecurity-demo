@@ -10,10 +10,11 @@
     </div>
     <div class="modal-body">
       <div>
-        <input type="hidden"  v-model="rentalContract.id" value="">
-
+        <input type="hidden"  v-model="rentalContract.contract.id" value="">
+        <input type="hidden"  v-model="rentalContract.user.id" value="">
       </div>
-      <div class="col-sm-6  rating" id="ratingContainer">
+      <div class="col-sm-12  rating" id="ratingContainer">
+        <label>Provide a rating back</label><br/>
         <!-- this binds the number selected to current value which then calls checkRating to set the class -->
         <span  v-bind:class="{'rating-active' :checkRating(n, rentalContract.rating)}"
                v-on:click="checkRating1(n)" v-for="n in 5" v-model="rentalContract.rating">
@@ -22,8 +23,8 @@
       </div>
 
       <div>
-         <span class="col-sm-6 dateField">
-        return date
+         <span class="col-sm-12 dateField">
+           <label>return date</label><br/>
         <datepicker v-model="rentalContract.returnDate1" class="dateField" required></datepicker>
         </span>
 
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-  import $ from 'jquery';
+  //import $ from 'jquery';
   import GarageService from '@/services/GarageService'
   import Datepicker from 'vuejs-datepicker';
   import modal from '../../Modal'
@@ -66,14 +67,14 @@
       this.authRecord=JSON.parse(localStorage.getItem('vuex')).auth.isAuthenticated;
       // Some unusual behaviour around :value="userId"
       //https://forum.vuejs.org/t/conflict-v-bind-value-with-v-model/34118
-      //this.rentalContract.driver.id=this.authRecord.id;
+      this.rentalContract.user.id=this.authRecord.id;
     },
     beforeUpdate: function() {
       // Some unusual behaviour around :value="userId"
       //https://forum.vuejs.org/t/conflict-v-bind-value-with-v-model/34118
       //console.log(' result' +JSON.stringify(this.result))
       if (this.result && this.result.id ) {
-      //  this.rentalContract.vehicle.id=this.result.id;
+        this.rentalContract.contract.id=this.result.id;
       } else {
         this.close();
 
@@ -91,8 +92,9 @@
       checkRating1(n) {
         this.rentalContract.rating=n;
         /**
-         * One was was jquery to bind the class - but actually setting the actual object value and defining another checkRating for class
-         * of overall object which calls the 2nd checkRating below does exactly the same - this is much much shorter now
+         * One way was to use jquery to bind the active class -
+         * but by setting the actual object value above and defining another checkRating for class
+         * of overall rate span which calls the checkRating below function and does exactly the same as below jquery code - but much much shorter now
          *
          *
 
@@ -111,14 +113,12 @@
       savePost: function () {
         // Some save logic goes here...
 
-        if (this.rentalContract.fromDate1) {
-          this.rentalContract.fromDate=moment(this.rentalContract.fromDate1).format('DD MMM YYYY')
+        if (this.rentalContract.returnDate1) {
+          this.rentalContract.returnDate=moment(this.rentalContract.returnDate1).format('DD MMM YYYY')
         }
-        if (this.rentalContract.toDate1) {
-          this.rentalContract.toDate=moment(this.rentalContract.toDate1).format('DD MMM YYYY')
-        }
+
         console.log(' > '+JSON.stringify(this.rentalContract))
-        return GarageService.createRootNoCatch('/guest/rental',this.rentalContract)
+        return GarageService.createRootNoCatch('/guest/returnRental',this.rentalContract)
           .then((res) => {
           if (res) {
             if (res.data) {

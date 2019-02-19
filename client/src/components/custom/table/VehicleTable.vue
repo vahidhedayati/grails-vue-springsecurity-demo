@@ -103,7 +103,7 @@ export default {
   data: function () {
   return {
     result:{},
-    rentalContract:{returnDate:'',id:'',rating:0},
+    rentalContract:{returnDate:'',id:'',rating:0, contract:{id:''}, user:{id:''}},
     currentSort:'contractName',
     currentSortDir:'asc',
     column:'id',

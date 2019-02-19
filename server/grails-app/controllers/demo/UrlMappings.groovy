@@ -24,6 +24,7 @@ class UrlMappings {
 
         get "/guest/rental"(controller:'vehicleRental', action:'index')
         post "/guest/rental"(controller:'vehicleRental',action:'save')
+        post "/guest/returnRental"(controller:'vehicleRental',action:'saveReturn')
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')
         "404"(view: '/notFound')

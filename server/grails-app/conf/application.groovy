@@ -11,6 +11,9 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'demo.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'demo.UserRole'
 grails.plugin.springsecurity.authority.className = 'demo.Role'
 
+grails.plugin.springsecurity.useSecurityEventListener = true
+
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/',               access: ['permitAll']],
 		[pattern: '/error',          access: ['permitAll']],
@@ -24,7 +27,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/guest/availableHires',       access: ['permitAll']],
 		[pattern: '/guest/hireVehicle',       access: ['permitAll']],
 		[pattern: '/guest/rental',       access: ['permitAll']],
-
+		[pattern: '/guest/returnRental',       access: ['permitAll']],
 		[pattern: '/vehicle/export',       access: ['permitAll']],
 		[pattern: '/**/js/**',       access: ['permitAll']],
 		[pattern: '/**/css/**',      access: ['permitAll']],
@@ -48,6 +51,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/guest/hireVehicle', filters: 'none'],
 		[pattern: '/guest/availableHires', filters: 'none'],
 		[pattern: '/guest/rental', filters: 'none'],
+		[pattern: '/guest/returnRental', filters: 'none'],
 		//Traditional chain
 		//[
 		//		pattern: '/**',

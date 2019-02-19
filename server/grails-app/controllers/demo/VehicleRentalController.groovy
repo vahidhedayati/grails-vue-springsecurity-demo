@@ -12,6 +12,7 @@ class VehicleRentalController {
 
     def vehicleHireService
     MessageSource messageSource
+    def springSecurityService
 
     def index(){
         println "rental index ${params}"
@@ -77,4 +78,34 @@ class VehicleRentalController {
     }
 
 
+
+    def saveReturn() {
+        def jsonParams = request.JSON
+        //def user = springSecurityService.currentUser
+        //println " user = ${user} ${springSecurityService.principal} vs ${session.username}"
+        //println "saving jsonParams = ${jsonParams}"
+        VehicleHireReturnBean bean = new VehicleHireReturnBean()
+        DataBindingUtils.bindObjectToInstance(bean, jsonParams)
+        bean.validate()
+        println "update user = ${bean.user}"
+        try {
+            if (!bean.hasErrors()) {
+                println "all done"
+
+                vehicleHireService.saveReturn(bean)
+                def done = [success: true]
+                render done as JSON
+                return
+            }
+        } catch (Throwable e ){
+            //   bean.errors=e
+            println "--- ${e} 0000000000000"
+
+        }
+        println "-------- ${bean.errors}"
+        //def msg = messageSource.getMessage('my.localized.content', ['Juan', 'lunes'] as Object[], 'Default Message', request.locale)
+        def errors = [error: bean.errors.fieldErrors.collect{messageSource.getMessage(it, request.locale)}]
+        println "-- ${errors}"
+        render errors as JSON, status: 409
+    }
 }

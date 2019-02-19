@@ -109,13 +109,27 @@ class VehicleHireService {
         if (!vc.save(flush:true)) {
             println "vcerrors: ${vc.errors}"
         }
-
+        VehicleHistory vh = new VehicleHistory()
+        vh.contract=vc
+        vh.checkedOutBy=bean.driver
+        vh.save()
         println " vc = ${vc.id} ${vc.driver}"
+    }
 
+    @Transactional
+    def saveReturn(VehicleHireReturnBean bean) {
 
+        bean.contract.vehicle.rating=bean.rating
+        bean.contract.returnDate=bean.returnDate
 
+        bean.contract.save()
 
-
+        VehicleHistory vh = VehicleHistory.findByContract(bean.contract)
+        if (vh) {
+            vh.returnDate=bean.returnDate
+            vh.checkedInBy=bean.user
+            vh.save()
+        }
 
     }
 

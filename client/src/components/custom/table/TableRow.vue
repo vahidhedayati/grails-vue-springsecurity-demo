@@ -6,7 +6,13 @@
       <td>{{ item.vehicleName }}</td>
       <td>{{ item.makeName }}</td>
       <td>{{ item.modelName }}</td>
-      <td>{{ item.driverName }}</td>
+      <td>
+      <span class="hidden">{{ item.driverId}}</span>
+        <span>
+
+        {{ item.driverName }}
+          </span>
+      </td>
       <td>{{ item.fromDate | shortMoment() }}</td>
       <td>{{ item.toDate | shortMoment() }}</td>
 
