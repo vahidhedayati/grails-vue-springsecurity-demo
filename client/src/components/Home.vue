@@ -16,7 +16,9 @@
     <router-link :to="{name: 'shop'}">
       <button class="btn btn-xs btn-success">Shop</button>
     </router-link>
-
+    <router-link :to="{name: 'examples'}">
+      <button class="btn btn-xs btn-success">Examples</button>
+    </router-link>
 
   <router-link v-show="!loggedIn" :to="{name: 'Login'}">
 
@@ -42,68 +44,10 @@
 
   </router-link>
 
-    <my-component3></my-component3>
-    <button v-on:click="incrementCounter">Increment Counter</button>
-    <my-component :my-counter.sync="ccounter"></my-component>
-
-    <my-component2 :my-info="message" inline-template>
-      <span>
-        <b>
-          inline-template - {{myInfo}}
-        </b>
-      </span>
-    </my-component2>
-
-    <form-component
-      :author="authorLabel"
-      :title="titleLabel">
-
-    </form-component>
-
   </div>
 </template>
 <script>
-  const FormComponent ={
-    template: `
-  <span>
-    <form>
-      <slot></slot>
-      <label for="title">{{title}}</label> <input id="title" type="text" />
-      <label for="author">{{author}}</label><input id="author" type="text" />
-
-    </form>
-  </span>
-
-  `,
-    props: ['title', 'author']
-  }
-  const MyComponent2 = {
-    props: ['myInfo']
-  };
-  const MyComponent3= {
-    template:'<span><button v-on:click="counter +=1">{{counter}} cc</button></span>',
-    data() {
-      return {
-        counter: 0
-      }
-    }
-  }
-  const MyComponent = {
-    template: `<span>
-      <button v-on:click="childIncrementCounter">Increment From Child {{this.myCounter}}</button>
-    </span>`,
-    methods: {
-      childIncrementCounter() {
-        this.$emit('update:myCounter', this.myCounter+1);
-      }
-    },
-    props:['my-counter']
-  }
-
   export default {
-
-    components:{'my-component': MyComponent,MyComponent2,MyComponent3,FormComponent},
-
     data() {
       return {
         loggedIn:false,
@@ -146,15 +90,10 @@
   },
 
     methods: {
-      childIncrementCounter() {
-        this.$emit('update:myCounter', this.myCounter+1);
-      },
+
       emitCounter() {
         console.log('emitting')
         //this.$emit("counter", this.counter);
-      },
-      incrementCounter() {
-        this.ccounter++;
       }
     },
   }

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Garage from '@/components/Garage'
+import Examples from '@/components/Examples'
 import Custom from '@/components/custom/Custom'
 import Rental from '@/components/rental/Rental'
 import Login from '@/components/login/Login'
@@ -21,6 +22,13 @@ const router = new Router({
       props: true,
       name: "Home",
       component: Home ,
+      meta: { requiresAuth:false}
+    },
+    {
+      path: '/examples',
+      props: true,
+      name: "examples",
+      component: Examples ,
       meta: { requiresAuth:false}
     },
     {
