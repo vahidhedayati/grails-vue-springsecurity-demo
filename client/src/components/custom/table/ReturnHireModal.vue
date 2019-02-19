@@ -13,8 +13,12 @@
         <input type="hidden"  v-model="rentalContract.id" value="">
 
       </div>
-      <div class="col-sm-6  rating">
-        <span v-on:click="checkRating1(n)" v-for="n in 5" v-model="rentalContract.rating">☆</span>
+      <div class="col-sm-6  rating" id="ratingContainer">
+        <!-- this binds the number selected to current value which then calls checkRating to set the class -->
+        <span  v-bind:class="{'rating-active' :checkRating(n, rentalContract.rating)}"
+               v-on:click="checkRating1(n)" v-for="n in 5" v-model="rentalContract.rating">
+          ☆
+        </span>
       </div>
 
       <div>
@@ -36,6 +40,7 @@
 </template>
 
 <script>
+  import $ from 'jquery';
   import GarageService from '@/services/GarageService'
   import Datepicker from 'vuejs-datepicker';
   import modal from '../../Modal'
@@ -84,9 +89,21 @@
         this.body = '';
       },
       checkRating1(n) {
-        return 5 - n >= 0;
+        this.rentalContract.rating=n;
+        /**
+         * One was was jquery to bind the class - but actually setting the actual object value and defining another checkRating for class
+         * of overall object which calls the 2nd checkRating below does exactly the same - this is much much shorter now
+         *
+         *
 
-       // (n, rentalContract.rating)}
+          $('#ratingContainer').find('span').removeClass('rating-active')
+          $('#ratingContainer span').each(function (i) {
+            if (i+1 <= Number(n)) {
+              $(this).addClass('rating-active')
+            }
+          })
+
+         */
       },
       checkRating(n, rating) {
         return rating - n >= 0;
