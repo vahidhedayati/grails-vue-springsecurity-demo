@@ -39,13 +39,49 @@
 
   <router-link v-show="loggedIn" :to="{name: 'Logout'}">
     <button class="btn btn-xs btn-success">Logout</button>
+
   </router-link>
 
+    <my-component3></my-component3>
+    <button v-on:click="incrementCounter">Increment Counter</button>
+    <my-component :my-counter.sync="ccounter"></my-component>
 
+    <my-component2 :my-info="message" inline-template>
+      <div>
+        <p>
+          inline-template - {{myInfo}}
+        </p>
+      </div>
+    </my-component2>
   </div>
 </template>
 <script>
+  const MyComponent2 = {
+    props: ['myInfo']
+  };
+  const MyComponent3= {
+    template:'<div><button v-on:click="counter +=1">{{counter}} cc</button></div>',
+    data() {
+      return {
+        counter: 0
+      }
+    }
+  }
+  const MyComponent = {
+    template: `<div>
+      <button v-on:click="childIncrementCounter">Increment From Child {{this.myCounter}}</button>
+    </div>`,
+    methods: {
+      childIncrementCounter() {
+        this.$emit('update:myCounter', this.myCounter+1);
+      }
+    },
+    props:['my-counter']
+  }
+
   export default {
+
+    components:{'my-component': MyComponent,MyComponent2,MyComponent3},
 
     data() {
       return {
@@ -53,6 +89,8 @@
         counter:0,
         lastPath:'',
         lastCounter:0,
+        message: 'Hello World',
+        ccounter: 0
       }
     },
     created () {
@@ -83,11 +121,18 @@
     console.log('aaaaaaaaabefore', this.$route.path);
     next();
   },
+
     methods: {
+      childIncrementCounter() {
+        this.$emit('update:myCounter', this.myCounter+1);
+      },
       emitCounter() {
         console.log('emitting')
         //this.$emit("counter", this.counter);
+      },
+      incrementCounter() {
+        this.ccounter++;
       }
-    }
+    },
   }
 </script>
