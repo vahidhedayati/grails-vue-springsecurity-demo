@@ -47,20 +47,41 @@
     <my-component :my-counter.sync="ccounter"></my-component>
 
     <my-component2 :my-info="message" inline-template>
-      <div>
-        <p>
+      <span>
+        <b>
           inline-template - {{myInfo}}
-        </p>
-      </div>
+        </b>
+      </span>
     </my-component2>
+
+    <form-component
+      :author="authorLabel"
+      :title="titleLabel">
+
+    </form-component>
+
   </div>
 </template>
 <script>
+  const FormComponent ={
+    template: `
+  <span>
+    <form>
+      <slot></slot>
+      <label for="title">{{title}}</label> <input id="title" type="text" />
+      <label for="author">{{author}}</label><input id="author" type="text" />
+
+    </form>
+  </span>
+
+  `,
+    props: ['title', 'author']
+  }
   const MyComponent2 = {
     props: ['myInfo']
   };
   const MyComponent3= {
-    template:'<div><button v-on:click="counter +=1">{{counter}} cc</button></div>',
+    template:'<span><button v-on:click="counter +=1">{{counter}} cc</button></span>',
     data() {
       return {
         counter: 0
@@ -68,9 +89,9 @@
     }
   }
   const MyComponent = {
-    template: `<div>
+    template: `<span>
       <button v-on:click="childIncrementCounter">Increment From Child {{this.myCounter}}</button>
-    </div>`,
+    </span>`,
     methods: {
       childIncrementCounter() {
         this.$emit('update:myCounter', this.myCounter+1);
@@ -81,7 +102,7 @@
 
   export default {
 
-    components:{'my-component': MyComponent,MyComponent2,MyComponent3},
+    components:{'my-component': MyComponent,MyComponent2,MyComponent3,FormComponent},
 
     data() {
       return {
@@ -90,6 +111,8 @@
         lastPath:'',
         lastCounter:0,
         message: 'Hello World',
+        titleLabel: 'The Title:',
+        authorLabel: 'The Author:',
         ccounter: 0
       }
     },
