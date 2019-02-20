@@ -1,5 +1,7 @@
 <template>
-  <div>
+
+    <div class="navbar navbar-default">
+      <div class="navbar-header">
   <router-link  v-show="loggedIn"  :to="{name: 'Profile'}" >
     <button class="btn btn-xs btn-danger">Profile</button>
   </router-link>
@@ -50,6 +52,7 @@
   </router-link>
 
   </div>
+    </div>
 </template>
 <script>
   export default {
