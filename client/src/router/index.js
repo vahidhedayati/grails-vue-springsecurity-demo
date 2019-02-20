@@ -14,6 +14,7 @@ import Profile from '@/components/account/Profile'
 import EditProfile from '@/components/account/EditProfile'
 import Form from '@/components/petstore/Form'
 import Main from '@/components/petstore/Main'
+import Main2 from '@/components/petstore/Main2'
 import Product from '@/components/petstore/Product'
 import EditProduct from '@/components/petstore/EditProduct'
 Vue.use(Router);
@@ -100,7 +101,7 @@ const router = new Router({
     {
       path: '/petstore',
       name: 'petstore',
-      component: Main,
+      component: Main2,
       props: true,
     },
     {

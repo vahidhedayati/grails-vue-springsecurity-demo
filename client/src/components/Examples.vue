@@ -32,9 +32,9 @@
       <hr/>
       Dynamic content<br/>
     <button @click="cycle">Cycle</button>
-    <h1>
-      <component :is="currentView"/>
-    </h1>
+      <transition name="component-fade" mode="out-in">
+        <component :is="currentView"/>
+      </transition>
     </div>
 
 
@@ -58,10 +58,56 @@
       </template>
     </book-component2>
     </div>
+    <div class="col-sm-3">
+      <div @click="show = !show">
+        <h2>{{title}}</h2>
+      </div>
+      <transition name="bounce">
+        <div v-if="show">
+          <h1>{{description}}</h1>
+        </div>
+      </transition>
+      JS Hooks example<br/>
+      <transition name="fade"
+                  @before-enter="beforeEnter"
+                  @enter="enter"
+                  @after-enter="afterEnter"
+                  @enter-cancelled="enterCancelled"
+                  @before-leave="beforeLeave"
+                  @leave="leave"
+                  @after-leave="afterLeave"
+                  @leave-cancelled="leaveCancelled"
+                  :css="false">
+        <div v-if="show">
+          <h1>{{description}}</h1>
+        </div>
+      </transition>
+    </div>
+    <div class="col-sm-3">
+      <div v-bind:class="[show1 ? blurClass : '', backClass]">
+        <h1> Transition Demo</h1>
+      </div>
+      <button @click="show1 = !show1">
+        Toggle
+      </button>
+      <transition name="fade">
+        <div v-if="show1">
+          <h1>{{demo}}</h1>
+        </div>
+      </transition>
+    </div>
   </div>
+
 </template>
 <script>
   import AppHeader from './AppHeader'
+  function addEventListener(el, done) {
+    el.addEventListener("animationend", function() {
+      el.style="";
+      done();
+    });
+  };
+
   const BookComponent2 ={
     template: `
   <div>
@@ -169,7 +215,14 @@
           {author: 'Avery Katz', title: 'The Life And Times Of Avery' }
         ],
 
-        ccounter: 0
+        ccounter: 0,
+        title: 'War and Peace',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elim',
+        show: false,
+        demo: 'Transition Me',
+        show1: false,
+        backClass: 'bk',
+        blurClass: 'blur'
       }
     },
 
@@ -189,8 +242,88 @@
           this.currentView = BookComponent
         else
           this.currentView = this.currentView === BookComponent ? FormComponent2 : HeaderComponent;
+      },
+      enter(el, done) {
+        console.log("enter");
+        addEventListener(el,done);
+        el.style.animationName = "bounceIn"
+        el.style.animationDuration = "1.5s";
+      },
+      leave(el, done) {
+        console.log("leave");
+        addEventListener(el,done);
+        el.style.animationName = "bounceIn"
+        el.style.animationDuration = "1.5s";
+        el.style.animationDirection="reverse";
+      },
+      beforeEnter(el) {
+        console.log("before enter");
+      },
+      afterEnter(el) {
+        console.log("after enter");
+      },
+      enterCancelled(el) {
+        console.log("enter cancelled");
+      },
+      beforeLeave(el) {
+        console.log("before leave");
+      },
+      afterLeave(el) {
+        console.log("after leave");
+      },
+      leaveCancelled(el) {
+        console.log("leave cancelled");
       }
     },
 
   }
 </script>
+<style>
+  .bounce-enter-active {
+    animation: bounceIn 2s;
+  }
+  .bounce-leave-active {
+    animation: bounceIn 2s reverse;
+  }
+
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0.1);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .component-fade-enter-active, .component-fade-leave-active {
+    transition: opacity 2.0s ease;
+  }
+  .component-fade-enter, .component-fade-leave-to {
+    opacity: 0;
+  }
+
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 2.5s ease-out;
+
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+
+  }
+
+  .bk {
+    transition: all 0.1s ease-out;
+  }
+
+  .blur {
+    filter: blur(2px);
+    opacity: 0.4;
+  }
+
+</style>
