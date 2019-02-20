@@ -1,9 +1,11 @@
 <template>
   <div id="custom">
     <app-header></app-header>
+
     <div class="col-sm-3">
     <my-component3></my-component3>
     </div>
+
     <div class="col-sm-3">
     <button v-on:click="incrementCounter">Increment Counter</button>
     <my-component :my-counter.sync="ccounter"></my-component>
@@ -18,6 +20,7 @@
       </span>
     </my-component2>
     </div>
+
     <div class="col-sm-3">
       Name scoped<br/>
     <form-component
@@ -47,7 +50,6 @@
     </div>
 
     <div class="col-sm-3">
-
     <book-component2 :books="books">
       <h1 slot="header">{{header}}</h1>
       <template slot="book" slot-scope="props">
@@ -58,6 +60,8 @@
       </template>
     </book-component2>
     </div>
+
+
     <div class="col-sm-3">
       <div @click="show = !show">
         <h2>{{title}}</h2>
@@ -83,6 +87,8 @@
         </div>
       </transition>
     </div>
+
+
     <div class="col-sm-3">
       <div v-bind:class="[show1 ? blurClass : '', backClass]">
         <h1> Transition Demo</h1>
@@ -96,11 +102,83 @@
         </div>
       </transition>
     </div>
+
+
+    <div class="col-sm-3">
+      <hello-world id="app" level="5" name="Erik">4</hello-world>
+    </div>
+
+    <div class="col-sm-3">
+    <p v-style-me>
+      {{welcome}}
+    </p>
+    <div v-style-me>Hi everybody</div>
+    </div>
+
+
+    <div class="col-sm-12">
+      <div class="col-md-3 col-md-offset-2">
+        <my-comp1 class="comp1"></my-comp1>
+      </div>
+      <div class="col-md-3">
+        <h2 class="text-center">Or</h2>
+      </div>
+      <div class="col-md-3">
+        <my-comp2 class="comp2"></my-comp2>
+      </div> <!--end col-md-2-->
+    </div><!-- end row -->
   </div>
+
 
 </template>
 <script>
   import AppHeader from './AppHeader'
+
+
+  const myButton = {
+    methods: {
+      pressed(val) {
+        alert(val);
+      }
+    },
+    data() {
+      return {
+        item: ''
+      }
+    }
+  }
+
+  const comp1 = {
+    template: `<div>
+    <h1>Enter Email</h1>
+    <form>
+      <div class="form-group">
+        <input v-model="item" type="email" class="form-control" placeholder="Email Address"/>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-lg" @click.prevent="pressed(item)">Press Button 1</button>
+      </div>
+    </form>
+    </div>`,
+    mixins: [myButton]
+
+  }
+  const comp2 = {
+    template: `<div>
+    <h1>Enter Number</h1>
+      <form>
+        <div class="form-group">
+            <input v-model="item" class="form-control" placeholder="Phone Number"/>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-warning btn-lg" @click.prevent="pressed(item)">Press Button 2</button>
+        </div>
+      </form>
+    </div>`,
+    mixins:[myButton],
+
+  }
+
   function addEventListener(el, done) {
     el.addEventListener("animationend", function() {
       el.style="";
@@ -196,7 +274,11 @@
       'book-component': BookComponent,
       'form-component2': FormComponent2,
       'header-component': HeaderComponent,
-      MyComponent2,MyComponent3,MyComponent5,FormComponent,AppHeader,BookComponent2},
+      myComp1: comp1,
+      myComp2: comp2,
+      MyComponent2,MyComponent3,MyComponent5,FormComponent,AppHeader,BookComponent2,
+
+    },
 
 
     data() {
@@ -222,10 +304,19 @@
         demo: 'Transition Me',
         show1: false,
         backClass: 'bk',
-        blurClass: 'blur'
+        blurClass: 'blur',
+        welcome: 'Hello World'
       }
     },
-
+    directives: {
+      styleMe(el, binding, vnode, oldVnode) {
+        bind: {
+          el.style.color = "blue"
+          el.style.fontSize = "42px";
+          el.className = "text-center";
+        }
+      }
+    },
     methods: {
       childIncrementCounter() {
         this.$emit('update:myCounter', this.myCounter+1);

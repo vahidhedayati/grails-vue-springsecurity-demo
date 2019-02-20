@@ -64,6 +64,42 @@ Vue.use(VueAuthenticate, {
 
 Vue.config.productionTip = false;
 
+//Global mixin
+Vue.mixin({
+  methods: {
+    pressed(val) {
+      alert(val);
+    }
+  },
+  data() {
+    return {
+      item: ''
+    }
+  }
+});
+
+//global component used in example.vue
+Vue.component('hello-world',{
+    render(createElement) {
+      return createElement(`h${this.$slots.default[0].text}`,
+        {
+          'class' : 'text-center',
+          on: {
+            click(e) {
+              alert('Clicked')
+            }
+          }
+        },
+        this.msg + this.name)
+    },
+    data() {
+      return {
+        msg: 'Hello World '
+      }
+    },
+    props: ['name', 'level']
+  }
+)
 // Global event bus
 Vue.prototype.$eventHub = new Vue();
 //using   this.$root.$emit('rental-counter',this.counter); rather than
