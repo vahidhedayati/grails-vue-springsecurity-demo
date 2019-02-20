@@ -157,16 +157,23 @@
       }
     },
     actions: {
-
+      increment(context, payload) {
+        setTimeout(function(){
+          context.commit('increment',payload);
+        },2000);
+      }
     },
     getters: {
-      blah(state) {
-        return state.blah
+      msg(state) {
+        return state.msg.toUpperCase();
+      },
+      count(state) {
+        return state.count;
       }
     }
 
   });
-  const { mapGetters } = Vuex;
+ // const { mapGetters } = Vuex;
 
 
   const myButton = {
@@ -354,10 +361,13 @@
     },
     computed: {
       welcome2() {
-        return store.state.msg
+        //return store.state.msg
+        return store.getters.msg;
+
       },
       counter2() {
-        return store.state.count;
+        //return store.state.count;
+        return store.getters.count;
       },
     },
 
