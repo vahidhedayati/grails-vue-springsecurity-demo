@@ -8,7 +8,7 @@ class VehicleHireBean implements Validateable {
     VehicleHire vehicle
 
     //Will be bound if the current user is existing driver
-    Driver driver
+    RentalDriver driver
 
     //Otherwise if no driver we capture new driver here
     //When we get rental from a new user - we need to capture their reqirements to sign up
