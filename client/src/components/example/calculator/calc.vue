@@ -1,5 +1,9 @@
 <script>
+  import AppHeader from '@/components/AppHeader'
   export default {
+    components: {
+      AppHeader
+    },
     data(){
       return {
         calculator: {
@@ -98,6 +102,7 @@
 
 <template>
   <div class="container">
+    <app-header></app-header>
     <div class="calculator">
       <div class="prev">{{ calculator.previous || '' }} {{ calculator.sign }}</div>
       <div class="display">{{ calculator.current || '0' }}</div>

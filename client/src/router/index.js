@@ -12,6 +12,10 @@ import Cart from '@/components/shoppingCart/Cart'
 import Home from '@/components/Home'
 import Profile from '@/components/account/Profile'
 import EditProfile from '@/components/account/EditProfile'
+import Form from '@/components/petstore/Form'
+import Main from '@/components/petstore/Main'
+import Product from '@/components/petstore/Product'
+import EditProduct from '@/components/petstore/EditProduct'
 Vue.use(Router);
 
 const router = new Router({
@@ -93,6 +97,36 @@ const router = new Router({
       name: 'Login',
       component: Login
     },
+    {
+      path: '/petstore',
+      name: 'petstore',
+      component: Main,
+      props: true,
+    },
+    {
+      path: '/product/:id',
+      name: 'Id',
+      component: Product,
+      props: true,
+      children: [
+        {
+          path: 'edit',
+          name: 'Edit',
+          component: EditProduct,
+          props: true
+        }
+      ]
+    },
+    {
+      path: '/form',
+      name: 'Form',
+      component: Form,
+      props: true
+    },
+    {
+      path: '*',
+      redirect:"/"
+    }
   ],
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {

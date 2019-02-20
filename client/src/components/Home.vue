@@ -1,8 +1,13 @@
 <template>
   <div>
-  <router-link :to="{name: 'Profile'}" >
+  <router-link  v-show="loggedIn"  :to="{name: 'Profile'}" >
     <button class="btn btn-xs btn-danger">Profile</button>
   </router-link>
+
+
+    <router-link :to="{name: 'petstore'}" >
+      <button class="btn btn-xs btn-danger">Pet store</button>
+    </router-link>
 
 
     <router-link :to="{name: 'testcalc'}">

@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <app-header></app-header>
     <h4>Profilo</h4>
     <p>{{profile.name}}</p>
     <p>{{profile.username}}</p>
@@ -22,7 +23,11 @@
 
 <script>
 import ProfileService from '@/services/ProfileService'
+import AppHeader from '../AppHeader'
 export default {
+  components: {
+    AppHeader
+  },
   computed: {
     profile () {
       return this.$store.state.user.profile
