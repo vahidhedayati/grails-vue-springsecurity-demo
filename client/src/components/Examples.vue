@@ -117,6 +117,13 @@
     <div v-style-me>Hi everybody</div>
     </div>
 
+    <div class="col-sm-3">
+      <h1>{{header}}</h1>
+      <h2>{{welcome2}}</h2>
+      <h3>{{counter2}}</h3>
+      <button @click="increment">Press Me</button>
+    </div>
+
 
     <div class="col-sm-12">
       <div class="col-md-3 col-md-offset-2">
@@ -135,8 +142,33 @@
 </template>
 <script>
   import AppHeader from './AppHeader'
-
   import HelloWorld2 from './HelloWorld'
+  import Vue from 'vue'
+  import Vuex from 'vuex'
+
+  const store = new Vuex.Store({
+    state: {
+      msg: 'Hello World',
+      count: 0
+    },
+    mutations: {
+      increment(state,payload) {
+        state.count += payload;
+      }
+    },
+    actions: {
+
+    },
+    getters: {
+      blah(state) {
+        return state.blah
+      }
+    }
+
+  });
+  const { mapGetters } = Vuex;
+
+
   const myButton = {
     methods: {
       pressed(val) {
@@ -320,10 +352,21 @@
         }
       }
     },
+    computed: {
+      welcome2() {
+        return store.state.msg
+      },
+      counter2() {
+        return store.state.count;
+      },
+    },
+
     methods: {
+
       childIncrementCounter() {
         this.$emit('update:myCounter', this.myCounter+1);
       },
+
       emitCounter() {
         console.log('emitting')
         //this.$emit("counter", this.counter);
@@ -331,12 +374,14 @@
       incrementCounter() {
         this.ccounter++;
       },
+
       cycle() {
         if(this.currentView === HeaderComponent)
           this.currentView = BookComponent
         else
           this.currentView = this.currentView === BookComponent ? FormComponent2 : HeaderComponent;
       },
+
       enter(el, done) {
         console.log("enter");
         addEventListener(el,done);
@@ -367,8 +412,13 @@
       },
       leaveCancelled(el) {
         console.log("leave cancelled");
+      },
+
+      increment() {
+        store.commit('increment', 10)
       }
     },
+
 
   }
 </script>
