@@ -14,7 +14,7 @@ Youtube
 --------
 [Part1 running through authentication](https://www.youtube.com/watch?v=dawm5DNSi9w)
 
-[Part2 Custom rest listing/ search / pagination/ file streaming/backend error validation](https://www.youtube.com/watch?v=4nnVnN6MWWg)
+[Part2 Custom rest listing/ search / pagination/ file streaming/backend error validation](https://www.youtube.com/watch?v=3otWzgbSg_U)
 
 
 
