@@ -106,6 +106,8 @@
 
     <div class="col-sm-3">
       <hello-world id="app" level="5" name="Erik">4</hello-world>
+
+      <HelloWorld2 header="1" name="Erik"></HelloWorld2>
     </div>
 
     <div class="col-sm-3">
@@ -134,7 +136,7 @@
 <script>
   import AppHeader from './AppHeader'
 
-
+  import HelloWorld2 from './HelloWorld'
   const myButton = {
     methods: {
       pressed(val) {
@@ -277,6 +279,7 @@
       myComp1: comp1,
       myComp2: comp2,
       MyComponent2,MyComponent3,MyComponent5,FormComponent,AppHeader,BookComponent2,
+      HelloWorld2
 
     },
 
