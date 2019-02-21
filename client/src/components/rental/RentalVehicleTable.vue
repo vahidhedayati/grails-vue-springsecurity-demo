@@ -13,9 +13,10 @@
         <th>Action</th>
       </tr>
     </thead>
-      <table-row v-for="vehicle in currentVehicles"
+      <table-row v-for="vehicle in vehicles"
                  :actualItem="vehicle" :key="vehicle.id"
                  :makes="makes"
+                 :updatedResults="currentVehicle"
                  :models="models"
                  :reload="reloadVehicles"
                  v-model="result"
@@ -43,15 +44,15 @@ export default {
     }
   },
   computed: {
-    currentVehicles() {
+    currentVehicle() {
       if (this.updatedResults) {
         var a = this.updatedResults;
-        console.log('aaa '+JSON.stringify(a))
+        console.log('returning updated vehicle from table '+JSON.stringify(a))
         this.updatedResults = null;
         return a
       } else {
-        console.log('returning normal vehicles'+JSON.stringify(this.updatedResults))
-        return this.vehicles
+        console.log('returning normal vehicle from table')
+        return this.vehicle
       }
     }
   },

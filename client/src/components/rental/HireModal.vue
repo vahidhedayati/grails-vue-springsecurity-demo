@@ -127,10 +127,10 @@
               //this.reload;
               /**
                * This sends the internalSearch results from VehicleRentalController back to called
-               * by RentalVehicleTable and results decided by  currentVehicles() inside vue page.
+               * by RentalVehicleTable and results decided by  currentVehicle() inside vue page.
                */
               setTimeout(() => {
-                this.$emit('input', res.data.instanceList);
+                this.$emit('input', res.data.instanceList[0]);
                 this.close()
             },2)
               //setTimeout(() => {},600)

@@ -62,6 +62,12 @@ class VehicleHireService {
             wp.makeId = bean.make as Long
         }
 
+        if (bean.id) {
+            println "yesss id = ${bean.id}"
+            where = addClause(where, "rv.id=:id")
+            wp.id = bean.id as Long
+        }
+
         if (bean.model) {
             where = addClause(where, "o.id=:model")
             wp.model = bean.model as Long

@@ -47,7 +47,7 @@ class VehicleRentalController {
     def internalSearch(Map paramsMap) {
         println "params = ${paramsMap}"
         def jsonResponse = vehicleHireService.search(paramsMap)
-        println "-=-- json response =  "+jsonResponse
+        println "-=--internalSearch  json response =  "+jsonResponse
         render jsonResponse as JSON
     }
     /**
@@ -68,7 +68,7 @@ class VehicleRentalController {
 
                 def  r = vehicleHireService.save(bean)
 
-               def paramsMap=[make:r.vehicle.make.id,model:r.vehicle.model.id]
+               def paramsMap=[id:jsonParams.vehicle.id]
                return internalSearch(paramsMap)
 
                // def done = [success: true]

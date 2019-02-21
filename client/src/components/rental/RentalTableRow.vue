@@ -2,20 +2,20 @@
     <tr>
 
       <td>
-        <span class="hidden">{{ actualItem.id}}</span>
-        <span>{{ actualItem.make.name }}</span>
+        <span class="hidden">{{ currentVehicle.id}}</span>
+        <span>{{ currentVehicle.make.name }}</span>
       </td>
-      <td>{{ actualItem.model.name }}</td>
-      <td>{{ actualItem.cost }}</td>
-      <td>{{ actualItem.deposit }}</td>
-      <td>{{actualItem.inStock}}</td>
+      <td>{{ currentVehicle.model.name }}</td>
+      <td>{{ currentVehicle.cost }}</td>
+      <td>{{ currentVehicle.deposit }}</td>
+      <td>{{currentVehicle.inStock}}</td>
       <td class="rating">
-        <span v-bind:class="{'rating-active' :checkRating(n, actualItem.rating)}" v-for="n in 5">☆</span>
+        <span v-bind:class="{'rating-active' :checkRating(n, currentVehicle.rating)}" v-for="n in 5">☆</span>
       </td>
-      <td>{{actualItem.regPlate}}</td>
+      <td>{{currentVehicle.regPlate}}</td>
       <td>
       <form action="javascript:void(0);">
-        <button v-show="actualItem.inStock>0" v-on:click="rentVehicle(actualItem)">Hire vehicle</button>
+        <button v-show="actualItem.inStock>0" v-on:click="rentVehicle(currentVehicle)">Hire vehicle</button>
 
         </form>
       </td>
@@ -30,7 +30,7 @@ import GarageService from '@/services/GarageService';
 
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['actualItem', 'reload'],
+   props: ['actualItem', 'reload','updatedResults'],
    data () {
         return {
           response: [],
@@ -42,6 +42,21 @@ export default {
 
         }
       },
+  computed: {
+    currentVehicle() {
+      if (this.updatedResults) {
+        console.log('returning updated TABLE ROW ' + JSON.stringify(this.updatedResults))
+        if (this.updatedResults.id === this.actualItem.id) {
+          return this.updatedResults;
+        } else {
+          return this.actualItem
+        }
+      } else {
+        console.log('returning normal VEH from row')
+        return this.actualItem
+      }
+    }
+  },
       //This is needed for the select component to work
       components: {
           FieldSelect
