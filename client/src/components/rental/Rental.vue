@@ -16,7 +16,7 @@
     <custom-table :vehicles="vehicles"
                   :makes="makes"
                   :models="models"
-
+                  @reloadVehicles="searchVehicles()"
                   v-bind="{fetchVehicles,sortSearch}"
     ></custom-table>
     </span>

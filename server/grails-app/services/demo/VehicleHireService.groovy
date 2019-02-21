@@ -116,6 +116,7 @@ class VehicleHireService {
         vh.checkedOutBy=bean.driver
         vh.save()
         println " vc = ${vc.id} ${vc.driver}"
+        return vc
     }
 
     @Transactional

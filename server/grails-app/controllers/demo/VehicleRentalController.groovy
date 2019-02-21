@@ -39,11 +39,17 @@ class VehicleRentalController {
 
     }
     def search() {
+        println "params = ${params}"
         def jsonResponse = vehicleHireService.search(params)
         println "-=-- json response =  "+jsonResponse
         render jsonResponse
     }
-
+    def internalSearch(Map paramsMap) {
+        println "params = ${paramsMap}"
+        def jsonResponse = vehicleHireService.search(paramsMap)
+        println "-=-- json response =  "+jsonResponse
+        render jsonResponse as JSON
+    }
     /**
      * This is the pop up dialog offering either a form for a guest user to provide username/name/password and rental from/toDates
      * or it is an existing user and they provide from / to dates
@@ -60,10 +66,14 @@ class VehicleRentalController {
             if (!bean.hasErrors()) {
                 println "all done"
 
-                vehicleHireService.save(bean)
-                def done = [success: true]
-                render done as JSON
-                return
+                def  r = vehicleHireService.save(bean)
+
+               def paramsMap=[make:r.vehicle.make.id,model:r.vehicle.model.id]
+               return internalSearch(paramsMap)
+
+               // def done = [success: true]
+               // render done as JSON
+               // return
             }
         } catch (Throwable e ){
         //   bean.errors=e

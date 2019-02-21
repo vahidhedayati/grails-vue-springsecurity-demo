@@ -66,7 +66,7 @@
   import modal from '../Modal'
   import moment from 'moment';
   export default {
-    props: ['show', 'actualItem', 'rentalContract','result'],
+    props: ['show', 'reloadVehicles', 'reload', 'actualItem', 'rentalContract','result'],
 
     data: function () {
       return {
@@ -122,8 +122,20 @@
           .then((res) => {
           if (res) {
             if (res.data) {
-              console.log('res'+JSON.stringify(res.data))
-              this.close();
+              console.log('resDAA----------------AA'+res.data.instanceList)
+              //this.reloadVehicles;
+              //this.reload;
+              /**
+               * This sends the internalSearch results from VehicleRentalController back to called
+               * by RentalVehicleTable and results decided by  currentVehicles() inside vue page.
+               */
+              setTimeout(() => {
+                this.$emit('input', res.data.instanceList);
+                this.close()
+            },2)
+              //setTimeout(() => {},600)
+
+              //setTimeout(() => {this.close();},600)
             } else {
               console.log(' dddd '+res.errors)
             }
