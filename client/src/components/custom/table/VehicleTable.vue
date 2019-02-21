@@ -77,6 +77,7 @@
       <table-row v-for="vehicle in vehicles"
                  :actualItem="vehicle" :key="vehicle.id"
                  :makes="makes"
+                 :updatedResults="currentVehicle"
                  :models="models"
                  v-bind="{fetchVehicles}"
                  v-model="result"
@@ -85,7 +86,7 @@
 
   <rental-hire-modal  v-bind="{result,rentalContract}"
                :show="result && result.id"
-
+                      v-model="updatedResults"
                @close="result = null"></rental-hire-modal>
   </div>
 </template>
@@ -102,6 +103,7 @@ export default {
   },
   data: function () {
   return {
+    updatedResults:null,
     result:{},
     rentalContract:{returnDate:'',id:'',rating:0, contract:{id:''}, user:{id:''}},
     currentSort:'contractName',
@@ -111,6 +113,7 @@ export default {
     currentStyle:'',
   }
 },
+
   methods: {
     sort: function (s) {
       this.column=s;
@@ -128,6 +131,17 @@ export default {
     }
   },
   computed:{
+    currentVehicle() {
+      if (this.updatedResults) {
+        var a = this.updatedResults;
+        console.log('returning updated vehicle from table '+JSON.stringify(a))
+        this.updatedResults = null;
+        return a
+      } else {
+        console.log('returning normal vehicle from table')
+        return this.vehicle
+      }
+    },
 
      //This is now ignored this was sorting based on paginated data
     //simply replace vehicle in vehicles to vehicle in sortedCats above line 14/15

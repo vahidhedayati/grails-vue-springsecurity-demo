@@ -66,7 +66,10 @@ class CustomRestService {
             where = addClause(where, "c.driver.id=:driverId")
             whereParams.driverId = bean.driver?.id
         }
-
+        if (bean.id) {
+            where = addClause(where, "c.id=:id")
+            whereParams.id = bean?.id
+        }
         if (bean.make) {
             where = addClause(where, "c.vehicle.make.id=:makeId")
             whereParams.makeId = bean.make?.id

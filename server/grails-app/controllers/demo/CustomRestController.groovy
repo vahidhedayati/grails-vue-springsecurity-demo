@@ -50,7 +50,6 @@ class CustomRestController {
         }
     }
 
-
     def save() {
         println "WE ARE IN SAVE ${request.JSON}"
         def jsonParams = request.JSON

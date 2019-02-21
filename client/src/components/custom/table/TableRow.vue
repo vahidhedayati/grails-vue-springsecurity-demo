@@ -1,27 +1,27 @@
 <template id="tablerow-template" xmlns="http://www.w3.org/1999/xhtml">
 
     <tr>
-      <td>{{ actualItem.id }}</td>
-      <td>{{ actualItem.contractName }}</td>
-      <td>{{ actualItem.vehicleName }}</td>
-      <td>{{ actualItem.makeName }}</td>
-      <td>{{ actualItem.modelName }}</td>
+      <td>{{ currentVehicle.id }}</td>
+      <td>{{ currentVehicle.contractName }}</td>
+      <td>{{ currentVehicle.vehicleName }}</td>
+      <td>{{ currentVehicle.makeName }}</td>
+      <td>{{ currentVehicle.modelName }}</td>
       <td>
-      <span class="hidden">{{ actualItem.driverId}}</span>
+      <span class="hidden">{{ currentVehicle.driverId}}</span>
         <span>
 
-        {{ actualItem.driverName }}
+        {{ currentVehicle.driverName }}
           </span>
       </td>
-      <td>{{ actualItem.fromDate | shortMoment() }}</td>
-      <td>{{ actualItem.toDate | shortMoment() }}</td>
+      <td>{{ currentVehicle.fromDate | shortMoment() }}</td>
+      <td>{{ currentVehicle.toDate | shortMoment() }}</td>
 
       <td>
-        <span v-if="actualItem.returnDate">
-        Returned {{ actualItem.returnDate | shortMoment() }}
+        <span v-if="currentVehicle.returnDate">
+        Returned {{ currentVehicle.returnDate | shortMoment() }}
         </span>
         <span v-else>
-           <button v-on:click="returnVehicle(actualItem)">Return hire vehicle</button>
+           <button v-on:click="returnVehicle(currentVehicle)">Return hire vehicle</button>
         </span>
       </td>
 
@@ -38,7 +38,7 @@ import moment from 'moment';
 import VueMoment from 'vue-moment'
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['actualItem', 'makes', 'models', 'drivers','reload'],
+   props: ['actualItem', 'makes', 'models', 'drivers','reload','updatedResults'],
    data () {
         return {
           response: [],
@@ -50,6 +50,21 @@ export default {
 
         }
       },
+  computed: {
+    currentVehicle() {
+      if (this.updatedResults) {
+        console.log('returning updated TABLE ROW ' + JSON.stringify(this.updatedResults))
+        if (this.updatedResults.id === this.actualItem.id) {
+          return this.updatedResults;
+        } else {
+          return this.actualItem
+        }
+      } else {
+        console.log('returning normal VEH from row')
+        return this.actualItem
+      }
+    }
+  },
       //This is needed for the select component to work
       components: {
           FieldSelect,

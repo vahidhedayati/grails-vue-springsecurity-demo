@@ -122,7 +122,10 @@
           .then((res) => {
           if (res) {
             if (res.data) {
-              console.log('res'+JSON.stringify(res.data))
+              console.log('res -->> '+JSON.stringify(res.data))
+
+              this.$emit('input', res.data.instanceList[0]);
+
               this.close();
             } else {
               console.log(' dddd '+res.errors)

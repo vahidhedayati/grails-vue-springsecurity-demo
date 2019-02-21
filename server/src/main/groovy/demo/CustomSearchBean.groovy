@@ -2,6 +2,8 @@ package demo
 
 class CustomSearchBean extends DefaultSearchBean {
 
+    Long id
+
     String contractName
     String vehicleName
 
@@ -20,6 +22,7 @@ class CustomSearchBean extends DefaultSearchBean {
     Double deposit
 
     static constraints={
+        id(nullable:true)
         contractName(nullable: true)
         vehicleName(nullable:true)
         driver(nullable:true)

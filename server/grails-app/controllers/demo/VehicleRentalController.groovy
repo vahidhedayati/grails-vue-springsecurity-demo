@@ -11,6 +11,7 @@ class VehicleRentalController {
     static responseFormats = ['json']
 
     def vehicleHireService
+    def customRestService
     MessageSource messageSource
     def springSecurityService
 
@@ -66,7 +67,7 @@ class VehicleRentalController {
             if (!bean.hasErrors()) {
                 println "all done"
 
-                def  r = vehicleHireService.save(bean)
+               vehicleHireService.save(bean)
 
                def paramsMap=[id:jsonParams.vehicle.id]
                return internalSearch(paramsMap)
@@ -89,6 +90,16 @@ class VehicleRentalController {
 
 
 
+    def internalCustomSearch(Map paramsMap) {
+        println "params = ${paramsMap}"
+        CustomSearchBean bean = new CustomSearchBean()
+        DataBindingUtils.bindObjectToInstance(bean, paramsMap)
+        def jsonResponse = customRestService.search(bean)
+        println "-=--internalSearch  json response =  "+jsonResponse
+        render jsonResponse as JSON
+    }
+
+
     def saveReturn() {
         def jsonParams = request.JSON
         //def user = springSecurityService.currentUser
@@ -103,9 +114,11 @@ class VehicleRentalController {
                 println "all done"
 
                 vehicleHireService.saveReturn(bean)
-                def done = [success: true]
-                render done as JSON
-                return
+                def paramsMap=[id:bean.contract.id]
+                return internalCustomSearch(paramsMap)
+                //def done = [success: true]
+                //render done as JSON
+                //return
             }
         } catch (Throwable e ){
             //   bean.errors=e
@@ -118,4 +131,6 @@ class VehicleRentalController {
         println "-- ${errors}"
         render errors as JSON, status: 409
     }
+
+
 }

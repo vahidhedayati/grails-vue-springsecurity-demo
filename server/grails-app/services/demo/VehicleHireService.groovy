@@ -146,6 +146,7 @@ class VehicleHireService {
             vh.save()
         }
 
+
     }
 
 }
