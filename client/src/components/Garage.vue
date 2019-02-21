@@ -89,13 +89,13 @@ export default {
           .then((res) => {
           if (res) {
             if (res.data.objects) {
-              ///console.log("rr "+res.data.objects)
+              console.log("rrrr "+JSON.stringify(res.data.objects))
               this.vehicles = res.data.objects;
               this.total=res.data.total;
               this.numberOfPages=res.data.numberOfPages;
             } else {
               if (res.data) {
-                //console.log("rr "+res.data.objects)
+                console.log("rr "+res.data)
                 this.vehicles = res.data;
 
               }
@@ -194,10 +194,12 @@ export default {
     },
     updateItem () {
       const newName = this.newName;
+      console.log('updating item')
       return GarageService.update('vehicle/'+this.item.id, newName)
         .then((res) => {
         if (res) {
           if (res.data) {
+            console.log(' data '+res.data)
             this.vehicles.push(res.data)
             this.vehicle = {name: '', make: null, model: null, driver: null}
 
