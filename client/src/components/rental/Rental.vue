@@ -31,7 +31,7 @@
                 <span class="label label-primary pull-right">
                 Make: {{ f.makeName }}  Model: {{f.modelName}}<br/> <br/>
                 Min Cost: {{ f.minCost }}  Max Cost: {{f.maxCost}}<br/>
-                Min Depost: {{ f.minDeposit }}  Max Deposit: {{f.maxDeposit}}<br/>
+                Min Deposit: {{ f.minDeposit }}  Max Deposit: {{f.maxDeposit}}<br/>
                 <br/>
                    <span  v-on:click="activateSearch(f)" class="lookupDeal btn btn-xs btn-danger pull-right">
                      Lookup deals
