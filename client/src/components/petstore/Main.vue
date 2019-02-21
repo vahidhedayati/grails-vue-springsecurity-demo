@@ -44,6 +44,7 @@
 </template>
 <script>
 import MyHeader from './Header.vue';
+import {mapGetters} from 'vuex';
 import axios from 'axios'
 export default {
   name: 'imain',
@@ -79,6 +80,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'session'
+    ]),
     cartItemCount() {
       return this.cart.length || '';
     },
@@ -116,13 +120,39 @@ export default {
     }
   },
   created: function() {
-    axios.get('/static/products.json').then(response => {
+     this.$store.dispatch('initStore');
+    /*axios.get('/static/products.json').then(response => {
       this.products = response.data.products;
       console.log(this.products);
     });
+    */
   }
 };
 </script>
 <style scoped>
+  .bounce-enter-active {
+    animation: shake 0.72s cubic-bezier(.37,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
 
+  @keyframes shake {
+    10%, 90% {
+      color: red;
+      transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+      color: red;
+      transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
 </style>

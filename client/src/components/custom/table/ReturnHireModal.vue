@@ -47,7 +47,7 @@
   import modal from '../../Modal'
   import moment from 'moment';
   export default {
-    props: ['show', 'item', 'rentalContract','result'],
+    props: ['show', 'actualItem', 'rentalContract','result'],
 
     data: function () {
       return {

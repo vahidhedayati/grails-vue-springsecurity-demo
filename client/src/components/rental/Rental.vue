@@ -8,7 +8,7 @@
     <span v-if="enableSearch" >
     <search-form v-model="search"
                  :makes="makes"
-                 :item="item"
+                 :actualItem="item"
                  :hide-search="hideSearch"
                  :models="models"
                  @submit="searchVehicles()"/>

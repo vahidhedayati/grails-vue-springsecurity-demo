@@ -21,10 +21,10 @@
 
       </span>
       <div class="col-sm-2">
-        <field-select :class="showAllSearch?'':'hidden'" v-model="search.make" :field="'Make'" :item="item.make.id" :obj="item.make" :values="makes"></field-select>
+        <field-select :class="showAllSearch?'':'hidden'" v-model="search.make" :field="'Make'" :actualItem="actualItem.make.id" :obj="item.make" :values="makes"></field-select>
       </div>
       <div class="col-sm-2">
-        <field-select :class="showAllSearch?'':'hidden'" v-model="search.model" :field="'Model'" :item="item.model.id" :obj="item.model" :values="models"></field-select>
+        <field-select :class="showAllSearch?'':'hidden'" v-model="search.model" :field="'Model'" :actualItem="actualItem.model.id" :obj="item.model" :values="models"></field-select>
       </div>
       <div class="col-sm-3">
         <div class="btn-group" role="group" aria-label="Search Contracts">
@@ -44,7 +44,7 @@
   import moment from 'moment';
 
   export default {
-    props: ['search','item','makes', 'models','hideSearch'],
+    props: ['search','actualItem','makes', 'models','hideSearch'],
     model: {
       prop: 'search',
       event: 'change',

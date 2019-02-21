@@ -11,7 +11,7 @@
       </tr>
     </thead> <!--1-->
       <table-row v-for="vehicle in vehicles"
-                 :item="vehicle" :key="vehicle.id"
+                 :actualItem="vehicle" :key="vehicle.id"
                  :makes="makes"
                  :models="models"
                  :reload="reload"

@@ -2,20 +2,20 @@
     <tr>
 
       <td>
-        <span class="hidden">{{ item.id}}</span>
-        <span>{{ item.make.name }}</span>
+        <span class="hidden">{{ actualItem.id}}</span>
+        <span>{{ actualItem.make.name }}</span>
       </td>
-      <td>{{ item.model.name }}</td>
-      <td>{{ item.cost }}</td>
-      <td>{{ item.deposit }}</td>
-      <td>{{item.inStock}}</td>
+      <td>{{ actualItem.model.name }}</td>
+      <td>{{ actualItem.cost }}</td>
+      <td>{{ actualItem.deposit }}</td>
+      <td>{{actualItem.inStock}}</td>
       <td class="rating">
-        <span v-bind:class="{'rating-active' :checkRating(n, item.rating)}" v-for="n in 5">☆</span>
+        <span v-bind:class="{'rating-active' :checkRating(n, actualItem.rating)}" v-for="n in 5">☆</span>
       </td>
-      <td>{{item.regPlate}}</td>
+      <td>{{actualItem.regPlate}}</td>
       <td>
       <form action="javascript:void(0);">
-        <button v-show="item.inStock>0" v-on:click="rentVehicle(item)">Hire vehicle</button>
+        <button v-show="actualItem.inStock>0" v-on:click="rentVehicle(actualItem)">Hire vehicle</button>
 
         </form>
       </td>
@@ -30,7 +30,7 @@ import GarageService from '@/services/GarageService';
 
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['item', 'reload'],
+   props: ['actualItem', 'reload'],
    data () {
         return {
           response: [],
@@ -48,13 +48,13 @@ export default {
         },
        methods: {
          rentVehicle () {
-           this.updateValue(this.item );
-         //These must be delcated in the data block above the this items or must be the direct object queried
+           this.updateValue(this.actualItem );
+         //These must be delcated in the data block above the this actualItems or must be the direct object queried
 
            /*
-           const userId=JSON.parse(localStorage.getItem('vuex')).user.profile.id
-           //console.log('---'+JSON.stringify(JSON.parse(localStorage.getItem('vuex')).user))
-           return GarageService.fetchRoot('/guest/hireVehicle?vehicle.id='+this.item.id+'&driver.id='+(userId?userId:''))
+           const userId=JSON.parse(localStorage.getactualItem('vuex')).user.profile.id
+           //console.log('---'+JSON.stringify(JSON.parse(localStorage.getactualItem('vuex')).user))
+           return GarageService.fetchRoot('/guest/hireVehicle?vehicle.id='+this.actualItem.id+'&driver.id='+(userId?userId:''))
              .then((res) => {
              if (res) {
                if (res.data) {
@@ -62,7 +62,7 @@ export default {
 
                  //this.vehicle = {name: '', make: null, model: null, driver: null}
                  //this.showForm=true;
-                 //this.vehicle=this.item;
+                 //this.vehicle=this.actualItem;
                  //console.log('json '+JSON.stringify(res.data));
                  //this.retrievedVehicle=res.data
 
@@ -83,7 +83,7 @@ export default {
           const newName = this.vehicle;
           //console.log( {id:newName.id,name:newName.name,make:{id: newName.make.id}, model:{id: newName.model.id}, driver:{id: newName.driver.id}} +" <<>>"+JSON.stringify(newName)+"---------");
           console.log(' '+JSON.stringify(newName))
-          return GarageService.update('rental/'+this.item.id, newName)
+          return GarageService.update('rental/'+this.actualItem.id, newName)
             .then((res) => {
             if (res) {
              // if (res.data) {

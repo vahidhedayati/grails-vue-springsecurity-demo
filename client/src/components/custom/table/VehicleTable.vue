@@ -75,7 +75,7 @@
     </thead> <!--1-->
       <!-- sortedCats replaces vehicles and is only sorting by current paginated dataset -->
       <table-row v-for="vehicle in vehicles"
-                 :item="vehicle" :key="vehicle.id"
+                 :actualItem="vehicle" :key="vehicle.id"
                  :makes="makes"
                  :models="models"
                  v-bind="{fetchVehicles}"

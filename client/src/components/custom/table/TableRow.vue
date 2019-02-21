@@ -1,27 +1,27 @@
 <template id="tablerow-template" xmlns="http://www.w3.org/1999/xhtml">
 
     <tr>
-      <td>{{ item.id }}</td>
-      <td>{{ item.contractName }}</td>
-      <td>{{ item.vehicleName }}</td>
-      <td>{{ item.makeName }}</td>
-      <td>{{ item.modelName }}</td>
+      <td>{{ actualItem.id }}</td>
+      <td>{{ actualItem.contractName }}</td>
+      <td>{{ actualItem.vehicleName }}</td>
+      <td>{{ actualItem.makeName }}</td>
+      <td>{{ actualItem.modelName }}</td>
       <td>
-      <span class="hidden">{{ item.driverId}}</span>
+      <span class="hidden">{{ actualItem.driverId}}</span>
         <span>
 
-        {{ item.driverName }}
+        {{ actualItem.driverName }}
           </span>
       </td>
-      <td>{{ item.fromDate | shortMoment() }}</td>
-      <td>{{ item.toDate | shortMoment() }}</td>
+      <td>{{ actualItem.fromDate | shortMoment() }}</td>
+      <td>{{ actualItem.toDate | shortMoment() }}</td>
 
       <td>
-        <span v-if="item.returnDate">
-        Returned {{ item.returnDate | shortMoment() }}
+        <span v-if="actualItem.returnDate">
+        Returned {{ actualItem.returnDate | shortMoment() }}
         </span>
         <span v-else>
-           <button v-on:click="returnVehicle(item)">Return hire vehicle</button>
+           <button v-on:click="returnVehicle(actualItem)">Return hire vehicle</button>
         </span>
       </td>
 
@@ -38,7 +38,7 @@ import moment from 'moment';
 import VueMoment from 'vue-moment'
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['item', 'makes', 'models', 'drivers','reload'],
+   props: ['actualItem', 'makes', 'models', 'drivers','reload'],
    data () {
         return {
           response: [],
@@ -71,7 +71,7 @@ export default {
          },
 
          returnVehicle() {
-           this.updateValue(this.item );
+           this.updateValue(this.actualItem );
          },
          updateValue: function (value) {
            this.$emit('input', value);
