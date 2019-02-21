@@ -25,7 +25,30 @@ class VehicleHireBean implements Validateable {
         username(nullable:true,size:5..15, matches: "[a-zA-Z0-9]+")
         name(nullable:true,minSize: 2,maxSize: 200)
         password(nullable:true,size:5..15)
+        fromDate(nullable:true)
+        toDate(nullable:true, validator:checkDates)
 
+    }
+
+
+
+    static def checkDates= { val, obj, errors ->
+        if (obj.fromDate && val) {
+            if (obj.fromDate >val) {
+                errors.rejectValue(propertyName, "invalid.fromDate")
+            } else {
+
+                //This calculates the end of the month based on fromDate and
+                //if toDate is greater than end of month it fails
+                Calendar cal = Calendar.getInstance()
+                cal.setTime(obj.fromDate)
+                int endDay  = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+                cal.set(Calendar.DAY_OF_MONTH,endDay)
+                if (val > cal.getTime()) {
+                    errors.rejectValue(propertyName, "longerThanMonth.label")
+                }
+            }
+        }
     }
 
     static def checkDriver= { val, obj, errors ->
