@@ -13,7 +13,7 @@
                  :models="models"
                  @submit="searchVehicles()"/>
 
-    <custom-table :vehicles="vehicles"
+    <custom-table :vehicles="realVehicles"
                   :makes="makes"
                   :models="models"
                   @reloadVehicles="searchVehicles()"
@@ -54,6 +54,8 @@
   import CustomTable from './RentalVehicleTable'
   import Pagination from '../Pagination'
   import moment from 'moment';
+  import { mapGetters } from 'vuex'
+
   export default {
     props: ['searchDetails','counter'],
     components: {
@@ -66,7 +68,9 @@
     data: function () {
       return {
         availableHires:[],
-        vehicles: [],
+        //vehicles: this.$store.getters.vehicles,
+        //total: this.$store.getters.total,
+       // numberOfPages: this.$store.getters.numberOfPages,
         search:{contractName:'',cost:'',deposit:'', vehicleName: '', make: {id:null}, model: {id:null}, driver: {id:null},returnDate1:'',fromDate1:'',toDate1:''},
         showSearch:false,
         vehicle: {},
@@ -80,11 +84,10 @@
         newName: '',
         drivers: [],
         serverURL: process.env.SERVER_URL,
-        total: 0,
         max: 10,
         offset: 0,
         currentPage: 1,
-        numberOfPages: 0,
+        //numberOfPages: this.$store.getters.numberOfPages,
         currentSort: '',
         currentSortDir: 'asc',
         lastPath:'',
@@ -101,7 +104,7 @@
     },
     mounted: function () {	//#E
       console.log('mounted show search'+this.showSearch);
-
+      console.log('Vehicles when mounted'+this.$store.getters.vehicles);
 
 
     },
@@ -125,6 +128,29 @@
     },	//#D
 
   computed:{
+    ...mapGetters([
+      'loadVehicles',
+      'total',
+        'numberOfPages'
+
+    ]),
+    // Create another computed property to call your mapped getter while passing the argument
+    realVehicles () {
+     // setTimeout(() => {return this.loadVehicles}, 1000)
+      //setTimeout(() => {return this.$store.getters.loadVehicles()}, 1000)
+
+      return this.loadVehicles;
+
+    },
+    // Create another computed property to call your mapped getter while passing the argument
+    realTotal () {
+      return this.total;
+    },
+    // Create another computed property to call your mapped getter while passing the argument
+    realPages () {
+      return this.numberOfPages;
+    },
+
 
     //This is now ignored this was sorting based on paginated data
     //simply replace vehicle in vehicles to vehicle in sortedCats above line 14/15
@@ -165,7 +191,14 @@
         }
       },
       initialiseVehicles(params){
+        //This is called in vehicles.js within store/modules and params passed direct
+        this.$store.dispatch( {type:'initVehicles',params:params});
+        console.log('--> store vehicles ='+JSON.stringify(this.$store.getters.loadVehicles()));
+        setTimeout(() => {console.log('--> store vehicles ='+JSON.stringify(this.$store.getters.loadVehicles()))}, 1000)
 
+
+        //no longer used
+        /*
         return GarageService.fetchRoot('/guest/rental?'+params)
           .then((res) => {
           if (res) {
@@ -185,6 +218,7 @@
 
           }
         });
+        */
       },
       activateSearch(vehicle) {
         this.showSearch=true;

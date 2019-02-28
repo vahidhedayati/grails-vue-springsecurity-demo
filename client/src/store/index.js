@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import createPersistedState from 'vuex-persistedstate'
 import products2 from './modules/products';
+import vehicles from './modules/vehicles';
 import auth from './auth'
 import user from './user'
 import cart from './cart'
@@ -21,6 +22,7 @@ const store = new Vuex.Store({
     cart,
     products,
     products2,
+    vehicles
   }
 })
 
