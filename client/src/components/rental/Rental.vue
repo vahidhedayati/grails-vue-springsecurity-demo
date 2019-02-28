@@ -193,8 +193,8 @@
       initialiseVehicles(params){
         //This is called in vehicles.js within store/modules and params passed direct
         this.$store.dispatch( {type:'initVehicles',params:params});
-        console.log('--> store vehicles ='+JSON.stringify(this.$store.getters.loadVehicles()));
-        setTimeout(() => {console.log('--> store vehicles ='+JSON.stringify(this.$store.getters.loadVehicles()))}, 1000)
+       // console.log('--> store vehicles ='+JSON.stringify(this.$store.getters.loadVehicles()));
+        //setTimeout(() => {console.log('--> store vehicles ='+JSON.stringify(this.$store.getters.loadVehicles()))}, 1000)
 
 
         //no longer used
