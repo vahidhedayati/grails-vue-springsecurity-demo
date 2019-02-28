@@ -1,6 +1,8 @@
 <template>
   <modal :show="show" @close="close">
+    <form @submit.prevent="onSubmit">
     <div class="modal-header">
+
       <h3>
         <span v-if="result">
         Return vehicle: {{result.contractName}}<hr/>
@@ -32,11 +34,14 @@
 
     </div>
     <div class="modal-footer text-right">
+      <!--
       <button class="modal-default-button" @click="savePost()">
         Save
       </button>
+      -->
+      <input class="btn btn-danger" type="submit" value="Save">
     </div>
-
+    </form>
   </modal>
 </template>
 
@@ -110,6 +115,56 @@
       checkRating(n, rating) {
         return rating - n >= 0;
       },
+      onSubmit() {
+        this.errors = []
+        if (this.rentalContract.returnDate1 && this.rentalContract.rating) {
+
+
+          if (this.rentalContract.returnDate1) {
+            this.rentalContract.returnDate=moment(this.rentalContract.returnDate1).format('DD MMM YYYY')
+          }
+
+          console.log(' > '+JSON.stringify(this.rentalContract))
+          return GarageService.createRootNoCatch('/guest/returnRental',this.rentalContract)
+            .then((res) => {
+            if (res) {
+              if (res.data) {
+                console.log('res -->> '+JSON.stringify(res.data))
+
+                this.$emit('input', res.data.instanceList[0]);
+                this.rentalContract.returnDate1=null
+                this.rentalContract.rating=null
+                this.close();
+              } else {
+                console.log(' dddd '+res.errors)
+              }
+            } else {
+              console.log('no res')
+          }
+        }).catch((error) => {
+            if (error.response) {
+            this.errors=error.response.data.error
+            error.response.data.error.forEach(function(element) {
+              console.log("..."+element);
+
+            });
+
+          } else if ( error.request) {
+            console.log("dddd"+error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+        });
+          this.close();
+
+        } else {
+
+          if(!this.rentalContract.returnDate1) this.errors.push("Return date required.")
+          if(!this.rentalContract.rating) this.errors.push("Rating required")
+
+        }
+      },
+
       savePost: function () {
         // Some save logic goes here...
 
