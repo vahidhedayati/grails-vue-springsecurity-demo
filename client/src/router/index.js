@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Garage from '@/components/Garage'
 import Examples from '@/components/Examples'
 import Custom from '@/components/custom/Custom'
+import Socks from '@/components/Socks'
 import Rental from '@/components/rental/Rental'
 import Login from '@/components/login/Login'
 import calc from '@/components/example/calculator/calc'
@@ -46,6 +47,12 @@ const router = new Router({
       path: '/testcalc',
       name: "testcalc",
       component: testcalc ,
+      meta: { requiresAuth:false}
+    },
+    {
+      path: '/socks',
+      name: "socks",
+      component: Socks ,
       meta: { requiresAuth:false}
     },
     {

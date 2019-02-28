@@ -20,6 +20,9 @@
       <button class="btn btn-xs btn-success">Calc</button>
     </router-link>
 
+      <router-link :to="{name: 'socks'}">
+        <button class="btn btn-xs btn-success">Socks</button>
+      </router-link>
     <router-link :to="{name: 'shop'}">
       <button class="btn btn-xs btn-success">Shop</button>
     </router-link>
