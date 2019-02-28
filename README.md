@@ -16,7 +16,7 @@ Youtube
 
 [Part2 Custom rest listing/ search / file streaming](https://www.youtube.com/watch?v=3otWzgbSg_U)
 
-[Part 3 - pagination / single item reload + issues arisen from it/backend error validation](https://www.youtube.com/watch?v=uQyvsWvC7w4&)
+[Part 3 - pagination / single item reload + issues arisen from it/backend error validation](https://www.youtube.com/watch?v=AWtqLsQHakA)
 
 
 
