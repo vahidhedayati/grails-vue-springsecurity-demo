@@ -2,20 +2,20 @@
     <tr>
 
       <td>
-        <span class="hidden">{{ currentVehicle.id}}</span>
-        <span>{{ currentVehicle.make.name }}</span>
+        <span class="hidden">{{ actualItem.id}}</span>
+        <span>{{ actualItem.make.name }}</span>
       </td>
-      <td>{{ currentVehicle.model.name }}</td>
-      <td>{{ currentVehicle.cost }}</td>
-      <td>{{ currentVehicle.deposit }}</td>
-      <td>{{currentVehicle.inStock}}</td>
+      <td>{{ actualItem.model.name }}</td>
+      <td>{{ actualItem.cost }}</td>
+      <td>{{ actualItem.deposit }}</td>
+      <td>{{actualItem.inStock}}</td>
       <td class="rating">
-        <span v-bind:class="{'rating-active' :checkRating(n, currentVehicle.rating)}" v-for="n in 5">☆</span>
+        <span v-bind:class="{'rating-active' :checkRating(n, actualItem.rating)}" v-for="n in 5">☆</span>
       </td>
-      <td>{{currentVehicle.regPlate}}</td>
+      <td>{{actualItem.regPlate}}</td>
       <td>
       <form action="javascript:void(0);">
-        <button v-show="actualItem.inStock>0" v-on:click="rentVehicle(currentVehicle)">Hire vehicle</button>
+        <button v-show="actualItem.inStock>0" v-on:click="rentVehicle(actualItem)">Hire vehicle</button>
 
         </form>
       </td>
@@ -43,7 +43,9 @@ export default {
         }
       },
   computed: {
-    currentVehicle() {
+
+     //No longer used - new emitted way working fine
+   /* currentVehicle() {
       if (this.updatedResults) {
         console.log('returning updated TABLE ROW ' + JSON.stringify(this.updatedResults))
         if (this.updatedResults.id === this.actualItem.id) {
@@ -56,6 +58,7 @@ export default {
         return this.actualItem
       }
     }
+    */
   },
       //This is needed for the select component to work
       components: {

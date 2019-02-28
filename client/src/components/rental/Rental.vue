@@ -16,6 +16,7 @@
     <custom-table :vehicles="realVehicles"
                   :makes="makes"
                   :models="models"
+                  @update-vehicles="updateVehicleContent"
                   @reloadVehicles="searchVehicles()"
                   v-bind="{fetchVehicles,sortSearch}"
     ></custom-table>
@@ -266,6 +267,13 @@
 
         console.log("Fetching vehicles "+pageNumber)
         this.initialiseVehicles(variables);
+      },
+
+      updateVehicleContent: function(cv) {
+        //This is the vehicle object which is emitted by RentalVehicleTable to this parent page -
+        // This now calls vuex storage and updates cache value with the new vehicle in its existing array of vehicles
+        console.log('updateing vehicle ---<<<<'+cv.id)
+        this.$store.dispatch( {type:'updateVehicles',vehicle:cv});
       },
       searchVehicles: function () {
         //console.log("searching vehicles ------------ "+this.search.make)

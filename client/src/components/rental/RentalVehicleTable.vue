@@ -13,19 +13,22 @@
         <th>Action</th>
       </tr>
     </thead>
+    <!--  :updatedResults="currentVehicle" -->
+
       <table-row v-for="vehicle in vehicles"
                  :actualItem="vehicle" :key="vehicle.id"
                  :makes="makes"
-                 :updatedResults="currentVehicle"
                  :models="models"
                  :reload="reloadVehicles"
                  v-model="result"
                  ></table-row>
   </table>
    Current results from vehicle selection =  {{result}}
+    <!-- v-model="updatedResults"  no longer used-->
   <hire-modal  v-bind="{result,rentalContract,reloadVehicles}"
                :show="result && result.id"
-               v-model="updatedResults"
+
+               @update-vehicles="updatedVehicleContent"
                @close="result = null"></hire-modal>
   </div>
 </template>
@@ -44,6 +47,8 @@ export default {
     }
   },
   computed: {
+     //no longer user
+     /*
     currentVehicle() {
       if (this.updatedResults) {
         var a = this.updatedResults;
@@ -55,6 +60,17 @@ export default {
         return this.vehicle
       }
     }
+    */
+  },
+  methods: {
+     //replaces currentVehicles work
+    updatedVehicleContent: function (vehicle) {
+      //This is actually passed in by HireModal.vue - when the user saves the save action returns
+      // actual vehicle object this is now -re-emitted which the parent page
+      // Rental.vue picks up this from custom-table tag and passes to another function
+      //which that then passes to vuex cache to update underlying vehicle with this new one
+      this.$emit('update-vehicles', vehicle);
+    },
   },
   components: {
     TableRow,

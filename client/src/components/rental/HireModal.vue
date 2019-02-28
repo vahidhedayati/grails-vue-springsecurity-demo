@@ -123,19 +123,14 @@
           if (res) {
             if (res.data) {
               console.log('resDAA----------------AA'+res.data.instanceList)
-              //this.reloadVehicles;
-              //this.reload;
-              /**
-               * This sends the internalSearch results from VehicleRentalController back to called
-               * by RentalVehicleTable and results decided by  currentVehicle() inside vue page.
-               */
-              setTimeout(() => {
-                this.$emit('input', res.data.instanceList[0]);
-                this.close()
-            },2)
-              //setTimeout(() => {},600)
 
-              //setTimeout(() => {this.close();},600)
+              //This is emitted to parent page RentalVehicleTable the current updated
+              //object as per DB once it has been saved another search was run to return
+              //just this id from search listing - this be in back end grails application
+              this.$emit('update-vehicles', res.data.instanceList[0]);
+
+              this.close()
+
             } else {
               console.log(' dddd '+res.errors)
             }

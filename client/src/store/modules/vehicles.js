@@ -9,7 +9,27 @@ const state = {
     numberOfPages: 0
 
 };
+const newObjInInitialArr = function(initialArr, newObject) {
+  let id = newObject.id;
+  let newArr = [];
+  for (let i = 0; i < initialArr.length; i++) {
+    if (id === initialArr[i].id) {
+      newArr.push(newObject);
+    } else {
+      newArr.push(initialArr[i]);
+    }
+  }
+  return newArr;
+};
 
+const updateObjectsInArr = function(initialArr, newArr) {
+  let finalUpdatedArr = initialArr;
+  for (let i = 0; i < newArr.length; i++) {
+    finalUpdatedArr = newObjInInitialArr(finalUpdatedArr, newArr[i]);
+  }
+
+  return finalUpdatedArr
+}
 const getters = {
     loadVehicles() {
       console.log('ahhh '+state.loadVehicles)
@@ -41,7 +61,15 @@ const actions = {
 
         console.log(' -STATE 00>> '+JSON.stringify(state.vehicles))
       });
-    }
+    },
+  updateVehicles:  ({commit}, vehicleObject) => {
+  console.log('updatting '+vehicleObject.vehicle.id)
+  state.loadVehicles=updateObjectsInArr(state.loadVehicles, [vehicleObject.vehicle])
+
+
+  }
+
+
 };
 
 const mutations = {
