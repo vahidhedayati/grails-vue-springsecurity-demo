@@ -18,6 +18,13 @@ class UrlMappings {
         get "/api/customRest"(controller:'customRest', action:'index')
         post "/api/customRest"(controller:'customRest',action:'save')
 
+
+        //Country config
+        get "/guest/countries"(controller:'country', action:'index')
+        post "/guest/countries"(controller:'country',action:'save')
+        get "/guest/deleteCountry"(controller:'country', action:'delete')
+        //END Country config
+
         get "/guest/availableHires"(controller:'vehicleRental', action:'listDefaults')
         get "/guest/hireVehicle"(controller:'vehicleRental', action:'hireVehicle')
        // post "/guest/saveHire"(controller:'vehicleRental',action:'save')

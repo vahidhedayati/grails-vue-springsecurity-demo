@@ -29,6 +29,13 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/guest/rental',       access: ['permitAll']],
 		[pattern: '/guest/returnRental',       access: ['permitAll']],
 		[pattern: '/vehicle/export',       access: ['permitAll']],
+
+
+		//Country specific rules added for country file - bypasses security
+		[pattern: '/guest/countries',       access: ['permitAll']],
+		[pattern: '/guest/deleteCountry',       access: ['permitAll']],
+
+
 		[pattern: '/**/js/**',       access: ['permitAll']],
 		[pattern: '/**/css/**',      access: ['permitAll']],
 		[pattern: '/**/images/**',   access: ['permitAll']],
@@ -52,6 +59,8 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/guest/availableHires', filters: 'none'],
 		[pattern: '/guest/rental', filters: 'none'],
 		[pattern: '/guest/returnRental', filters: 'none'],
+		[pattern: '/guest/countries', filters: 'none'],
+		[pattern: '/guest/deleteCountry', filters: 'none'],
 		//Traditional chain
 		//[
 		//		pattern: '/**',

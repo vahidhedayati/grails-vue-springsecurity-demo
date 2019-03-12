@@ -18,6 +18,9 @@ import Main from '@/components/petstore/Main'
 import Main2 from '@/components/petstore/Main2'
 import Product from '@/components/petstore/Product'
 import EditProduct from '@/components/petstore/EditProduct'
+//Country specific
+import Country from '@/components/country/Country'
+
 Vue.use(Router);
 
 const router = new Router({
@@ -61,6 +64,14 @@ const router = new Router({
       component: Cart ,
       meta: { requiresAuth:false}
     },
+    //Country specific
+    {
+      path: '/country',
+      name: "Country",
+      component: Country ,
+      meta: { requiresAuth:false}
+    },
+    // end country config
     {
       path: '/logout',
       name: "Logout",

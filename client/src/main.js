@@ -13,7 +13,7 @@ import './assets/css/bootstrap.css'
 import './assets/css/grails.css'
 import './assets/css/main.css'
 import VueAuthenticate from 'vue-authenticate'
-
+import {Tabs, Tab} from 'vue-tabs-component';
 
 import { currency } from './currency'
 //import VuejsDialog from "vuejs-dialog"
@@ -36,6 +36,11 @@ Vue.router = router;
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
+
+
+
+Vue.component('tabs', Tabs);
+Vue.component('tab', Tab);
 //Vue.use(require('vue-moment'));
 
 // Vue Auth
