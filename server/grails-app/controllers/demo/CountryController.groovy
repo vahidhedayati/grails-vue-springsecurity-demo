@@ -21,7 +21,7 @@ class CountryController {
     MessageSource messageSource
 
     def index(){
-        println "index hit"
+
         CountrySearchBean bean = new CountrySearchBean()
         DataBindingUtils.bindObjectToInstance(bean, params)
         bean.validate()
@@ -32,6 +32,21 @@ class CountryController {
             render results as JSON
             //return
         }
+    }
+
+
+    def patch() {
+        println "patching"
+        save()
+
+    }
+    private def internalSearch(CountrySearchBean bean) {
+        def jsonResponse = countryService.search(bean)
+        render jsonResponse as JSON
+    }
+
+    def update() {
+        save()
     }
 
     def save() {
@@ -45,18 +60,19 @@ class CountryController {
             bean.updateUser=utilService.adminUser
         }
         bean.validate()
-        //
         try {
             if (!bean.hasErrors()) {
-                bean=countryService.save(bean)
-                def done = [success:true]
-                render done as JSON
-                return
+                def c  = countryService.save(bean)
+                if (c) {
+                    println "aved it"
+                    CountrySearchBean bean1 = new CountrySearchBean()
+                    bean1.id=jsonParams.id
+                    return internalSearch(bean1)
+                }
             }
         } catch (Throwable e ){
-            //   bean.errors=e
-        }
 
+        }
         def errors = [error: bean.errors.fieldErrors.collect{messageSource.getMessage(it, request.locale)}]
         render errors as JSON, status: 409
     }

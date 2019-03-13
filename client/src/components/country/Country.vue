@@ -1,12 +1,29 @@
 <template>
   <div id="custom">
+
     <app-header></app-header>
-    <search-form v-model="search" @submit="searchVehicles()"></search-form>
 
+    <!-- The refresh and country errors are being returned by CountryForm which is the add tab of search form -->
+    <search-form v-model="search"
+              @submit="searchCountries()"
+              @refresh-list="refreshCountries"
+              @country-errors="errorCountries"
+    ></search-form>
+
+    <!-- any errors caused by any underlying processes on this page -->
+    <ul v-show="errors.length>0"  class="errors"><li v-for="error in errors">{{ error }}</li></ul>
+
+
+    <!-- this loads up the entire country listing -->
     <country-table :countries="countries"
-                   v-bind="{fetchCountries,sortSearch}"></country-table>
+                   v-bind="{fetchCountries,sortSearch}"
+                   @country-update="updateCountries"
+                    @country-errors="errorCountries"
+                   >
+    </country-table>
 
 
+    <!-- generic pagination -->
     <Pagination
       :maxVisibleButtons=3
       :totalPages="numberOfPages"
@@ -25,6 +42,29 @@ import GarageService from '@/services/GarageService'
 import CountryTable from './table/CountryTable'
 import Pagination from '../Pagination'
 import moment from 'moment';
+
+
+const newObjInInitialArr = function(initialArr, newObject) {
+  let id = newObject.id;
+  let newArr = [];
+  for (let i = 0; i < initialArr.length; i++) {
+    if (id === initialArr[i].id) {
+      newArr.push(newObject);
+    } else {
+      newArr.push(initialArr[i]);
+    }
+  }
+  return newArr;
+};
+
+const updateObjectsInArr = function(initialArr, newArr) {
+  let finalUpdatedArr = initialArr;
+  for (let i = 0; i < newArr.length; i++) {
+    finalUpdatedArr = newObjInInitialArr(finalUpdatedArr, newArr[i]);
+  }
+  return finalUpdatedArr
+}
+
 export default {
   components: {
     SearchForm,
@@ -35,6 +75,7 @@ export default {
   },
   data: function () {
     return {
+    errors:[],
       countries: [],
       search:{name:''},
       country: {},
@@ -48,9 +89,7 @@ export default {
       currentSortDir:'asc'
     }
   },
-  // end::component[]
-  // tag::fetch[]
-  created () { // <1>
+  created () {
     this.fetchData()
   },
   methods: {
@@ -64,12 +103,9 @@ export default {
       }
     },
     initialiseCountries(params){
-      //return GarageService.fetchName('countries?'+params)
-
       return GarageService.fetchRoot('/guest/countries?'+params)
         .then((res) => {
         if (res) {
-          //console.log(' rees'+JSON.stringify(res))
           if (res.data.instanceList) {
             console.log("rr "+res.data.instanceList)
             this.countries = res.data.instanceList;
@@ -78,11 +114,9 @@ export default {
           } else {
             if (res.data) {
               //console.log("rr "+res.data.objects)
-              this.vehicles = res.data;
-
+              this.countries = res.data;
             }
           }
-
         }
       });
     },
@@ -90,19 +124,28 @@ export default {
       console.log("Page = "+page)
       this.currentPage = page;
       this.offset=(page*this.max)-this.max
-      this.fetchVehicles(this.offset)
+      this.fetchCountries(this.offset)
     },
     sortSearch(currentSort,currentSortDir) {
-      //This is coming back grom VehicleTable sortable column full sorting is method 2 here
       var variables = $.param(this.search);
-      if (this.search.returnDate1) {
-        variables+="&returnDate="+moment(this.search.returnDate1).format('DD MMM YYYY')
-      }
       this.currentSort=currentSort;
       this.currentSortDir=currentSortDir;
       variables+="&sort="+currentSort+"&order="+currentSortDir+'&offset='+ this.offset;
       this.initialiseCountries(variables);
     },
+   refreshCountries: function () {
+      console.log('refreshing entire list after a new entry was added')
+      this.fetchCountries(0)
+   },
+   updateCountries: function (country) {
+    this.errors=[];
+      console.log('country.vue updating country list')
+      this.countries=updateObjectsInArr(this.countries, [country])
+    },
+     errorCountries: function (errors) {
+               console.log('countryTable.vue updating error list')
+                  this.errors=errors;
+                },
     fetchCountries: function (pageNumber) {
       var variables=''
       if (this.search) {
@@ -119,8 +162,7 @@ export default {
       console.log("Fetching countries "+pageNumber)
       this.initialiseCountries(variables);
     },
-    searchVehicles: function () {
-      console.log("--------------------searching countries "+$.param(this.search))
+    searchCountries: function () {
       var variables = $.param(this.search);
       this.initialiseCountries(variables);
     }

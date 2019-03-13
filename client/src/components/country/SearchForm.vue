@@ -10,23 +10,29 @@
       </div>
       <div class="col-sm-1">
         <div class="btn-group" role="group" aria-label="Search Contracts">
-          <button type="button" class="btn btn-success" @click="submit()">Search</button>
+          <button type="button" class="btn btn-primary" @click="submit()">Search</button>
         </div>
       </div>
     </div>
       </tab>
       <tab name="add">
+        <country-form
+          @refresh-list="refreshCountries"
+          @country-errors="errorCountries"
+        >
 
+        </country-form>
       </tab>
     </tabs>
   </div>
 </template>
 <script>
   import {Tabs, Tab} from 'vue-tabs-component';
-
+  import CountryForm from './CountryForm'
   export default {
     components: {
       Tabs,
+      CountryForm,
     },
     props: ['search'],
     model: {
@@ -36,7 +42,15 @@
     methods: {
       submit () {
         this.$emit('submit')
-      }
+      },
+      refreshCountries: function () {
+          console.log('refresh entire list from searchForm')
+          this.$emit('refresh-list');
+      },
+      errorCountries: function (errors) {
+       console.log('countryTable.vue updating country list')
+          this.$emit('country-errors',errors);
+      },
     }
   }
 </script>
@@ -79,6 +93,8 @@
 
   .tabs-component-tab.is-active {
     color: #000;
+     text-decoration: none;
+    background:orange;
   }
 
   .tabs-component-tab.is-disabled * {

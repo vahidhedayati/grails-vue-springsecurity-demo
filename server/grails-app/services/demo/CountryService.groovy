@@ -6,9 +6,9 @@ class CountryService {
 
     //This will do both edit / create
     @Transactional
-    Country save(CountryBean bean) {
+    def save(CountryBean bean)  {
         Country country = Country.bindBean(bean)
-        return country.save()
+        return  country.save(flush:true)
     }
 
 
@@ -66,6 +66,7 @@ class CountryService {
         } else {
             query += " order by c.lastUpdated $bean.order"
         }
+        println "-- $query == ${whereParams}"
         def results = VehicleContract.executeQuery(query, whereParams, metaParams)
         int total = results.size()
         if (total >= metaParams.max) {
@@ -73,6 +74,7 @@ class CountryService {
         } else {
             total += metaParams.offset as Long
         }
+
         return [instanceList: results, instanceTotal: total]
 
     }

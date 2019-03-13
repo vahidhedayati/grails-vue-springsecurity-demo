@@ -50,8 +50,10 @@
     </thead> <!--1-->
       <!-- sortedCats replaces vehicles and is only sorting by current paginated dataset -->
       <table-row v-for="country in countries"
-                 :actualItem="country" :key="country.id"
-                 :updatedResults="currentCountry"
+                  :key="country.id"
+                  :country="country"
+                  @country-update="updateCountries"
+                  @country-errors="errorCountries"
                  v-bind="{fetchCountries}"
                  v-model="result"
                 ></table-row> <!--2-->
@@ -94,20 +96,19 @@ export default {
       //This is full on search and sortedSearch sits in the parent page Custom.vue
       this.sortSearch(s,this.currentSortDir)
 
-    }
+    },
+     updateCountries: function (country) {
+     console.log('countryTable.vue updating country list')
+        this.$emit('country-update',country);
+      },
+
+           errorCountries: function (errors) {
+           console.log('countryTable.vue updating country list')
+              this.$emit('country-errors',errors);
+            },
   },
   computed:{
-    currentCountry() {
-      if (this.updatedResults) {
-        var a = this.updatedResults;
 
-        this.updatedResults = null;
-        return a
-      } else {
-
-        return this.vehicle
-      }
-    }
   }
 }
 

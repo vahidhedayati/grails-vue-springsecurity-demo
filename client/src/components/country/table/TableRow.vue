@@ -1,12 +1,33 @@
+
 <template id="tablerow-template" xmlns="http://www.w3.org/1999/xhtml">
     <tr>
-      <td>{{ currentCountry.id }}</td>
-      <td>{{ currentCountry.name }}</td>
-      <td>{{ currentCountry.code }}</td>
-      <td>{{ currentCountry.updateUser.username }}</td>
-      <td>  {{ currentCountry.lastUpdated | shortMoment() }}</td>
+      <td>{{ country.id }}</td>
       <td>
-          <button v-on:click="editCounty(currentCountry)">Edit</button>
+          <span v-if="showForm">
+              <input  v-model="updatedCountry.name">
+          </span>
+          <span v-else>
+              {{ country.name }}
+          </span v-else>
+      </td>
+      <td>
+          <span v-if="showForm">
+                <input  v-model="updatedCountry.code">
+          </span>
+          <span v-else>
+              {{ country.code }}
+            </span v-else>
+       </td>
+      <td>{{ country.updateUser.username }}</td>
+      <td>  {{ country.lastUpdated | shortMoment() }}
+      </td>
+      <td>
+        <span v-if="showForm">
+            <button v-on:click="save(updatedCountry)">Save</button>
+        </span>
+        <span v-else>
+          <button v-on:click="editCounty(country)">Edit</button>
+        </span>
       </td>
     </tr>
 </template>
@@ -19,12 +40,12 @@ import moment from 'moment';
 import VueMoment from 'vue-moment'
 export default {
     //You must declare what is being passed in otherwise they wont work..
-   props: ['actualItem', 'makes', 'models', 'drivers','reload','updatedResults'],
+   props: ['country', 'makes', 'models', 'drivers','reload','updatedResults'],
    data () {
         return {
           response: [],
           errors: [],
-          vehicle:{},
+          updatedCountry:{},
           serverURL: process.env.SERVER_URL,
           showForm: false,
           retrievedVehicle: {}
@@ -32,19 +53,7 @@ export default {
         }
       },
   computed: {
-    currentCountry() {
-      if (this.updatedResults) {
-        console.log('returning updated TABLE ROW ' + JSON.stringify(this.updatedResults))
-        if (this.updatedResults.id === this.actualItem.id) {
-          return this.updatedResults;
-        } else {
-          return this.actualItem
-        }
-      } else {
-        console.log('returning normal VEH from row')
-        return this.actualItem
-      }
-    }
+    
   },
       //This is needed for the select component to work
       components: {
@@ -65,16 +74,39 @@ export default {
          moment: function () {
            return moment();
          },
-
          editCounty() {
-           this.updateValue(this.actualItem );
+          this.showForm=true;
+          this.updatedCountry=this.country;
          },
          updateValue: function (value) {
            this.$emit('input', value);
          },
+         save() {
+           const newName = this.updatedCountry;
 
+           console.log('new Name =  '+JSON.stringify(newName))
+           return GarageService.createRootNoCatch('guest/countries', newName)
+             .then((res) => {
+             if (res) {
+                console.log('RES: '+JSON.stringify(res));
+             }
+             if (res.data) {
+               this.showForm=false;
+               console.log('resData '+JSON.stringify(res.data))
+               this.$emit('country-update', res.data);
+             }
+           }).catch((error) => {
+              if (error.response) {
+                   this.$emit('country-errors', error.response.data.error);
+
+            } else if ( error.request) {
+              console.log("dddd"+error.request);
+            } else {
+              console.log('Error', error.message);
+            }
+          });
+         }
      }
-
 }
 
 </script>

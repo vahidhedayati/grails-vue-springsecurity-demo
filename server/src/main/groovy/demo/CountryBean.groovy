@@ -25,7 +25,7 @@ class CountryBean implements  Validateable{
         dateCreated(nullable: true)
         lastUpdated(nullable: true)
         updateUser(nullable: true)
-        code(nullable:true)
+        code(blank:true,minSize:2,maxSize:2,matches:/^[a-zA-Z]{2}$/)
     }
 
     CountryBean bindBean(Country c) {
