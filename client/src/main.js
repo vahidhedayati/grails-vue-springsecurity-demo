@@ -14,7 +14,7 @@ import './assets/css/grails.css'
 import './assets/css/main.css'
 import VueAuthenticate from 'vue-authenticate'
 import {Tabs, Tab} from 'vue-tabs-component';
-
+import VueDropdown from 'vue-dynamic-dropdown'
 import { currency } from './currency'
 //import VuejsDialog from "vuejs-dialog"
 
@@ -36,7 +36,7 @@ Vue.router = router;
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
-
+Vue.component('vue-dropdown', VueDropdown);
 
 
 Vue.component('tabs', Tabs);

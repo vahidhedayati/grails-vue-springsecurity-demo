@@ -49,7 +49,16 @@ class CountryController {
         save()
     }
 
+    def show() {
+        println "we are in show"
+        Country c = Country.load(params.id as Long)
+        if (c) {
+            render c.loadCountry() as JSON
+        }
+    }
+
     def save() {
+        println " $params.id is id in question"
         def jsonParams = request.JSON
         CountryBean bean = new CountryBean()
         DataBindingUtils.bindObjectToInstance(bean, jsonParams)
@@ -78,8 +87,8 @@ class CountryController {
     }
 
     def delete() {
-        println "params = $params"
-        String deleted = countryService.delete(params.id as Long)
+        println "delete params = $params"
+        def deleted = countryService.deleteRecord(params.id as Long)
         if (!deleted) {
             //throw error
             def errors = [error: message(code:'deleteFailed.label')]

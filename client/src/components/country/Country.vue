@@ -18,6 +18,7 @@
     <country-table :countries="countries"
                    v-bind="{fetchCountries,sortSearch}"
                    @country-update="updateCountries"
+                   @refresh-list="refreshCountries"
                     @country-errors="errorCountries"
                    >
     </country-table>

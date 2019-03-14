@@ -40,6 +40,14 @@ class Country {
     }
 
 
+    Map loadCountry() {
+        Map m = [:]
+        m.name=this.name
+        m.code=this.code
+        m.updateUser=this.updateUser.loadUser()
+        m.lastUpdated=this.lastUpdated.format('dd MMM yyyy hh:mm:ss')
+        return m
+    }
     String toString() {
         return "Country name: ${name} code: ${code} updated By: ${updateUser.username} at ${lastUpdated.format('dd MMM yyyy hh:mm')}"
     }

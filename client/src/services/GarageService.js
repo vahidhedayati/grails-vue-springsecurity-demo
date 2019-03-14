@@ -73,6 +73,14 @@ export default {
     return instance.post(component, params)
 
   },
+  putRootNoCatch (component, params) {
+    return instance.put(component, params)
+
+  },
+  patchRootNoCatch (component, params) {
+    return instance.patch(component, params)
+
+  },
   update(component,params) {
 
     return Api().patch(component, params)
@@ -85,6 +93,9 @@ export default {
             console.log('Error', error.message);
         }
     });
+  },
+  deleteNoCatch (component, id) {
+    return instance.delete(component+'/' + id)
   },
   delete (component,id) {
     return Api().delete(component+'/' + id)

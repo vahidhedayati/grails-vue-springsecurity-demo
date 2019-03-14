@@ -53,6 +53,7 @@
                   :key="country.id"
                   :country="country"
                   @country-update="updateCountries"
+                 @refresh-list="refreshCountries"
                   @country-errors="errorCountries"
                  v-bind="{fetchCountries}"
                  v-model="result"
@@ -64,7 +65,6 @@
 
 <script>
 import TableRow from './TableRow.vue';
-
 export default {
    props: ['countries', 'reload','fetchCountries','sortSearch'],
   components: { // <3>
@@ -101,11 +101,14 @@ export default {
      console.log('countryTable.vue updating country list')
         this.$emit('country-update',country);
       },
-
-           errorCountries: function (errors) {
-           console.log('countryTable.vue updating country list')
-              this.$emit('country-errors',errors);
-            },
+    refreshCountries: function () {
+      console.log('countryTable.vue refresh country list')
+      this.$emit('refresh-list');
+    },
+   errorCountries: function (errors) {
+      console.log('countryTable.vue updating country list')
+      this.$emit('country-errors',errors);
+    },
   },
   computed:{
 

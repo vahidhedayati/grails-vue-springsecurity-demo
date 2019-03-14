@@ -20,14 +20,18 @@ class UrlMappings {
 
 
         //Country config
+        delete "/guest/countries/$id(.$format)?"(controller:'country',action:"delete")
         get "/guest/countries"(controller:'country', action:'index')
-        post "/guest/countries"(controller:'country',action:'save')
+        get "/guest/countries/$id(.$format)?"(controller:'country',action:"show")
+        post "/guest/countries(.$format)?"(controller:'country',action:"save")
+        put "/guest/countries/$id(.$format)?"(controller:'country',action:"update")
+        patch "/guest/countries/$id(.$format)?"(controller:'country',action:"patch")
         get "/guest/deleteCountry"(controller:'country', action:'delete')
         //END Country config
 
         get "/guest/availableHires"(controller:'vehicleRental', action:'listDefaults')
         get "/guest/hireVehicle"(controller:'vehicleRental', action:'hireVehicle')
-       // post "/guest/saveHire"(controller:'vehicleRental',action:'save')
+        // post "/guest/saveHire"(controller:'vehicleRental',action:'save')
 
         get "/guest/rental"(controller:'vehicleRental', action:'index')
         post "/guest/rental"(controller:'vehicleRental',action:'save')

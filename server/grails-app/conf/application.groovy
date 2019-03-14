@@ -24,16 +24,17 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		//[pattern: '/j_spring_security_switch_user',      access: ['permitAll']],
 		//[pattern: '/api/logout',      access: ['permitAll']],
 		//[pattern: '/api/searchUser/**',      access: ['permitAll']],
-		[pattern: '/guest/availableHires',       access: ['permitAll']],
-		[pattern: '/guest/hireVehicle',       access: ['permitAll']],
-		[pattern: '/guest/rental',       access: ['permitAll']],
-		[pattern: '/guest/returnRental',       access: ['permitAll']],
-		[pattern: '/vehicle/export',       access: ['permitAll']],
 
+		//Anything starting with /guest will bypass spring security checks - non authenticated access
+		[pattern: '/guest/**',       access: ['permitAll']],
 
+		//[pattern: '/guest/hireVehicle',       access: ['permitAll']],
+		//[pattern: '/guest/rental',       access: ['permitAll']],
+		//[pattern: '/guest/returnRental',       access: ['permitAll']],
+		//[pattern: '/vehicle/export',       access: ['permitAll']],
 		//Country specific rules added for country file - bypasses security
-		[pattern: '/guest/countries',       access: ['permitAll']],
-		[pattern: '/guest/deleteCountry',       access: ['permitAll']],
+		//[pattern: '/guest/countries',       access: ['permitAll']],
+		//[pattern: '/guest/deleteCountry',       access: ['permitAll']],
 
 
 		[pattern: '/**/js/**',       access: ['permitAll']],
@@ -55,12 +56,15 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/**/favicon.ico', filters: 'none'],
 		[pattern: '/vehicle/export', filters: 'none'],
 		[pattern: '/oauth/access_token', filters: 'none'],
-		[pattern: '/guest/hireVehicle', filters: 'none'],
-		[pattern: '/guest/availableHires', filters: 'none'],
-		[pattern: '/guest/rental', filters: 'none'],
-		[pattern: '/guest/returnRental', filters: 'none'],
-		[pattern: '/guest/countries', filters: 'none'],
-		[pattern: '/guest/deleteCountry', filters: 'none'],
+
+		[pattern: '/guest/**', filters: 'none'],
+
+		//[pattern: '/guest/hireVehicle', filters: 'none'],
+		//[pattern: '/guest/availableHires', filters: 'none'],
+		//[pattern: '/guest/rental', filters: 'none'],
+		//[pattern: '/guest/returnRental', filters: 'none'],
+		//[pattern: '/guest/countries', filters: 'none'],
+		//[pattern: '/guest/deleteCountry', filters: 'none'],
 		//Traditional chain
 		//[
 		//		pattern: '/**',

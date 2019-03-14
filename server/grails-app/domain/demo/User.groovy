@@ -22,6 +22,13 @@ class User implements Serializable {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
 
+    Map loadUser() {
+        Map m=[:]
+        m.username=this.username
+        m.id=this.id
+        return m
+
+    }
     static constraints = {
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true

@@ -11,12 +11,14 @@ class CountryService {
         return  country.save(flush:true)
     }
 
+    @Transactional
+    def deleteRecord(Long id) {
+        println "Delete"
 
-    String delete(Long id) {
-        Country country = Country.get(id)
+        Country country = Country.load(id)
         if (country) {
             String name= country.name
-            country.delete()
+            country.delete(flush:true)
             return "$name deleted"
         }
     }
