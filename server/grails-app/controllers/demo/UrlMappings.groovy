@@ -26,7 +26,6 @@ class UrlMappings {
         post "/guest/countries(.$format)?"(controller:'country',action:"save")
         put "/guest/countries/$id(.$format)?"(controller:'country',action:"update")
         patch "/guest/countries/$id(.$format)?"(controller:'country',action:"patch")
-        get "/guest/deleteCountry"(controller:'country', action:'delete')
         //END Country config
 
         get "/guest/availableHires"(controller:'vehicleRental', action:'listDefaults')

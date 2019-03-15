@@ -18,6 +18,7 @@ Youtube
 
 [Part 3 - pagination / single item reload + issues arisen from it/backend error validation](https://www.youtube.com/watch?v=AWtqLsQHakA)
 
+[Part 4 - Complete Country walk through](https://www.youtube.com/watch?v=VPhzh3h8Ls8)
 
 
 Taken from :
