@@ -54,31 +54,39 @@
                   :country="country"
                   @country-update="updateCountries"
                  @refresh-list="refreshCountries"
+                 @country-show="showCountry"
                   @country-errors="errorCountries"
                  v-bind="{fetchCountries}"
-                 v-model="result"
                 ></table-row> <!--2-->
   </table>
+
+    <display-country-modal
+                 :show="showModal"
+                 :country="currentShowCountry"
+                 @close="closeModalPopup"></display-country-modal>
 
   </div>
 </template>
 
 <script>
 import TableRow from './TableRow.vue';
+import DisplayCountryModal from './DisplayCountryModal.vue';
 export default {
    props: ['countries', 'reload','fetchCountries','sortSearch'],
   components: { // <3>
-    TableRow
+    TableRow,
+    DisplayCountryModal
   },
   data: function () {
   return {
     updatedResults:null,
-    result:{},
+    currentShowCountry:null,
     currentSort:'contractName',
     currentSortDir:'asc',
     column:'id',
     activeColumn:'id',
     currentStyle:'',
+    showModal:false
   }
 },
 
@@ -101,6 +109,17 @@ export default {
      console.log('countryTable.vue updating country list')
         this.$emit('country-update',country);
       },
+    showCountry: function (country) {
+      //This is when the tableRow returned current current to be displayed - this updates the internal country
+      //of this page to be that.
+      this.currentShowCountry=country;
+      this.showModal=true;
+      //
+    },
+    closeModalPopup: function () {
+      this.showModal = false;
+      this.currentShowCountry = null;
+    },
     refreshCountries: function () {
       console.log('countryTable.vue refresh country list')
       this.$emit('refresh-list');

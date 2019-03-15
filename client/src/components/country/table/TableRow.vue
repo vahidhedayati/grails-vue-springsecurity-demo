@@ -53,8 +53,6 @@ export default {
           updatedCountry:{},
           serverURL: process.env.SERVER_URL,
           showForm: false,
-          retrievedVehicle: {},
-          showDialog:false,
           config: {
             options: [
               {
@@ -114,11 +112,11 @@ export default {
                  console.log('RES: '+JSON.stringify(res));
                }
                if (res.data) {
-               this.showForm=false;
+               //this.showForm=false;
                console.log('show resData '+JSON.stringify(res.data))
-               //this.$emit('country-update', res.data);
-               showCountry=res.data;
-               showDialog=true
+               this.$emit('country-show', res.data);
+               //showCountry=res.data;
+               //showDialog=true
              }
            }).catch((error) => {
                if (error.response) {
