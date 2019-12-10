@@ -1,4 +1,13 @@
 
+### Side note - similar / related projects
+- [micronaut-vuejs-cqrs](https://github.com/vahidhedayati/micronaut-vuejs-cqrs)
+
+- [micronaut-vuejs-crud](https://github.com/vahidhedayati/micronaut-vuejs-crud)
+
+- [grails-vue-springsecurity-demo (this)](https://github.com/vahidhedayati/grails-vue-springsecurity-demo)
+
+- [micronaut-ms micronaut beer serving app](https://github.com/vahidhedayati/micronaut-ms)
+
 
 To run this application
 ```
